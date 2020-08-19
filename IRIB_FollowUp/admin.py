@@ -139,11 +139,10 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
     readonly_fields = ['last_login_jalali', 'date_joined_jalali']
     inlines = [AttendantInline]
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(UserAdmin, self).get_form(request, obj=obj, **kwargs)
+    def get_readonly_fields(self, request, obj=None):
         if request.user.is_secretary and not request.user.is_superuser:
-            self.readonly_fields += ['is_staff', 'is_superuser', 'groups', 'user_permissions']
-        return form
+            return self.readonly_fields + ['is_staff', 'is_superuser', 'groups', 'user_permissions']
+        return self.readonly_fields
 
 
 @admin.register(Enactment)
@@ -176,18 +175,14 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         return queryset.filter(first_actor=request.user) | queryset.filter(second_actor=request.user) | \
                queryset.filter(session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(EnactmentAdmin, self).get_form(request, obj=obj, **kwargs)
+    def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
-            self.readonly_fields = ['id', 'code', 'session', 'date', 'review_date', 'assigner', 'subject',
-                                    'description', 'first_actor', 'second_actor', 'follow_grade',
-                                    'first_supervisor', 'second_supervisor']
+            return self.readonly_fields + ['code', 'session', 'date', 'review_date', 'assigner', 'subject',
+                                           'description', 'first_actor', 'second_actor', 'follow_grade']
         elif obj:
-            self.readonly_fields = ['id', 'date', 'review_date', 'first_supervisor', 'second_supervisor']
-        else:
-            self.readonly_fields = ['id', 'first_supervisor', 'second_supervisor']
+            return self.readonly_fields + ['date', 'review_date']
 
-        return form
+        return self.readonly_fields
 
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
