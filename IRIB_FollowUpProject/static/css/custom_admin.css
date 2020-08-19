@@ -1,0 +1,158 @@
+@font-face {
+    font-family: 'iransans';
+    src: url('../fonts/iransans-bold.eot?#') format('eot'); /* IE9 Compat Modes */
+    src: url('../fonts/iransans-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/iransans-bold.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/iransans-bold.woff') format('woff'), /* Pretty Modern Browsers */ url('../fonts/iransans.ttf') format('truetype'); /* Safari, Android, iOS */
+    font-weight: bold;
+}
+
+@font-face {
+    src: url('../fonts/iransans-light.eot?#') format('eot'); /* IE9 Compat Modes */
+    src: url('../fonts/iransans-light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/iransans-light.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/iransans-light.woff') format('woff'), /* Pretty Modern Browsers */ url('../fonts/iransans.ttf') format('truetype'); /* Safari, Android, iOS */
+    font-weight: 400;
+}
+
+:lang(fa) {
+    font-family: iransans !important;
+}
+
+:lang(en) {
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif !important;
+}
+
+#branding {
+    width: 60%;
+    float: left;
+    position: relative;
+}
+
+#branding .logo {
+    width: 120px;
+}
+
+.login #branding {
+    width: 100%;
+}
+
+:lang(fa) #branding {
+    float: right;
+}
+
+.blocking-logo {
+    position: absolute;
+    bottom: 0;
+    margin: 20px;
+}
+
+.blocking-logo {
+    position: absolute;
+    bottom: 0;
+    margin: 20px;
+}
+
+.blocking-version {
+    font-size: 12px;
+}
+
+.startlink, .inlinestartlink {
+    padding-right: 16px !important;
+    background: url('/static/admin/img/icon-yes.svg') 0 1px no-repeat;
+    background-position: right;
+}
+
+.startedlink {
+    width: 30px;
+    padding-right: 10px;
+}
+
+:lang(fa) .startedlink {
+    padding-left: 10px;
+}
+
+:lang(fa) .startlink, .inlinestartlink {
+    padding-left: 16px !important;
+    padding-right: auto !important;
+}
+
+.admin-interface.login #header #branding h1 img.logo + span {
+    margin-bottom: 5px;
+    right: 0;
+}
+
+:lang(fa) .admin-interface.login #header #branding h1 img.logo + span {
+    right: 95px;
+    left: auto;
+    white-space: inherit;
+}
+
+.i18n_flag {
+    width: 26px;
+    vertical-align: text-top;
+}
+
+.form-row.field-url div.readonly {
+    direction: initial;
+    text-align: -webkit-match-parent;
+}
+
+.invisible-lang {
+    display: none;
+}
+
+.aligned label {
+    width: fit-content;
+}
+
+.fieldBox.field-box.field-session,
+.fieldBox.field-box.field-date,
+.fieldBox.field-box.field-review_date,
+.fieldBox.field-box.field-assigner,
+.fieldBox.field-box.field-subject,
+.fieldBox.field-box.field-first_actor,
+.fieldBox.field-box.field-second_actor,
+.fieldBox.field-box.field-follow_grade,
+.fieldBox.field-box.field-first_supervisor,
+.fieldBox.field-box.field-second_supervisor,
+.fieldBox.field-box.field-row {
+    white-space: nowrap;
+}
+
+.form-row.field-description div div {
+    padding-right: 80px;
+}
+
+.errornote.loading-message.index {
+    width: 100%;
+}
+
+.loading-message {
+    width: auto;
+    margin-right: 280px;
+}
+
+:lang(fa) .loading-message {
+    margin-left: 280px;
+    margin-right: 0;
+}
+
+:lang(fa) .admin-interface .paginator .this-page + a:not(.showall) {
+    margin-left: auto;
+}
+
+.record-nav img {
+    width: 28px;
+    border: solid #4c70a6 2px;
+    padding: 3px;
+}
+
+.center {
+    margin: -32px auto auto;
+    width: fit-content;
+}
+
+:lang(fa) .center {
+    margin-top: auto;
+}
+
+.admin-interface .submit-row .close-enactment {
+    margin: 0 5px;
+}

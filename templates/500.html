@@ -1,0 +1,55 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+{% load i18n %}
+
+<!-- custom filter module -->
+{% load i18n_switcher %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block extrahead %}
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom_admin.css' %}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/error_page.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <div class="full-screen" {% if LANGUAGE_CODE == 'fa' %}style="direction:rtl;"{% endif %}>
+        <div class="container">
+            <div {% if LANGUAGE_CODE == 'fa' %}style="direction:ltr;"{% endif %}>
+                <span class="error-num">5</span>
+
+                <div class='eye'></div>
+                <div class='eye'></div>
+            </div>
+        <p class="sub-text">اوف! گند زدیم!! لطفا مدیر سیستم را خبر کنید...</p>
+
+        <p class="sub-text">
+            <a style="cursor: auto" href="javascript: void(0)">تلفن: <span style="direction: ltr; display: inline-block;"> +98 21 2915 5120</span></a>
+        </p>
+        <p class="sub-text"><a style="cursor: auto" href="javascript: void(0)">پست الکترونیک:</a><a
+                href="mailto:qbesharat@irib.ir"> qbesharat@irib.ir</a></p>
+        <a href="javascript: goBack();"> بازگشت</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(".full-screen").mousemove(function (event) {
+            var eye = $(".eye");
+            var x = (eye.offset().left) + (eye.width() / 2);
+            var y = (eye.offset().top) + (eye.height() / 2);
+            var rad = Math.atan2(event.pageX - x, event.pageY - y);
+            var rot = (rad * (180 / Math.PI) * -1) + 180;
+            eye.css({
+                '-webkit-transform': 'rotate(' + rot + 'deg)',
+                '-moz-transform': 'rotate(' + rot + 'deg)',
+                '-ms-transform': 'rotate(' + rot + 'deg)',
+                'transform': 'rotate(' + rot + 'deg)'
+            });
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+{% endblock %}

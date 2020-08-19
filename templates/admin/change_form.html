@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% if  opts.model_name == 'enactment' %}
+    {% block extrahead %}
+        {{ block.super }}
+        <script>
+            var url = '{% url 'ajax_actor_supervisor_unit' %}';
+        </script>
+        <script type="text/javascript" src="{% static 'js/custom_admin.js' %}"/>
+    {% endblock %}
+{% endif %}

@@ -1,0 +1,153 @@
+<html lang="fa" dir="rtl">
+<head>
+    <title>مدیریت وب‌گاه | اتوماسیون اداری معاونت فضای مجازی</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/png">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style type="text/css">
+        @font-face {
+            font-family: 'iransans';
+            src: url('http://office.eirib.ir/static/fonts/iransans-bold.eot?#') format('eot'); /* IE9 Compat Modes */
+            src: url('http://office.eirib.ir/static/fonts/iransans-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('http://office.eirib.ir/static/fonts/iransans-bold.woff2') format('woff2'), /* Super Modern Browsers */ url('http://office.eirib.ir/static/fonts/iransans-bold.woff') format('woff'), /* Pretty Modern Browsers */ url('http://office.eirib.ir/static/fonts/iransans.ttf') format('truetype'); /* Safari, Android, iOS */
+            font-weight: bold;
+        }
+
+        @font-face {
+            src: url('http://office.eirib.ir/static/fonts/iransans-light.eot?#') format('eot'); /* IE9 Compat Modes */
+            src: url('http://office.eirib.ir/static/fonts/iransans-light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('http://office.eirib.ir/static/fonts/iransans-light.woff2') format('woff2'), /* Super Modern Browsers */ url('http://office.eirib.ir/static/fonts/iransans-light.woff') format('woff'), /* Pretty Modern Browsers */ url('http://office.eirib.ir/static/fonts/iransans.ttf') format('truetype'); /* Safari, Android, iOS */
+            font-weight: 400;
+        }
+
+        :lang(fa) {
+            font-family: iransans !important;
+        }
+
+        :lang(en) {
+            font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif !important;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #content {
+            padding: 0;
+        }
+
+        .full-screen {
+            background-color: rgb(51, 51, 51);
+            width: 100%;
+            height: 200vh;
+            color: white;
+            font-family: 'Arial Black';
+            text-align: center;
+        }
+
+        .container {
+            padding-top: 4em;
+            width: 90%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .error-num {
+            font-size: 8em;
+        }
+
+        .eye {
+            background: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            height: 100px;
+            position: relative;
+            width: 100px;
+        }
+
+        .eye::after {
+            background: #000;
+            border-radius: 50%;
+            bottom: 56.1px;
+            content: ' ';
+            height: 33px;
+            position: absolute;
+            right: 33px;
+            width: 33px;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .full-screen p {
+            margin-bottom: 2em;
+            font-size: 35px;
+        }
+
+        .full-screen a,
+        .full-screen a:link,
+        .full-screen a:visited {
+            color: white !important;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 20px;
+        }
+
+        .full-screen a:hover {
+            color: lightgray !important;
+        }
+    </style>
+</head>
+
+<head>
+<body>
+<div class="full-screen" style="direction:rtl;">
+    <a href="http://office.eirib.ir">
+        <div class="" style="direction: ltr">
+            <h1>
+                <img width="100" src="/static/img/logo.png" title="اتوماسیون اداری معاونت فضای مجازی" alt="اتوماسیون اداری معاونت فضای مجازی">
+                <span>اتوماسیون اداری معاونت فضای مجازی</span>
+            </h1>
+        </div>
+    </a>
+
+    <div class="container">
+        <div style="direction: ltr">
+            <span class="error-num">5</span>
+
+            <div class='eye'></div>
+            <div class='eye'></div>
+        </div>
+
+        <p class="sub-text">اوف! گند زدیم!! لطفا مدیر سیستم را خبر کنید...</p>
+
+        <p class="sub-text">
+            <a style="cursor: auto" href="javascript: void(0)">تلفن: <span style="direction: ltr; display: inline-block;"> +98 21 2915 5120</span></a>
+        </p>
+        <p class="sub-text"><a style="cursor: auto" href="javascript: void(0)">پست الکترونیک:</a><a
+                href="mailto:qbesharat@irib.ir"> qbesharat@irib.ir</a></p>
+        <a href="javascript: goBack();"> بازگشت</a>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".full-screen").mousemove(function (event) {
+        var eye = $(".eye");
+        var x = (eye.offset().left) + (eye.width() / 2);
+        var y = (eye.offset().top) + (eye.height() / 2);
+        var rad = Math.atan2(event.pageX - x, event.pageY - y);
+        var rot = (rad * (180 / Math.PI) * -1) + 180;
+        eye.css({
+            '-webkit-transform': 'rotate(' + rot + 'deg)',
+            '-moz-transform': 'rotate(' + rot + 'deg)',
+            '-ms-transform': 'rotate(' + rot + 'deg)',
+            'transform': 'rotate(' + rot + 'deg)'
+        });
+    });
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>

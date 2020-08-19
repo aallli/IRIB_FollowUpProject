@@ -1,0 +1,70 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n static admin_interface_tags simple_tag i18n_switcher %}
+
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom_admin.css' %}"/>
+{% endblock %}
+
+{% block branding %}
+    {% get_admin_interface_theme as theme %}
+    <h1 id="site-name">
+        {% if theme.logo_visible %}
+            {% if theme.logo %}
+                <img class="logo" style="display:none;" src="{{ theme.logo.url }}"
+                     {% if theme.logo.width %}width="{{ theme.logo.width }}"{% endif %}
+                     {% if theme.logo.height %}height="{{ theme.logo.height }}"{% endif %}>
+            {% else %}
+                <img class="logo default" style="display:none;"
+                     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="104"
+                     height="36">
+            {% endif %}
+        {% endif %}
+        <span class="blocking-logo">
+    {% version as version %}
+            {% if theme.title_visible %}
+                <div>{% if theme.title %}{% trans theme.title %}{% else %}
+                    {{ site_header }}{% endif %}
+                </div>
+                <div class="blocking-version">{% trans 'Version' %}: {{ version }}</div>
+            {% endif %}
+        </span>
+    </h1>
+{% endblock %}
+
+{% block userlinks %}
+    <span class="{% if LANGUAGE_CODE == 'en' %}invisible-lang{% endif %}">
+        <a href="{{ request|switch_i18n:'en' }}">{% trans 'En' %}
+{#            <img class="i18n_flag" src="{% static 'img/en.png' %}"/>#}
+        </a> /
+    </span>
+
+    <span class="{% if LANGUAGE_CODE == 'fa' %}invisible-lang{% endif %}">
+        <a href="{{ request|switch_i18n:'fa' }}">{% trans 'Fa' %}
+{#            <img class="i18n_flag" src="{% static 'img/fa.png' %}"/>#}
+        </a> /
+    </span>
+
+    {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+            <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+        {% endif %}
+    {% endif %}
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+    {% endif %}
+    <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+{% endblock %}
+
+{% block welcome-msg %}
+    {% if LANGUAGE_CODE == 'en' %}
+        {% trans 'Welcome,' %}
+        <strong>{{ user.title }} {% firstof user.get_full_name user.get_username %}</strong>.
+    {% endif %}
+
+    {% if LANGUAGE_CODE == 'fa' %}
+        <strong>{{ user.title }} {% firstof user.get_full_name user.get_username %}</strong>.
+        {% trans 'Welcome,' %}
+    {% endif %}
+{% endblock %}
