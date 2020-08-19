@@ -154,7 +154,7 @@ class Enactment(models.Model):
     result_short.short_description = _('Result')
 
     def row(self):
-        return self.id
+        return self.id if self.id else '-'
 
     row.short_description = _('Row')
 
