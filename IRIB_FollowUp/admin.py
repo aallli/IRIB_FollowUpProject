@@ -159,9 +159,10 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_display_links = ['row', 'session', 'review_date_jalali', 'subject', 'description_short',
                           'result_short']
     list_filter = [JalaliDateFilter, 'session', 'subject', 'assigner', ActorFilter, SupervisorFilter]
-    search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result',
-                     'first_actor__fname', 'first_actor__lname', 'second_actor__fname', 'second_actor__lname',
-                     'first_supervisor__name', 'second_supervisor__name', ]
+    search_fields = ['session__name', 'subject__name', 'description', 'result',
+                     'assigner__first_name', 'assigner__last_name',
+                     'first_actor__first_name', 'first_actor__last_name',
+                     'second_actor__first_name', 'second_actor__last_name']
     inlines = [AttachmentInline]
     readonly_fields = ['row', 'description_short', 'result_short', 'review_date_jalali', 'first_supervisor',
                        'second_supervisor', ]
