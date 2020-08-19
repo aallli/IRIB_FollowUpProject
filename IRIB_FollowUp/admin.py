@@ -148,22 +148,22 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
 @admin.register(Enactment)
 class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Enactment
-    fields = (('id', 'session', 'date', 'review_date'),
+    fields = (('row', 'session', 'date', 'review_date'),
               ('assigner', 'subject', 'code'),
               'description', 'result',
               ('first_actor', 'first_supervisor'),
               ('second_actor', 'second_supervisor'),
               )
-    list_display = ['id', 'session', 'review_date_jalali', 'subject', 'description_short',
+    list_display = ['row', 'session', 'review_date_jalali', 'subject', 'description_short',
                     'result_short']
-    list_display_links = ['id', 'session', 'review_date_jalali', 'subject', 'description_short',
+    list_display_links = ['row', 'session', 'review_date_jalali', 'subject', 'description_short',
                           'result_short']
     list_filter = [JalaliDateFilter, 'session', 'subject', 'assigner', ActorFilter, SupervisorFilter]
     search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result',
                      'first_actor__fname', 'first_actor__lname', 'second_actor__fname', 'second_actor__lname',
                      'first_supervisor__name', 'second_supervisor__name', ]
     inlines = [AttachmentInline]
-    readonly_fields = ['description_short', 'result_short', 'review_date_jalali', 'first_supervisor',
+    readonly_fields = ['row', 'description_short', 'result_short', 'review_date_jalali', 'first_supervisor',
                        'second_supervisor', ]
     form = EnactmentAdminForm
 

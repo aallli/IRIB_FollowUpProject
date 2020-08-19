@@ -153,6 +153,11 @@ class Enactment(models.Model):
 
     result_short.short_description = _('Result')
 
+    def row(self):
+        return self.id
+
+    row.short_description = _('Row')
+
     def date_jalali(self):
         return to_jalali(self.date, True)
 

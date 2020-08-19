@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 11:25+0430\n"
+"POT-Creation-Date: 2020-08-19 10:54+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "Welcome to EIRIB administration system"
 msgstr "خوش آمدید..."
 
 #: .\IRIB_FollowUp\admin.py:19 .\IRIB_FollowUp\models.py:133
-#: .\IRIB_FollowUp\models.py:165
+#: .\IRIB_FollowUp\models.py:170
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
@@ -171,7 +171,7 @@ msgid "Code"
 msgstr "کد"
 
 #: .\IRIB_FollowUp\models.py:122 .\IRIB_FollowUp\models.py:149
-#: .\IRIB_FollowUp\models.py:183
+#: .\IRIB_FollowUp\models.py:188
 msgid "Description"
 msgstr "شرح"
 
@@ -183,7 +183,7 @@ msgstr "پیگیری کننده اول"
 msgid "Second Actor"
 msgstr "پیگیری کننده دوم"
 
-#: .\IRIB_FollowUp\models.py:128 .\IRIB_FollowUp\models.py:159
+#: .\IRIB_FollowUp\models.py:128 .\IRIB_FollowUp\models.py:164
 msgid "Assignment Date"
 msgstr "تاریخ"
 
@@ -199,7 +199,7 @@ msgstr "نتیجه"
 msgid "Task Assigner"
 msgstr "گوینده"
 
-#: .\IRIB_FollowUp\models.py:136 .\IRIB_FollowUp\models.py:185
+#: .\IRIB_FollowUp\models.py:136 .\IRIB_FollowUp\models.py:190
 msgid "Enactment"
 msgstr "مصوبه"
 
@@ -207,23 +207,27 @@ msgstr "مصوبه"
 msgid "Enactments"
 msgstr "مصوبات"
 
-#: .\IRIB_FollowUp\models.py:171
+#: .\IRIB_FollowUp\models.py:159
+msgid "Row"
+msgstr "ردیف"
+
+#: .\IRIB_FollowUp\models.py:176
 msgid "First Supervisor"
 msgstr "واحد پیگیری کننده اول"
 
-#: .\IRIB_FollowUp\models.py:176
+#: .\IRIB_FollowUp\models.py:181
 msgid "Second Supervisor"
 msgstr "واحد پیگیری کننده دوم"
 
-#: .\IRIB_FollowUp\models.py:184
+#: .\IRIB_FollowUp\models.py:189
 msgid "File"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:188
+#: .\IRIB_FollowUp\models.py:193
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:189
+#: .\IRIB_FollowUp\models.py:194
 msgid "Attachments"
 msgstr "ضمایم"
 
