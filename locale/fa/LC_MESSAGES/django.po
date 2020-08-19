@@ -20,7 +20,7 @@ msgstr ""
 
 #: .\IRIB_FollowUpProject\settings.py:32
 msgid "EIRIB Administration System"
-msgstr "سامانه مدیریت معاونت فضای مجازی"
+msgstr "شورای سیاستگذاری فضای مجازی سازمان صدا و سیما"
 
 #: .\IRIB_FollowUpProject\settings.py:136 .\static\admin\base_site.html:38
 #: .\static\base_site.html:39 .\templates\admin\base_site.html:37
