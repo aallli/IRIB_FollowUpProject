@@ -68,8 +68,8 @@ class SupervisorFilter(SimpleListFilter):
         return [(supervisor.pk, supervisor.name) for supervisor in Supervisor.objects.all()]
 
     def queryset(self, request, queryset):
-        return queryset.filter(first_supervisor__pk=self.value()) | queryset.filter(
-            second_supervisor__pk=self.value()) if self.value() else queryset
+        return queryset.filter(first_actor__supervisor__pk=self.value()) | queryset.filter(
+            second_actor__supervisor__pk=self.value()) if self.value() else queryset
 
 
 class BaseModelAdmin(admin.ModelAdmin):
