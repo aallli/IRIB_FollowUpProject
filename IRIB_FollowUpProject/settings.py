@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.4.4'
+VERSION = '1.4.6'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='qbesharat@irib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
-    'IRIB_FollowUp.apps.EiribFollowupConfig',
+    'IRIB_FollowUp.apps.IribFollowupConfig',
 ]
 
 MIDDLEWARE = [

@@ -5,7 +5,6 @@ from django.utils import timezone
 from django.dispatch import receiver
 from IRIB_FollowUpProject.utils import to_jalali
 from django.contrib.auth.models import AbstractUser
-from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
 
 locale.setlocale(locale.LC_ALL, '')

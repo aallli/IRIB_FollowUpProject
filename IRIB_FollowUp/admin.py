@@ -1,7 +1,9 @@
 import datetime
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from django.utils import timezone
 from .forms import EnactmentAdminForm
+
 from jalali_date import datetime2jalali
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
@@ -143,6 +145,24 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
         if request.user.is_secretary and not request.user.is_superuser:
             return self.readonly_fields + ['is_staff', 'is_superuser', 'groups', 'user_permissions']
         return self.readonly_fields
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:
+            obj.is_staff = True
+        super(UserAdmin, self).save_model(request, obj, form, change)
+
+    def save_related(self, request, form, formsets, change):
+        user = form.instance
+        super(UserAdmin, self).save_related(request, form, formsets, change)
+        self.set_groups(user)
+
+    def set_groups(self, user):
+        if user.is_secretary:
+            user.groups.add(get_object_or_404(Group, name='Operators'))
+            user.groups.remove(get_object_or_404(Group, name='Users'))
+        else:
+            user.groups.add(get_object_or_404(Group, name='Users'))
+            user.groups.remove(get_object_or_404(Group, name='Operators'))
 
 
 @admin.register(Enactment)
