@@ -1,11 +1,9 @@
 import datetime
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.utils import timezone
-from .forms import EnactmentAdminForm
-
 from jalali_date import datetime2jalali
 from django.db.transaction import atomic
+from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.admin import SimpleListFilter
@@ -13,8 +11,9 @@ from jalali_date.admin import ModelAdminJalaliMixin
 from IRIB_FollowUpProject.utils import get_admin_url
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
+from .forms import EnactmentAdminForm, get_followup_inline_form
 from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, \
-    Attachment, Attendant
+    Attachment, Attendant, FollowUp
 
 
 class JalaliDateFilter(SimpleListFilter):
@@ -101,6 +100,42 @@ class AttachmentInline(admin.TabularInline):
     model = Attachment
 
 
+def get_followup_inline(request):
+    class FollowUpInline(ModelAdminJalaliMixin, admin.TabularInline):
+        model = FollowUp
+        form = get_followup_inline_form(request)
+        fields = ['actor', 'supervisor', 'result', 'date_jalali']
+        readonly_fields = ['supervisor', 'date_jalali']
+
+        def has_add_permission(self, request, obj):
+            user = request.user
+            return user.is_superuser or user.is_secretary
+
+        def has_delete_permission(self, request, obj):
+            user = request.user
+            return user.is_superuser or user.is_secretary
+
+        def get_readonly_fields(self, request, obj=None):
+            user = request.user
+            if user.is_superuser or user.is_secretary:
+                return self.readonly_fields
+            else:
+                return self.readonly_fields + ['actor']
+
+        def get_formset(self, request, obj=None, **kwargs):
+            user = request.user
+            if user.is_superuser or user.is_secretary:
+                self.extra = 2
+                self.max_num = FollowUp.objects.filter(enactment=obj).count() + 2
+            else:
+                self.extra = 0
+                self.max_num = 0
+
+            return super(FollowUpInline, self).get_formset(request, obj, **kwargs)
+
+    return FollowUpInline
+
+
 @admin.register(Attachment)
 class AttachmentAdmin(BaseModelAdmin):
     model = Attachment
@@ -169,31 +204,27 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
 class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Enactment
     fields = (('row', 'session', 'date', 'review_date'),
-              ('assigner', 'subject', 'code'),
-              'description', 'result',
-              ('first_actor', 'first_supervisor'),
-              ('second_actor', 'second_supervisor'),
+              ('assigner', 'subject', 'code'), 'description',
               )
-    list_display = ['row', 'session', 'review_date_jalali', 'subject', 'description_short',
-                    'result_short']
-    list_display_links = ['row', 'session', 'review_date_jalali', 'subject', 'description_short',
-                          'result_short']
+    list_display = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
+    list_display_links = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
     list_filter = [JalaliDateFilter, 'session', 'subject', 'assigner', ActorFilter, SupervisorFilter]
-    search_fields = ['session__name', 'subject__name', 'description', 'result',
-                     'assigner__first_name', 'assigner__last_name',
-                     'first_actor__first_name', 'first_actor__last_name',
-                     'second_actor__first_name', 'second_actor__last_name']
-    inlines = [AttachmentInline]
-    readonly_fields = ['row', 'description_short', 'result_short', 'review_date_jalali', 'first_supervisor',
-                       'second_supervisor', ]
+    search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', ]
+    readonly_fields = ['row', 'description_short', 'review_date_jalali', ]
     form = EnactmentAdminForm
+
+    def get_inline_instances(self, request, obj=None):
+        return [
+            get_followup_inline(request)(self.model, self.admin_site),
+            AttachmentInline(self.model, self.admin_site),
+        ]
 
     def get_queryset(self, request):
         queryset = Enactment.objects.filter(follow_grade=1)
         if request.user.is_superuser or request.user.is_secretary:
             return queryset
 
-        return queryset.filter(first_actor=request.user) | queryset.filter(second_actor=request.user) | \
+        return queryset.filter(pk__in=FollowUp.objects.filter(actor=request.user).values('pk')) | \
                queryset.filter(session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
 
     def get_readonly_fields(self, request, obj=None):

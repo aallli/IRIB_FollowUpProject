@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-25 08:15+0430\n"
+"POT-Creation-Date: 2020-08-25 10:17+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: .\IRIB_FollowUpProject\settings.py:32
 msgid "EIRIB Administration System"
-msgstr "سامانه مدیریت فضای مجازی سازمان صدا و سیما"
+msgstr "شورای فضای مجازی سازمان صدا و سیما"
 
 #: .\IRIB_FollowUpProject\settings.py:136 .\static\admin\base_site.html:38
 #: .\static\base_site.html:39 .\templates\admin\base_site.html:37
@@ -70,23 +70,23 @@ msgstr "مسوول پیگیری"
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\IRIB_FollowUp\admin.py:127
+#: .\IRIB_FollowUp\admin.py:131
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: .\IRIB_FollowUp\admin.py:130
+#: .\IRIB_FollowUp\admin.py:134
 msgid "Address Info"
 msgstr "نشانیهای دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:132
+#: .\IRIB_FollowUp\admin.py:136
 msgid "Important dates"
 msgstr "تاریخهای مهم"
 
-#: .\IRIB_FollowUp\admin.py:134
+#: .\IRIB_FollowUp\admin.py:138
 msgid "Permissions"
 msgstr "سطوح دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:136
+#: .\IRIB_FollowUp\admin.py:140
 msgid "Sensitive Info"
 msgstr "اطلاعات حساس"
 
@@ -169,7 +169,7 @@ msgid "Code"
 msgstr "کد"
 
 #: .\IRIB_FollowUp\models.py:121 .\IRIB_FollowUp\models.py:148
-#: .\IRIB_FollowUp\models.py:187
+#: .\IRIB_FollowUp\models.py:211
 msgid "Description"
 msgstr "شرح"
 
@@ -190,6 +190,7 @@ msgid "Follow Grade"
 msgstr "لزوم پیگیری"
 
 #: .\IRIB_FollowUp\models.py:129 .\IRIB_FollowUp\models.py:153
+#: .\IRIB_FollowUp\models.py:186
 msgid "Result"
 msgstr "نتیجه"
 
@@ -197,7 +198,8 @@ msgstr "نتیجه"
 msgid "Task Assigner"
 msgstr "گوینده"
 
-#: .\IRIB_FollowUp\models.py:135 .\IRIB_FollowUp\models.py:189
+#: .\IRIB_FollowUp\models.py:135 .\IRIB_FollowUp\models.py:187
+#: .\IRIB_FollowUp\models.py:213
 msgid "Enactment"
 msgstr "مصوبه"
 
@@ -217,15 +219,31 @@ msgstr "واحد پیگیری کننده اول"
 msgid "Second Supervisor"
 msgstr "واحد پیگیری کننده دوم"
 
-#: .\IRIB_FollowUp\models.py:188
+#: .\IRIB_FollowUp\models.py:184
+msgid "Actor"
+msgstr "پیگیری کننده"
+
+#: .\IRIB_FollowUp\models.py:185 .\IRIB_FollowUp\models.py:203
+msgid "Response Date"
+msgstr "تاریخ پاسخدهی"
+
+#: .\IRIB_FollowUp\models.py:190
+msgid "Follow Up"
+msgstr "پیگیری"
+
+#: .\IRIB_FollowUp\models.py:191
+msgid "Follow Ups"
+msgstr "پیگیریها"
+
+#: .\IRIB_FollowUp\models.py:212
 msgid "File"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:192
+#: .\IRIB_FollowUp\models.py:216
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:193
+#: .\IRIB_FollowUp\models.py:217
 msgid "Attachments"
 msgstr "ضمایم"
 

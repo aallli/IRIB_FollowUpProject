@@ -120,13 +120,8 @@ class Enactment(models.Model):
     code = models.IntegerField(verbose_name=_('Code'), default=1, blank=False)
     description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True)
-    first_actor = models.ForeignKey(User, verbose_name=_('First Actor'), on_delete=models.SET_NULL, blank=True,
-                                    null=True, related_name='first_actor')
-    second_actor = models.ForeignKey(User, verbose_name=_('Second Actor'), on_delete=models.SET_NULL, blank=True,
-                                     null=True, related_name='second_actor')
     date = models.DateField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
     follow_grade = models.CharField(verbose_name=_('Follow Grade'), max_length=100, blank=False, null=False, default=1)
-    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=True, null=True)
     session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(User, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
     review_date = models.DateField(verbose_name=_('Review Date'), blank=False, default=set_now)
@@ -147,37 +142,52 @@ class Enactment(models.Model):
 
     description_short.short_description = _('Description')
 
-    def result_short(self):
-        return '%s...' % self.result[:50] if self.result else ''
-
-    result_short.short_description = _('Result')
-
     def row(self):
         return self.id if self.id else '-'
 
     row.short_description = _('Row')
 
     def date_jalali(self):
-        return to_jalali(self.date, True)
+        return to_jalali(self.date)
 
     date_jalali.short_description = _('Assignment Date')
     date_jalali.admin_order_field = 'date'
 
     def review_date_jalali(self):
-        return to_jalali(self.review_date, True)
+        return to_jalali(self.review_date)
 
     review_date_jalali.short_description = _('Review Date')
     review_date_jalali.admin_order_field = 'review_date'
 
-    def first_supervisor(self):
-        return self.first_actor.supervisor
 
-    first_supervisor.short_description = _('First Supervisor')
+class FollowUp(models.Model):
+    actor = models.ForeignKey(User, verbose_name=_('Actor'), on_delete=models.SET_NULL, blank=True, null=True)
+    date = models.DateTimeField(verbose_name=_('Response Date'), blank=True, null=True)
+    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=True, null=True)
+    enactment = models.ForeignKey(Enactment, verbose_name=_('Enactment'), on_delete=models.CASCADE)
 
-    def second_supervisor(self):
-        return self.second_actor.supervisor
+    class Meta:
+        verbose_name = _('Follow Up')
+        verbose_name_plural = _('Follow Ups')
+        ordering = ['actor__last_name', 'actor__first_name']
+        unique_together = ['actor', 'enactment']
 
-    second_supervisor.short_description = _('Second Supervisor')
+    def __str__(self):
+        return '%s: %s' % (self.enactment, self.actor)
+
+    def __unicode__(self):
+        return '%s: %s' % (self.enactment, self.actor)
+
+    def date_jalali(self):
+        return to_jalali(self.date)
+
+    date_jalali.short_description = _('Response Date')
+    date_jalali.admin_order_field = 'date'
+
+    def supervisor(self):
+        return self.actor.supervisor or '-'
+
+    supervisor.short_description = _('Supervisor Unit')
 
 
 class Attachment(models.Model):

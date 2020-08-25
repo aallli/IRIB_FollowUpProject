@@ -82,6 +82,7 @@
     right: 95px;
     left: auto;
     white-space: inherit;
+    width: fit-content;
 }
 
 .i18n_flag {

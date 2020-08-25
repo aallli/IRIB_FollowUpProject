@@ -19,31 +19,31 @@ if (!$) {
 
 var counter = 0;
 var max_try = 20;
-function bind_selector(name) {
-    var dropdown = document.getElementsByName('{0}_actor'.format(name));
-    if (!dropdown || dropdown.length == 0) {
+function bind_selector() {
+    var dropdowns = document.querySelectorAll('[id^=id_followup_set-][id$=-actor]');
+    if (!dropdowns || dropdowns.length == 0) {
         if (counter > max_try) return;
-        setTimeout(bind_selector, 1000, name);
+        setTimeout(bind_selector, 1000);
         return;
     }
-    dropdown = dropdown[0];
-
-    var supervisor = document.querySelector('.fieldBox.field-box.field-{0}_supervisor div'.format(name));
-
-    dropdown.onchange = function () {
-        $.ajax({
-            url: url,
-            data: {
-                'pk': this.value,
-            },
-            success: function (data) {
-                supervisor.innerText = data;
-            }
-        });
-    };
+    dropdowns.forEach(function (item, index) {
+        var supervisor = document.querySelector('#followup_set-{0} .field-supervisor p'.format(index));
+        if (!supervisor) return;
+        item.onchange = function () {
+            $.ajax({
+                url: url,
+                data: {
+                    'pk': this.value,
+                },
+                success: function (data) {
+                    supervisor.innerText = data ? data : '-';
+                }
+            });
+        };
+    })
 }
 
-bind_selector("first");
-bind_selector("second");
+
+bind_selector();
 
 
