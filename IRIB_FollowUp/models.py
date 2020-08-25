@@ -120,11 +120,11 @@ class Enactment(models.Model):
     code = models.IntegerField(verbose_name=_('Code'), default=1, blank=False)
     description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True)
-    date = models.DateField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
+    date = models.DateTimeField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
     follow_grade = models.CharField(verbose_name=_('Follow Grade'), max_length=100, blank=False, null=False, default=1)
     session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(User, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
-    review_date = models.DateField(verbose_name=_('Review Date'), blank=False, default=set_now)
+    review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)
 
     class Meta:
         verbose_name = _('Enactment')
