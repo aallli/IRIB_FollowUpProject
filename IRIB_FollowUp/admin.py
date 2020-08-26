@@ -53,8 +53,8 @@ class ActorFilter(SimpleListFilter):
         return [(actor.pk, actor) for actor in User.objects.all()]
 
     def queryset(self, request, queryset):
-        return queryset.filter(first_actor__pk=self.value()) | queryset.filter(
-            second_actor__pk=self.value()) if self.value() else queryset
+        return queryset.filter(pk__in=FollowUp.objects.filter(actor__pk=self.value()).values(
+            'enactment__pk')) if self.value() else queryset
 
 
 class AttendantInline(admin.TabularInline):
@@ -69,8 +69,23 @@ class SupervisorFilter(SimpleListFilter):
         return [(supervisor.pk, supervisor.name) for supervisor in Supervisor.objects.all()]
 
     def queryset(self, request, queryset):
-        return queryset.filter(first_actor__supervisor__pk=self.value()) | queryset.filter(
-            second_actor__supervisor__pk=self.value()) if self.value() else queryset
+        return queryset.filter(pk__in=FollowUp.objects.filter(actor__supervisor__pk=self.value()).values(
+            'enactment__pk')) if self.value() else queryset
+
+
+class SessionFilter(SimpleListFilter):
+    title = _('Session')
+    parameter_name = 'session'
+
+    def lookups(self, request, model_admin):
+        user = request.user
+        if user.is_superuser or user.is_secretary:
+            return [(session.pk, session.name) for session in Session.objects.all()]
+        else:
+            return [(obj.session.pk, obj.session.name) for obj in Attendant.objects.filter(user=user)]
+
+    def queryset(self, request, queryset):
+        return queryset.filter(session__pk=self.value()) if self.value() else queryset
 
 
 class BaseModelAdmin(admin.ModelAdmin):
@@ -143,16 +158,13 @@ class AttachmentAdmin(BaseModelAdmin):
     search_fields = ['description', 'file',
                      'enactment__session__name', 'enactment__code', 'enactment__subject__name',
                      'enactment__assigner__name', 'enactment__description', 'enactment__result',
-                     'enactment__first_actor__fname', 'enactment__first_actor__lname', 'enactment__second_actor__fname',
-                     'enactment__second_actor__lname', 'enactment__first_supervisor__name',
                      'enactment__second_supervisor__name', ]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "enactment" and not (request.user.is_superuser or request.user.is_secretary):
             queryset = Enactment.objects.filter(follow_grade=1)
-            kwargs["queryset"] = \
-                queryset.filter(first_actor=request.user) | queryset.filter(second_actor=request.user) | \
-                queryset.filter(session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
+            kwargs["queryset"] = queryset.filter(
+                session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -208,7 +220,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
               )
     list_display = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
     list_display_links = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
-    list_filter = [JalaliDateFilter, 'session', 'subject', 'assigner', ActorFilter, SupervisorFilter]
+    list_filter = [JalaliDateFilter, ActorFilter, SupervisorFilter, SessionFilter, 'subject', 'assigner']
     search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', ]
     readonly_fields = ['row', 'description_short', 'review_date_jalali', ]
     form = EnactmentAdminForm
@@ -229,7 +241,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
             return self.readonly_fields + ['code', 'session', 'date', 'review_date', 'assigner', 'subject',
-                                           'description', 'first_actor', 'second_actor', 'follow_grade']
+                                           'description', 'follow_grade']
         elif obj:
             return self.readonly_fields + ['date', 'review_date']
 
