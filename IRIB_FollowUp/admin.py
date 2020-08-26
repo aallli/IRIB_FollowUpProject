@@ -44,7 +44,7 @@ class JalaliDateFilter(SimpleListFilter):
             enddate = startdate - datetime.timedelta(days=29)
 
         if self.value() == '90days':
-            enddate = startdate - datetime.timedelta(days=59)
+            enddate = startdate - datetime.timedelta(days=89)
 
         if self.value() == '180days':
             enddate = startdate - datetime.timedelta(days=179)
@@ -80,7 +80,7 @@ class ReviewJalaliDateFilter(SimpleListFilter):
             enddate = startdate - datetime.timedelta(days=29)
 
         if self.value() == '90days':
-            enddate = startdate - datetime.timedelta(days=59)
+            enddate = startdate - datetime.timedelta(days=89)
 
         if self.value() == '180days':
             enddate = startdate - datetime.timedelta(days=179)
