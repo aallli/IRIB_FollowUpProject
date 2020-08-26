@@ -17,12 +17,13 @@ from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, 
 
 
 class JalaliDateFilter(SimpleListFilter):
-    title = _('Review Date')
-    parameter_name = 'review_date'
+    title = _('Assignment Date')
+    parameter_name = 'date'
 
     def lookups(self, request, model_admin):
         return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
-                ('this_month', _('This month')), ('30days', _('Last 30 days'))]
+                ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
+                ('180days', _('Last 6 months'))]
 
     def queryset(self, request, queryset):
         startdate = timezone.now()
@@ -41,6 +42,48 @@ class JalaliDateFilter(SimpleListFilter):
 
         if self.value() == '30days':
             enddate = startdate - datetime.timedelta(days=29)
+
+        if self.value() == '90days':
+            enddate = startdate - datetime.timedelta(days=59)
+
+        if self.value() == '180days':
+            enddate = startdate - datetime.timedelta(days=179)
+
+        return queryset.filter(date__range=[enddate, startdate]) if enddate else queryset
+
+
+class ReviewJalaliDateFilter(SimpleListFilter):
+    title = _('Review Date')
+    parameter_name = 'review_date'
+
+    def lookups(self, request, model_admin):
+        return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
+                ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
+                ('180days', _('Last 6 months'))]
+
+    def queryset(self, request, queryset):
+        startdate = timezone.now()
+        enddate = None
+        if self.value() == 'today':
+            enddate = startdate
+
+        if self.value() == 'this_week':
+            enddate = startdate - datetime.timedelta(days=(startdate.weekday() + 2) % 7)
+
+        if self.value() == '10days':
+            enddate = startdate - datetime.timedelta(days=9)
+
+        if self.value() == 'this_month':
+            enddate = startdate - datetime.timedelta(days=datetime2jalali(startdate).day - 1)
+
+        if self.value() == '30days':
+            enddate = startdate - datetime.timedelta(days=29)
+
+        if self.value() == '90days':
+            enddate = startdate - datetime.timedelta(days=59)
+
+        if self.value() == '180days':
+            enddate = startdate - datetime.timedelta(days=179)
 
         return queryset.filter(review_date__range=[enddate, startdate]) if enddate else queryset
 
@@ -218,11 +261,11 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     fields = (('row', 'session', 'date', 'review_date'),
               ('assigner', 'subject'), 'description',
               )
-    list_display = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
-    list_display_links = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
-    list_filter = [JalaliDateFilter, ActorFilter, SupervisorFilter, SessionFilter, 'subject', 'assigner']
+    list_display = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
+    list_display_links = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
+    list_filter = [ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, SessionFilter, 'subject', 'assigner']
     search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', ]
-    readonly_fields = ['row', 'description_short', 'review_date_jalali', ]
+    readonly_fields = ['row', 'description_short', 'date_jalali', 'review_date_jalali', ]
     form = EnactmentAdminForm
 
     def get_inline_instances(self, request, obj=None):
