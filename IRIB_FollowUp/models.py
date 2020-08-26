@@ -128,7 +128,7 @@ class Enactment(models.Model):
     class Meta:
         verbose_name = _('Enactment')
         verbose_name_plural = _('Enactments')
-        ordering = ['-review_date', 'id']
+        ordering = ['-review_date', '-date', 'session', 'subject', 'id']
 
     def __str__(self):
         return '%s: %s' % (self.session, self.pk)
