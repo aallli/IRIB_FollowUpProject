@@ -154,6 +154,14 @@
     margin-top: auto;
 }
 
-.admin-interface .submit-row .close-enactment {
+.admin-interface .submit-row input.close-enactment {
     margin: 0 5px;
+}
+
+.admin-interface .submit-row div.close-enactment {
+    float: left;
+}
+
+:lang(fa) .admin-interface .submit-row div.close-enactment {
+    float: right;
 }

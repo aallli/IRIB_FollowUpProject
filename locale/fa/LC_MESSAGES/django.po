@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-25 10:17+0430\n"
+"POT-Creation-Date: 2020-08-26 14:01+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,13 +22,11 @@ msgstr ""
 msgid "EIRIB Administration System"
 msgstr "شورای فضای مجازی سازمان صدا و سیما"
 
-#: .\IRIB_FollowUpProject\settings.py:136 .\static\admin\base_site.html:38
-#: .\static\base_site.html:39 .\templates\admin\base_site.html:37
+#: .\IRIB_FollowUpProject\settings.py:136 .\templates\admin\base_site.html:37
 msgid "En"
 msgstr "انگلیسی"
 
-#: .\IRIB_FollowUpProject\settings.py:137 .\static\admin\base_site.html:44
-#: .\static\base_site.html:45 .\templates\admin\base_site.html:43
+#: .\IRIB_FollowUpProject\settings.py:137 .\templates\admin\base_site.html:43
 msgid "Fa"
 msgstr "فارسی"
 
@@ -36,57 +34,62 @@ msgstr "فارسی"
 msgid "Welcome to EIRIB administration system"
 msgstr "خوش آمدید..."
 
-#: .\IRIB_FollowUp\admin.py:21 .\IRIB_FollowUp\models.py:132
-#: .\IRIB_FollowUp\models.py:169
+#: .\IRIB_FollowUp\admin.py:20 .\IRIB_FollowUp\models.py:126
+#: .\IRIB_FollowUp\models.py:158
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
-#: .\IRIB_FollowUp\admin.py:25
+#: .\IRIB_FollowUp\admin.py:24
 msgid "Today"
 msgstr "امروز"
 
-#: .\IRIB_FollowUp\admin.py:25
+#: .\IRIB_FollowUp\admin.py:24
 msgid "This week"
 msgstr "هفته جاری"
 
-#: .\IRIB_FollowUp\admin.py:25
+#: .\IRIB_FollowUp\admin.py:24
 msgid "Last 10 days"
 msgstr "ده روز گذشته"
 
-#: .\IRIB_FollowUp\admin.py:26
+#: .\IRIB_FollowUp\admin.py:25
 msgid "This month"
 msgstr "ماه جاری"
 
-#: .\IRIB_FollowUp\admin.py:26
+#: .\IRIB_FollowUp\admin.py:25
 msgid "Last 30 days"
 msgstr "30 روز گذشته"
 
-#: .\IRIB_FollowUp\admin.py:50
+#: .\IRIB_FollowUp\admin.py:49
 msgid "Supervisor"
 msgstr "مسوول پیگیری"
 
-#: .\IRIB_FollowUp\admin.py:66 .\IRIB_FollowUp\models.py:78
-#: .\IRIB_FollowUp\models.py:95
+#: .\IRIB_FollowUp\admin.py:65 .\IRIB_FollowUp\models.py:78
+#: .\IRIB_FollowUp\models.py:95 .\IRIB_FollowUp\models.py:189
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\IRIB_FollowUp\admin.py:131
+#: .\IRIB_FollowUp\admin.py:77 .\IRIB_FollowUp\models.py:31
+#: .\IRIB_FollowUp\models.py:43 .\IRIB_FollowUp\models.py:124
+msgid "Session"
+msgstr "جلسه"
+
+#: .\IRIB_FollowUp\admin.py:174
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: .\IRIB_FollowUp\admin.py:134
+#: .\IRIB_FollowUp\admin.py:177
 msgid "Address Info"
 msgstr "نشانیهای دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:136
+#: .\IRIB_FollowUp\admin.py:179
 msgid "Important dates"
 msgstr "تاریخهای مهم"
 
-#: .\IRIB_FollowUp\admin.py:138
+#: .\IRIB_FollowUp\admin.py:181
 msgid "Permissions"
 msgstr "سطوح دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:140
+#: .\IRIB_FollowUp\admin.py:183
 msgid "Sensitive Info"
 msgstr "اطلاعات حساس"
 
@@ -115,11 +118,6 @@ msgstr "سرکار خانم"
 msgid "Name"
 msgstr "نام"
 
-#: .\IRIB_FollowUp\models.py:31 .\IRIB_FollowUp\models.py:43
-#: .\IRIB_FollowUp\models.py:130
-msgid "Session"
-msgstr "جلسه"
-
 #: .\IRIB_FollowUp\models.py:32
 msgid "Sessions"
 msgstr "جلسه"
@@ -132,7 +130,7 @@ msgstr "مدعو"
 msgid "Attendants"
 msgstr "مدعوین"
 
-#: .\IRIB_FollowUp\models.py:63 .\IRIB_FollowUp\models.py:122
+#: .\IRIB_FollowUp\models.py:63 .\IRIB_FollowUp\models.py:121
 msgid "Subject"
 msgstr "موضوع"
 
@@ -164,86 +162,65 @@ msgstr "آخرین ورود"
 msgid "date joined"
 msgstr "تاریخ عضویت"
 
-#: .\IRIB_FollowUp\models.py:120
-msgid "Code"
-msgstr "کد"
-
-#: .\IRIB_FollowUp\models.py:121 .\IRIB_FollowUp\models.py:148
-#: .\IRIB_FollowUp\models.py:211
+#: .\IRIB_FollowUp\models.py:120 .\IRIB_FollowUp\models.py:142
+#: .\IRIB_FollowUp\models.py:196
 msgid "Description"
 msgstr "شرح"
 
-#: .\IRIB_FollowUp\models.py:123
-msgid "First Actor"
-msgstr "پیگیری کننده اول"
-
-#: .\IRIB_FollowUp\models.py:125
-msgid "Second Actor"
-msgstr "پیگیری کننده دوم"
-
-#: .\IRIB_FollowUp\models.py:127 .\IRIB_FollowUp\models.py:163
+#: .\IRIB_FollowUp\models.py:122 .\IRIB_FollowUp\models.py:152
 msgid "Assignment Date"
 msgstr "تاریخ"
 
-#: .\IRIB_FollowUp\models.py:128
+#: .\IRIB_FollowUp\models.py:123
 msgid "Follow Grade"
 msgstr "لزوم پیگیری"
 
-#: .\IRIB_FollowUp\models.py:129 .\IRIB_FollowUp\models.py:153
-#: .\IRIB_FollowUp\models.py:186
-msgid "Result"
-msgstr "نتیجه"
-
-#: .\IRIB_FollowUp\models.py:131
+#: .\IRIB_FollowUp\models.py:125
 msgid "Task Assigner"
 msgstr "گوینده"
 
-#: .\IRIB_FollowUp\models.py:135 .\IRIB_FollowUp\models.py:187
-#: .\IRIB_FollowUp\models.py:213
+#: .\IRIB_FollowUp\models.py:129 .\IRIB_FollowUp\models.py:166
+#: .\IRIB_FollowUp\models.py:198
 msgid "Enactment"
 msgstr "مصوبه"
 
-#: .\IRIB_FollowUp\models.py:136
+#: .\IRIB_FollowUp\models.py:130
 msgid "Enactments"
 msgstr "مصوبات"
 
-#: .\IRIB_FollowUp\models.py:158
+#: .\IRIB_FollowUp\models.py:147
 msgid "Row"
 msgstr "ردیف"
 
-#: .\IRIB_FollowUp\models.py:175
-msgid "First Supervisor"
-msgstr "واحد پیگیری کننده اول"
-
-#: .\IRIB_FollowUp\models.py:180
-msgid "Second Supervisor"
-msgstr "واحد پیگیری کننده دوم"
-
-#: .\IRIB_FollowUp\models.py:184
+#: .\IRIB_FollowUp\models.py:163
 msgid "Actor"
 msgstr "پیگیری کننده"
 
-#: .\IRIB_FollowUp\models.py:185 .\IRIB_FollowUp\models.py:203
+#: .\IRIB_FollowUp\models.py:164 .\IRIB_FollowUp\models.py:183
 msgid "Response Date"
 msgstr "تاریخ پاسخدهی"
 
-#: .\IRIB_FollowUp\models.py:190
+#: .\IRIB_FollowUp\models.py:165
+msgid "Result"
+msgstr "نتیجه"
+
+#: .\IRIB_FollowUp\models.py:169
 msgid "Follow Up"
 msgstr "پیگیری"
 
-#: .\IRIB_FollowUp\models.py:191
+#: .\IRIB_FollowUp\models.py:170
 msgid "Follow Ups"
 msgstr "پیگیریها"
 
-#: .\IRIB_FollowUp\models.py:212
+#: .\IRIB_FollowUp\models.py:197
 msgid "File"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:216
+#: .\IRIB_FollowUp\models.py:201
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:217
+#: .\IRIB_FollowUp\models.py:202
 msgid "Attachments"
 msgstr "ضمایم"
 
@@ -318,69 +295,58 @@ msgstr ""
 "نمی تواند کلمه عبور شما را مشاهده کند.  کلمه عبور خود را می توانید از طریق "
 "<a href=\"{}\">این لینک</a> تغییر دهید."
 
-#: .\static\404.html:17 .\templates\404.html:17
+#: .\templates\404.html:17
 msgid "Oh eyeballs! Not found!."
 msgstr "اوف! پیداش نکردم...ببخشید"
 
-#: .\static\404.html:20 .\templates\404.html:20
+#: .\templates\404.html:20
 msgid "Tel"
 msgstr "شماره تلفن"
 
-#: .\static\404.html:32 .\templates\404.html:32
+#: .\templates\404.html:32
 msgid "Email"
 msgstr "پست الکترونیک"
 
-#: .\static\404.html:35 .\templates\404.html:35
+#: .\templates\404.html:35
 msgid "Go back"
 msgstr "بازگشت"
 
-#: .\static\admin\base_site.html:30 .\templates\admin\base_site.html:29
+#: .\templates\admin\base_site.html:29
 msgid "Version"
 msgstr "ویرایش"
 
-#: .\static\admin\base_site.html:52 .\static\base_site.html:53
 #: .\templates\admin\base_site.html:51
 msgid "Documentation"
 msgstr "مستندات"
 
-#: .\static\admin\base_site.html:56 .\static\base_site.html:57
 #: .\templates\admin\base_site.html:55
 msgid "Change password"
 msgstr "تغییر کلمه عبور"
 
-#: .\static\admin\base_site.html:58 .\static\base_site.html:59
 #: .\templates\admin\base_site.html:57
 msgid "Log out"
 msgstr "خروج"
 
-#: .\static\admin\base_site.html:63 .\static\admin\base_site.html:69
-#: .\static\base_site.html:64 .\static\base_site.html:70
 #: .\templates\admin\base_site.html:62 .\templates\admin\base_site.html:68
 msgid "Welcome,"
 msgstr "خوش آمدید"
 
 #: .\templates\admin\submit_line.html:10
-#, fuzzy
-#| msgid "Enactment"
 msgid "Close enactment"
 msgstr "انتقال به سیستم عملکرد"
 
-#: .\templates\admin\submit_line.html:18 .\templates\admin\submit_line.html:19
-#: .\templates\admin\submit_line.html:35 .\templates\admin\submit_line.html:36
-msgid "<< First"
-msgstr "<< اولین"
+#: .\templates\admin\submit_line.html:17 .\templates\admin\submit_line.html:32
+msgid "Last"
+msgstr "آخرین"
 
-#: .\templates\admin\submit_line.html:22 .\templates\admin\submit_line.html:23
-#: .\templates\admin\submit_line.html:39 .\templates\admin\submit_line.html:40
-msgid "< Previous"
-msgstr "< قبلی"
+#: .\templates\admin\submit_line.html:19 .\templates\admin\submit_line.html:30
+msgid "Next"
+msgstr "بعدی"
 
-#: .\templates\admin\submit_line.html:26 .\templates\admin\submit_line.html:27
-#: .\templates\admin\submit_line.html:43 .\templates\admin\submit_line.html:44
-msgid "Next >"
-msgstr "بعدی >"
+#: .\templates\admin\submit_line.html:21 .\templates\admin\submit_line.html:28
+msgid "Previous"
+msgstr "قبلی"
 
-#: .\templates\admin\submit_line.html:30 .\templates\admin\submit_line.html:31
-#: .\templates\admin\submit_line.html:47 .\templates\admin\submit_line.html:48
-msgid "Last >>"
-msgstr "آخرین >>"
+#: .\templates\admin\submit_line.html:23 .\templates\admin\submit_line.html:26
+msgid "First"
+msgstr "اولین"

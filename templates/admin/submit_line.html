@@ -5,7 +5,7 @@
     {{ block.super }}
     {% if  opts.model_name == 'enactment' %}
         {% if user.is_superuser or user.is_secretary %}
-            <div class="">
+            <div class="close-enactment">
                 <p class="deletelink-box">
                     <input type="button" value="{% trans 'Close enactment' %}" class="close-enactment"
                            onclick='javascript: location.href="{% url 'admin:close' %}?pk={{ original.pk }}"'>
@@ -14,39 +14,23 @@
         {% endif %}
         <div class="center">
             {% if LANGUAGE_CODE == 'fa' %}
-                <a href="{% url 'admin:first' %}" class="record-nav">
-                    <img src="{% static 'img/button-last.png' %}" title="{% trans '<< First' %}"
-                         alt="{% trans '<< First' %}">
-                </a>
-                <a href="{% url 'admin:previous' %}?pk={{ original.pk }}" class="record-nav">
-                    <img src="{% static 'img/button-next.png' %}" title="{% trans '< Previous' %}"
-                         alt="{% trans '< Previous' %}">
-                </a>
-                <a href="{% url 'admin:next' %}?pk={{ original.pk }}" class="record-nav">
-                    <img src="{% static 'img/button-previous.png' %}" title="{% trans 'Next >' %}"
-                         alt="{% trans 'Next >' %}">
-                </a>
-                <a href="{% url 'admin:last' %}" class="record-nav">
-                    <img src="{% static 'img/button-first.png' %}" title="{% trans 'Last >>' %}"
-                         alt="{% trans 'Last >>' %}">
-                </a>
+                <input type="button" value="◄◄" class="close-enactment" title="{% trans 'Last' %}"
+                       onclick='javascript: location.href="{% url 'admin:last' %}"'>
+                <input type="button" value="◄" class="close-enactment" title="{% trans 'Next' %}"
+                       onclick='javascript: location.href="{% url 'admin:next' %}?pk={{ original.pk }}"'>
+                <input type="button" value="►" class="close-enactment" title="{% trans 'Previous' %}"
+                       onclick='javascript: location.href="{% url 'admin:first' %}"'>
+                <input type="button" value="►►" class="close-enactment" title="{% trans 'First' %}"
+                       onclick='javascript: location.href="{% url 'admin:previous' %}?pk={{ original.pk }}"'>
             {% else %}
-                <a href="{% url 'admin:first' %}" class="record-nav">
-                    <img src="{% static 'img/button-first.png' %}" title="{% trans '<< First' %}"
-                         alt="{% trans '<< First' %}">
-                </a>
-                <a href="{% url 'admin:previous' %}?pk={{ original.pk }}" class="record-nav">
-                    <img src="{% static 'img/button-previous.png' %}" title="{% trans '< Previous' %}"
-                         alt="{% trans '< Previous' %}">
-                </a>
-                <a href="{% url 'admin:next' %}?pk={{ original.pk }}" class="record-nav">
-                    <img src="{% static 'img/button-next.png' %}" title="{% trans 'Next >' %}"
-                         alt="{% trans 'Next >' %}">
-                </a>
-                <a href="{% url 'admin:last' %}" class="record-nav">
-                    <img src="{% static 'img/button-last.png' %}" title="{% trans 'Last >>' %}"
-                         alt="{% trans 'Last >>' %}">
-                </a>
+                <input type="button" value="◄◄" class="close-enactment" title="{% trans 'First' %}"
+                       onclick='javascript: location.href="{% url 'admin:previous' %}?pk={{ original.pk }}"'>
+                <input type="button" value="◄" class="close-enactment" title="{% trans 'Previous' %}"
+                       onclick='javascript: location.href="{% url 'admin:first' %}"'>
+                <input type="button" value="►" class="close-enactment" title="{% trans 'Next' %}"
+                       onclick='javascript: location.href="{% url 'admin:next' %}?pk={{ original.pk }}"'>
+                <input type="button" value="►►" class="close-enactment" title="{% trans 'Last' %}"
+                       onclick='javascript: location.href="{% url 'admin:last' %}"'>
             {% endif %}
         </div>
     {% endif %}

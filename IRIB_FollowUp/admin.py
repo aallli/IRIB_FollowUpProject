@@ -156,7 +156,7 @@ class AttachmentAdmin(BaseModelAdmin):
     model = Attachment
     fields = ['description', 'file', 'enactment']
     search_fields = ['description', 'file',
-                     'enactment__session__name', 'enactment__code', 'enactment__subject__name',
+                     'enactment__session__name', 'enactment__subject__name',
                      'enactment__assigner__name', 'enactment__description', 'enactment__result',
                      'enactment__second_supervisor__name', ]
 
@@ -216,7 +216,7 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
 class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Enactment
     fields = (('row', 'session', 'date', 'review_date'),
-              ('assigner', 'subject', 'code'), 'description',
+              ('assigner', 'subject'), 'description',
               )
     list_display = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
     list_display_links = ['row', 'session', 'review_date_jalali', 'subject', 'description_short']
@@ -240,7 +240,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
-            return self.readonly_fields + ['code', 'session', 'date', 'review_date', 'assigner', 'subject',
+            return self.readonly_fields + ['session', 'date', 'review_date', 'assigner', 'subject',
                                            'description', 'follow_grade']
         elif obj:
             return self.readonly_fields + ['date', 'review_date']

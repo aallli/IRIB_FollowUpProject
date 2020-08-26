@@ -117,7 +117,6 @@ class User(AbstractUser):
 
 
 class Enactment(models.Model):
-    code = models.IntegerField(verbose_name=_('Code'), default=1, blank=False)
     description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
