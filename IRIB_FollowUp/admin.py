@@ -125,8 +125,8 @@ def get_followup_inline(request):
         def get_formset(self, request, obj=None, **kwargs):
             user = request.user
             if user.is_superuser or user.is_secretary:
-                self.extra = 2
-                self.max_num = FollowUp.objects.filter(enactment=obj).count() + 2
+                self.extra = 1
+                self.max_num = 20
             else:
                 self.extra = 0
                 self.max_num = 0
@@ -224,8 +224,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         if request.user.is_superuser or request.user.is_secretary:
             return queryset
 
-        return queryset.filter(pk__in=FollowUp.objects.filter(actor=request.user).values('pk')) | \
-               queryset.filter(session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
+        return queryset.filter(session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
 
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
