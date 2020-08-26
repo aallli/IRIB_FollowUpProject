@@ -116,21 +116,6 @@ class SupervisorFilter(SimpleListFilter):
             'enactment__pk')) if self.value() else queryset
 
 
-class SessionFilter(SimpleListFilter):
-    title = _('Session')
-    parameter_name = 'session'
-
-    def lookups(self, request, model_admin):
-        user = request.user
-        if user.is_superuser or user.is_secretary:
-            return [(session.pk, session.name) for session in Session.objects.all()]
-        else:
-            return [(obj.session.pk, obj.session.name) for obj in Attendant.objects.filter(user=user)]
-
-    def queryset(self, request, queryset):
-        return queryset.filter(session__pk=self.value()) if self.value() else queryset
-
-
 class BaseModelAdmin(admin.ModelAdmin):
     save_on_top = True
 
@@ -263,7 +248,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
               )
     list_display = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
     list_display_links = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
-    list_filter = [ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, SessionFilter, 'subject', 'assigner']
+    list_filter = [ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, 'session', 'subject', 'assigner']
     search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', ]
     readonly_fields = ['row', 'description_short', 'date_jalali', 'review_date_jalali', ]
     form = EnactmentAdminForm
@@ -279,7 +264,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         if request.user.is_superuser or request.user.is_secretary:
             return queryset
 
-        return queryset.filter(session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
+        return queryset.filter(pk__in=FollowUp.objects.filter(actor=request.user).values('enactment')) | \
+               queryset.filter(session__in=Attendant.objects.filter(user=request.user).values('session'))
 
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
