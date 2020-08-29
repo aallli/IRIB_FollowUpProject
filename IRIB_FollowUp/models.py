@@ -115,6 +115,11 @@ class User(AbstractUser):
     def is_secretary(self):
         return self.access_level == AccessLevel.SECRETARY
 
+    def delete(self, using=None, keep_parents=False):
+        if self.is_superuser:
+            raise Exception(_('Delete failed, Immutable user: (%s)' % self.username))
+        return super(User, self).delete(using, keep_parents)
+
 
 class Enactment(models.Model):
     description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)

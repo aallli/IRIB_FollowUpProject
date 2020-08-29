@@ -1,6 +1,7 @@
 import datetime
 from django.contrib import admin
 from django.utils import timezone
+from django.contrib import messages
 from jalali_date import datetime2jalali
 from django.db.transaction import atomic
 from django.contrib.auth.models import Group
@@ -239,6 +240,20 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             user.groups.add(get_object_or_404(Group, name='Users'))
             user.groups.remove(get_object_or_404(Group, name='Operators'))
 
+    def delete_model(self, request, obj):
+        try:
+            return super(UserAdmin, self).delete_model(request, obj)
+        except Exception as e:
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, e)
+
+    def delete_queryset(self, request, queryset):
+        for obj in queryset.all():
+            try:
+                obj.delete()
+            except Exception as e:
+                messages.set_level(request, messages.ERROR)
+                messages.error(request, e)
 
 @admin.register(Enactment)
 class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
