@@ -258,3 +258,35 @@ def auto_delete_attachment_on_change(sender, instance, **kwargs):
     except Exception as e:
         print('Delete error: %s' % e.args[0])
         return False
+
+
+class Group(models.Model):
+    name = models.CharField(verbose_name=_('Name'), max_length=200, blank=False, unique=True)
+
+    class Meta:
+        verbose_name = _('Group')
+        verbose_name_plural = _('Groups')
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
+
+
+class GroupUser(models.Model):
+    group = models.ForeignKey(Group, verbose_name=_('Group'), on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('Group User')
+        verbose_name_plural = _('Group Users')
+        ordering = ['group', 'user']
+        unique_together = ['group', 'user']
+
+    def __str__(self):
+        return '%s: %s' % (self.group, self.user)
+
+    def __unicode__(self):
+        return '%s: %s' % (self.group, self.user)

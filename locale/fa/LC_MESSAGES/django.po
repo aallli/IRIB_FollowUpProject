@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-26 14:53+0430\n"
+"POT-Creation-Date: 2020-08-29 17:47+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,75 +34,70 @@ msgstr "فارسی"
 msgid "Welcome to EIRIB administration system"
 msgstr "خوش آمدید..."
 
-#: .\IRIB_FollowUp\admin.py:20 .\IRIB_FollowUp\models.py:122
-#: .\IRIB_FollowUp\models.py:152
+#: .\IRIB_FollowUp\admin.py:21 .\IRIB_FollowUp\models.py:127
+#: .\IRIB_FollowUp\models.py:157
 msgid "Assignment Date"
 msgstr "تاریخ مصوبه"
 
-#: .\IRIB_FollowUp\admin.py:24 .\IRIB_FollowUp\admin.py:60
+#: .\IRIB_FollowUp\admin.py:25 .\IRIB_FollowUp\admin.py:61
 msgid "Today"
 msgstr "امروز"
 
-#: .\IRIB_FollowUp\admin.py:24 .\IRIB_FollowUp\admin.py:60
+#: .\IRIB_FollowUp\admin.py:25 .\IRIB_FollowUp\admin.py:61
 msgid "This week"
 msgstr "هفته جاری"
 
-#: .\IRIB_FollowUp\admin.py:24 .\IRIB_FollowUp\admin.py:60
+#: .\IRIB_FollowUp\admin.py:25 .\IRIB_FollowUp\admin.py:61
 msgid "Last 10 days"
 msgstr "ده روز گذشته"
 
-#: .\IRIB_FollowUp\admin.py:25 .\IRIB_FollowUp\admin.py:61
+#: .\IRIB_FollowUp\admin.py:26 .\IRIB_FollowUp\admin.py:62
 msgid "This month"
 msgstr "ماه جاری"
 
-#: .\IRIB_FollowUp\admin.py:25 .\IRIB_FollowUp\admin.py:61
+#: .\IRIB_FollowUp\admin.py:26 .\IRIB_FollowUp\admin.py:62
 msgid "Last 30 days"
 msgstr "30 روز گذشته"
 
-#: .\IRIB_FollowUp\admin.py:25 .\IRIB_FollowUp\admin.py:61
+#: .\IRIB_FollowUp\admin.py:26 .\IRIB_FollowUp\admin.py:62
 msgid "Last 3 months"
 msgstr "سه ماه گذشته"
 
-#: .\IRIB_FollowUp\admin.py:26 .\IRIB_FollowUp\admin.py:62
+#: .\IRIB_FollowUp\admin.py:27 .\IRIB_FollowUp\admin.py:63
 msgid "Last 6 months"
 msgstr "شش ماه گذشته"
 
-#: .\IRIB_FollowUp\admin.py:56 .\IRIB_FollowUp\models.py:126
-#: .\IRIB_FollowUp\models.py:158
+#: .\IRIB_FollowUp\admin.py:57 .\IRIB_FollowUp\models.py:131
+#: .\IRIB_FollowUp\models.py:163
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
-#: .\IRIB_FollowUp\admin.py:92
+#: .\IRIB_FollowUp\admin.py:93
 msgid "Supervisor"
 msgstr "مسوول پیگیری"
 
-#: .\IRIB_FollowUp\admin.py:108 .\IRIB_FollowUp\models.py:78
-#: .\IRIB_FollowUp\models.py:95 .\IRIB_FollowUp\models.py:189
+#: .\IRIB_FollowUp\admin.py:113 .\IRIB_FollowUp\models.py:78
+#: .\IRIB_FollowUp\models.py:95 .\IRIB_FollowUp\models.py:194
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\IRIB_FollowUp\admin.py:120 .\IRIB_FollowUp\models.py:31
-#: .\IRIB_FollowUp\models.py:43 .\IRIB_FollowUp\models.py:124
-msgid "Session"
-msgstr "جلسه"
-
-#: .\IRIB_FollowUp\admin.py:217
+#: .\IRIB_FollowUp\admin.py:207
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: .\IRIB_FollowUp\admin.py:220
+#: .\IRIB_FollowUp\admin.py:210
 msgid "Address Info"
 msgstr "نشانیهای دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:222
+#: .\IRIB_FollowUp\admin.py:212
 msgid "Important dates"
 msgstr "تاریخهای مهم"
 
-#: .\IRIB_FollowUp\admin.py:224
+#: .\IRIB_FollowUp\admin.py:214
 msgid "Permissions"
 msgstr "سطوح دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:226
+#: .\IRIB_FollowUp\admin.py:216
 msgid "Sensitive Info"
 msgstr "اطلاعات حساس"
 
@@ -111,6 +106,7 @@ msgid "EIRIB Follow-Up"
 msgstr "سامانه پیگیری"
 
 #: .\IRIB_FollowUp\models.py:18 .\IRIB_FollowUp\models.py:44
+#: .\IRIB_FollowUp\models.py:280
 msgid "User"
 msgstr "کاربر"
 
@@ -127,9 +123,14 @@ msgid "Mrs"
 msgstr "سرکار خانم"
 
 #: .\IRIB_FollowUp\models.py:28 .\IRIB_FollowUp\models.py:60
-#: .\IRIB_FollowUp\models.py:75
+#: .\IRIB_FollowUp\models.py:75 .\IRIB_FollowUp\models.py:264
 msgid "Name"
 msgstr "نام"
+
+#: .\IRIB_FollowUp\models.py:31 .\IRIB_FollowUp\models.py:43
+#: .\IRIB_FollowUp\models.py:129
+msgid "Session"
+msgstr "جلسه"
 
 #: .\IRIB_FollowUp\models.py:32
 msgid "Sessions"
@@ -143,7 +144,7 @@ msgstr "عضو جلسه"
 msgid "Attendants"
 msgstr "اعضای جلسه"
 
-#: .\IRIB_FollowUp\models.py:63 .\IRIB_FollowUp\models.py:121
+#: .\IRIB_FollowUp\models.py:63 .\IRIB_FollowUp\models.py:126
 msgid "Subject"
 msgstr "موضوع"
 
@@ -175,63 +176,84 @@ msgstr "آخرین ورود"
 msgid "date joined"
 msgstr "تاریخ عضویت"
 
-#: .\IRIB_FollowUp\models.py:120 .\IRIB_FollowUp\models.py:142
-#: .\IRIB_FollowUp\models.py:196
+#: .\IRIB_FollowUp\models.py:120
+#, python-format
+msgid "Delete failed, Immutable user: (%s)"
+msgstr ""
+
+#: .\IRIB_FollowUp\models.py:125 .\IRIB_FollowUp\models.py:147
+#: .\IRIB_FollowUp\models.py:201
 msgid "Description"
 msgstr "شرح"
 
-#: .\IRIB_FollowUp\models.py:123
+#: .\IRIB_FollowUp\models.py:128
 msgid "Follow Grade"
 msgstr "لزوم پیگیری"
 
-#: .\IRIB_FollowUp\models.py:125
+#: .\IRIB_FollowUp\models.py:130
 msgid "Task Assigner"
 msgstr "گوینده"
 
-#: .\IRIB_FollowUp\models.py:129 .\IRIB_FollowUp\models.py:166
-#: .\IRIB_FollowUp\models.py:198
+#: .\IRIB_FollowUp\models.py:134 .\IRIB_FollowUp\models.py:171
+#: .\IRIB_FollowUp\models.py:203
 msgid "Enactment"
 msgstr "مصوبه"
 
-#: .\IRIB_FollowUp\models.py:130
+#: .\IRIB_FollowUp\models.py:135
 msgid "Enactments"
 msgstr "مصوبات"
 
-#: .\IRIB_FollowUp\models.py:147
+#: .\IRIB_FollowUp\models.py:152
 msgid "Row"
 msgstr "ردیف"
 
-#: .\IRIB_FollowUp\models.py:163
+#: .\IRIB_FollowUp\models.py:168
 msgid "Actor"
 msgstr "پیگیری کننده"
 
-#: .\IRIB_FollowUp\models.py:164 .\IRIB_FollowUp\models.py:183
+#: .\IRIB_FollowUp\models.py:169 .\IRIB_FollowUp\models.py:188
 msgid "Response Date"
 msgstr "تاریخ پاسخدهی"
 
-#: .\IRIB_FollowUp\models.py:165
+#: .\IRIB_FollowUp\models.py:170
 msgid "Result"
 msgstr "نتیجه"
 
-#: .\IRIB_FollowUp\models.py:169
+#: .\IRIB_FollowUp\models.py:174
 msgid "Follow Up"
 msgstr "پیگیری"
 
-#: .\IRIB_FollowUp\models.py:170
+#: .\IRIB_FollowUp\models.py:175
 msgid "Follow Ups"
 msgstr "پیگیریها"
 
-#: .\IRIB_FollowUp\models.py:197
+#: .\IRIB_FollowUp\models.py:202
 msgid "File"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:201
+#: .\IRIB_FollowUp\models.py:206
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:202
+#: .\IRIB_FollowUp\models.py:207
 msgid "Attachments"
 msgstr "ضمایم"
+
+#: .\IRIB_FollowUp\models.py:267 .\IRIB_FollowUp\models.py:279
+msgid "Group"
+msgstr "گروه"
+
+#: .\IRIB_FollowUp\models.py:268
+msgid "Groups"
+msgstr "گروهها"
+
+#: .\IRIB_FollowUp\models.py:283
+msgid "Group User"
+msgstr "عضو گروه"
+
+#: .\IRIB_FollowUp\models.py:284
+msgid "Group Users"
+msgstr "اعضای گروه"
 
 #: .\IRIB_FollowUp\utils.py:4
 msgid "welcome"

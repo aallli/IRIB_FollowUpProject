@@ -4,17 +4,17 @@ from django.utils import timezone
 from django.contrib import messages
 from jalali_date import datetime2jalali
 from django.db.transaction import atomic
-from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
 from IRIB_FollowUpProject.utils import get_admin_url
+from django.contrib.auth.models import Group as _Group
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 from .forms import EnactmentAdminForm, get_followup_inline_form
 from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, \
-    Attachment, Attendant, FollowUp
+    Attachment, Attendant, FollowUp, Group, GroupUser
 
 
 class JalaliDateFilter(SimpleListFilter):
@@ -103,6 +103,12 @@ class ActorFilter(SimpleListFilter):
 
 class AttendantInline(admin.TabularInline):
     model = Attendant
+    insert_after_fieldset = _('Important dates')
+
+
+class GroupUserInline(admin.TabularInline):
+    model = GroupUser
+    insert_after_fieldset = _('Important dates')
 
 
 class SupervisorFilter(SimpleListFilter):
@@ -215,7 +221,8 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
     list_display_links = ['username', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
     list_filter = ('supervisor', 'access_level', 'is_active', 'is_superuser', 'groups')
     readonly_fields = ['last_login_jalali', 'date_joined_jalali']
-    inlines = [AttendantInline]
+    inlines = [AttendantInline, GroupUserInline]
+    change_form_template = 'admin/custom/change_form.html'
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_secretary and not request.user.is_superuser:
@@ -234,11 +241,11 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
 
     def set_groups(self, user):
         if user.is_secretary:
-            user.groups.add(get_object_or_404(Group, name='Operators'))
-            user.groups.remove(get_object_or_404(Group, name='Users'))
+            user.groups.add(get_object_or_404(_Group, name='Operators'))
+            user.groups.remove(get_object_or_404(_Group, name='Users'))
         else:
-            user.groups.add(get_object_or_404(Group, name='Users'))
-            user.groups.remove(get_object_or_404(Group, name='Operators'))
+            user.groups.add(get_object_or_404(_Group, name='Users'))
+            user.groups.remove(get_object_or_404(_Group, name='Operators'))
 
     def delete_model(self, request, obj):
         try:
@@ -255,6 +262,7 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
                 messages.set_level(request, messages.ERROR)
                 messages.error(request, e)
 
+
 @admin.register(Enactment)
 class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Enactment
@@ -263,7 +271,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
               )
     list_display = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
     list_display_links = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
-    list_filter = [ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, 'session', 'subject', 'assigner']
+    list_filter = [ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, 'session', 'subject',
+                   'assigner']
     search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', ]
     readonly_fields = ['row', 'description_short', 'date_jalali', 'review_date_jalali', ]
     form = EnactmentAdminForm
@@ -337,3 +346,9 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         enactment.follow_grade = 0
         enactment.save()
         return result
+
+
+@admin.register(Group)
+class GroupAdmin(BaseModelAdmin):
+    model = Group
+    inlines = [GroupUserInline]
