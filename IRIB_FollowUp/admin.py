@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 from .forms import EnactmentAdminForm, get_followup_inline_form
 from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, \
-    Attachment, Attendant, FollowUp, Group, GroupUser
+    Attachment, Attendant, FollowUp, Group, GroupUser, GroupFollowUp
 
 
 class JalaliDateFilter(SimpleListFilter):
@@ -109,6 +109,13 @@ class AttendantInline(admin.TabularInline):
 class GroupUserInline(admin.TabularInline):
     model = GroupUser
     insert_after_fieldset = _('Important dates')
+
+
+class GroupFollowUpInline(admin.TabularInline):
+    model = GroupFollowUp
+    max_num = 1
+    extra = 1
+    template = 'admin/custom/edit_inline/tabular.html'
 
 
 class SupervisorFilter(SimpleListFilter):
@@ -279,6 +286,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     def get_inline_instances(self, request, obj=None):
         return [
+            GroupFollowUpInline(self.model, self.admin_site),
             get_followup_inline(request)(self.model, self.admin_site),
             AttachmentInline(self.model, self.admin_site),
         ]
@@ -346,6 +354,16 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         enactment.follow_grade = 0
         enactment.save()
         return result
+
+    def response_change(self, request, obj):
+        if 'add-group-followup' in request.POST:
+            if request.POST['groupfollowup_set-0-group']:
+                group = Group.objects.get(pk=request.POST['groupfollowup_set-0-group'])
+                for group_user in GroupUser.objects.filter(group=group):
+                    FollowUp.objects.get_or_create(enactment=obj, actor=group_user.user)
+                self.message_user(request, _("Followup added for all %(group)s users." % {'group': group.name}))
+            return HttpResponseRedirect('.')
+        return super(EnactmentAdmin, self).response_change(request, obj)
 
 
 @admin.register(Group)

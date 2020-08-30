@@ -290,3 +290,18 @@ class GroupUser(models.Model):
 
     def __unicode__(self):
         return '%s: %s' % (self.group, self.user)
+
+
+class GroupFollowUp(models.Model):
+    group = models.ForeignKey(Group, verbose_name=_('Group'), on_delete=models.CASCADE)
+    enactment = models.ForeignKey(Enactment, verbose_name=_('Enactment'), on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('Group FollowUp')
+        verbose_name_plural = _('Group FollowUps')
+
+    def __str__(self):
+        return '%s: %s' % (self.group, self.enactment)
+
+    def __unicode__(self):
+        return '%s: %s' % (self.group, self.enactment)
