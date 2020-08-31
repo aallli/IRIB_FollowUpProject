@@ -274,14 +274,15 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
 class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Enactment
     fields = (('row', 'session', 'date', 'review_date'),
-              ('assigner', 'subject'), 'description',
+              ('assigner', 'subject', '_type'), 'description',
               )
-    list_display = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
-    list_display_links = ['row', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
-    list_filter = [ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, 'session', 'subject',
+    list_display = ['row', 'type', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
+    list_display_links = ['row', 'type', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
+    list_filter = ['_type', ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, 'session',
+                   'subject',
                    'assigner']
     search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', ]
-    readonly_fields = ['row', 'description_short', 'date_jalali', 'review_date_jalali', ]
+    readonly_fields = ['row', 'type', 'description_short', 'date_jalali', 'review_date_jalali', ]
     form = EnactmentAdminForm
 
     def get_inline_instances(self, request, obj=None):

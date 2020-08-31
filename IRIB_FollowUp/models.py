@@ -24,6 +24,11 @@ class Title(models.TextChoices):
     MRS = 'Mrs', _('Mrs')
 
 
+class EnactmentType(models.TextChoices):
+    AG = 'AGENDA', _('Agenda')
+    EN = 'ENACTMENT', _('Enactment')
+
+
 class Session(models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
 
@@ -129,6 +134,8 @@ class Enactment(models.Model):
     session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(User, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
     review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)
+    _type= models.CharField(verbose_name=_('Type'), choices=EnactmentType.choices,
+                              default=EnactmentType.EN, max_length=30, null=False)
 
     class Meta:
         verbose_name = _('Enactment')
@@ -145,6 +152,11 @@ class Enactment(models.Model):
         return '%s...' % self.description[:50] if self.description else ''
 
     description_short.short_description = _('Description')
+
+    def type(self):
+        return EnactmentType(self._type).label
+
+    type.short_description = _('Type')
 
     def row(self):
         return self.id if self.id else '-'
