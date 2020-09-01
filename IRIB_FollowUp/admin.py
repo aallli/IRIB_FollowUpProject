@@ -140,6 +140,26 @@ class SessionAdmin(BaseModelAdmin):
     search_fields = ['name', ]
     inlines = [AttendantInline]
 
+    @atomic()
+    def save_model(self, request, obj, form, change):
+        if obj.pk:
+            if 'name' in form.initial:
+                group = get_object_or_404(Group, name=form.initial['name'])
+                group.name = obj.name
+                group.save()
+        else:
+            Group.objects.get_or_create(name=obj.name)
+        super(SessionAdmin, self).save_model(request, obj, form, change)
+
+    @atomic()
+    def save_formset(self, request, form, formset, change):
+        if formset.model._meta.model_name == 'attendant':
+            group = Group.objects.get_or_create(name=formset.instance.name)[0]
+            for item in formset.cleaned_data:
+                if 'user' in item:
+                    GroupUser.objects.get_or_create(group=group, user=item['user'])
+        super(SessionAdmin, self).save_formset(request, form, formset, change)
+
 
 @admin.register(Subject)
 class SubjectAdmin(BaseModelAdmin):
