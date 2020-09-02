@@ -222,7 +222,7 @@ msgstr "مصوبات"
 
 #: .\IRIB_FollowUp\models.py:162
 msgid "Row"
-msgstr "ردیف"
+msgstr "شماره ردیف"
 
 #: .\IRIB_FollowUp\models.py:178
 msgid "Actor"
@@ -230,7 +230,7 @@ msgstr "پیگیری کننده"
 
 #: .\IRIB_FollowUp\models.py:179 .\IRIB_FollowUp\models.py:198
 msgid "Response Date"
-msgstr "تاریخ پاسخدهی"
+msgstr "تاریخ پاسخ دهی"
 
 #: .\IRIB_FollowUp\models.py:180
 msgid "Result"
@@ -394,7 +394,7 @@ msgstr "خوش آمدید"
 #: .\static\admin\custom\edit_inline\tabular.html:26
 #: .\templates\admin\custom\edit_inline\tabular.html:26
 msgid "Delete?"
-msgstr "حذق"
+msgstr "حذف"
 
 #: .\static\admin\custom\edit_inline\tabular.html:49
 #: .\templates\admin\custom\edit_inline\tabular.html:49
