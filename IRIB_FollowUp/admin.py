@@ -301,7 +301,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_filter = ['_type', ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, 'session',
                    'subject',
                    'assigner']
-    search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', ]
+    search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', 'row' ]
     readonly_fields = ['row', 'type', 'description_short', 'date_jalali', 'review_date_jalali', ]
     form = EnactmentAdminForm
 
