@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
 from IRIB_FollowUpProject.utils import get_admin_url
+from IRIB_FollowUpProject.utils import BaseModelAdmin
 from django.contrib.auth.models import Group as _Group
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
@@ -128,10 +129,6 @@ class SupervisorFilter(SimpleListFilter):
     def queryset(self, request, queryset):
         return queryset.filter(pk__in=FollowUp.objects.filter(actor__supervisor__pk=self.value()).values(
             'enactment__pk')) if self.value() else queryset
-
-
-class BaseModelAdmin(admin.ModelAdmin):
-    save_on_top = True
 
 
 @admin.register(Session)

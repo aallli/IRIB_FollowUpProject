@@ -5,32 +5,34 @@
     {{ block.super }}
     {% if  opts.model_name == 'enactment' %}
         {% if user.is_superuser or user.is_secretary %}
-            <div class="close-enactment">
+            <div class="">
                 <p class="deletelink-box">
                     <input type="button" value="{% trans 'Close enactment' %}" class="close-enactment"
                            onclick='javascript: location.href="{% url 'admin:close' %}?pk={{ original.pk }}"'>
                 </p>
             </div>
         {% endif %}
+    {% endif %}
+    {% if opts.app_label == 'IRIB_FollowUp' or opts.app_label == 'Knowledge_Management'%}
         <div class="center">
             {% if LANGUAGE_CODE == 'fa' %}
                 <input type="button" value="◄◄" class="close-enactment" title="{% trans 'Last' %}"
-                       onclick='javascript: location.href="{% url 'admin:last' %}"'>
+                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.model_name %}"'>
                 <input type="button" value="◄" class="close-enactment" title="{% trans 'Next' %}"
-                       onclick='javascript: location.href="{% url 'admin:next' %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►" class="close-enactment" title="{% trans 'Previous' %}"
-                       onclick='javascript: location.href="{% url 'admin:first' %}"'>
+                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►►" class="close-enactment" title="{% trans 'First' %}"
-                       onclick='javascript: location.href="{% url 'admin:previous' %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.model_name %}"'>
             {% else %}
                 <input type="button" value="◄◄" class="close-enactment" title="{% trans 'First' %}"
-                       onclick='javascript: location.href="{% url 'admin:previous' %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.model_name %}"'>
                 <input type="button" value="◄" class="close-enactment" title="{% trans 'Previous' %}"
-                       onclick='javascript: location.href="{% url 'admin:first' %}"'>
+                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►" class="close-enactment" title="{% trans 'Next' %}"
-                       onclick='javascript: location.href="{% url 'admin:next' %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►►" class="close-enactment" title="{% trans 'Last' %}"
-                       onclick='javascript: location.href="{% url 'admin:last' %}"'>
+                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.model_name %}"'>
             {% endif %}
         </div>
     {% endif %}
