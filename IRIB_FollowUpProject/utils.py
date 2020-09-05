@@ -1,7 +1,10 @@
 from django.contrib import admin
+from django.utils import timezone
 from jalali_date import datetime2jalali
 from IRIB_FollowUpProject import settings
 from django.http import HttpResponseRedirect
+from django.contrib.admin import SimpleListFilter
+from django.utils.translation import ugettext_lazy as _
 
 
 def get_admin_url(self):
@@ -46,6 +49,10 @@ def switch_lang_code(path, language):
     return '/'.join(parts)
 
 
+def set_now():
+    return timezone.now()
+
+
 class BaseModelAdmin(admin.ModelAdmin):
     save_on_top = True
 
@@ -85,3 +92,39 @@ class BaseModelAdmin(admin.ModelAdmin):
                 path('next/', self.next, name="next-%s" % self.model._meta.model_name),
                 path('last/', self.last, name="last-%s" % self.model._meta.model_name),
                 ] + urls
+
+
+class JalaliDateFilter(SimpleListFilter):
+    title = _('Assignment Date')
+    parameter_name = 'date'
+
+    def lookups(self, request, model_admin):
+        return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
+                ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
+                ('180days', _('Last 6 months'))]
+
+    def queryset(self, request, queryset):
+        startdate = timezone.now()
+        enddate = None
+        if self.value() == 'today':
+            enddate = startdate
+
+        if self.value() == 'this_week':
+            enddate = startdate - datetime.timedelta(days=(startdate.weekday() + 2) % 7)
+
+        if self.value() == '10days':
+            enddate = startdate - datetime.timedelta(days=9)
+
+        if self.value() == 'this_month':
+            enddate = startdate - datetime.timedelta(days=datetime2jalali(startdate).day - 1)
+
+        if self.value() == '30days':
+            enddate = startdate - datetime.timedelta(days=29)
+
+        if self.value() == '90days':
+            enddate = startdate - datetime.timedelta(days=89)
+
+        if self.value() == '180days':
+            enddate = startdate - datetime.timedelta(days=179)
+
+        return queryset.filter(date__range=[enddate, startdate]) if enddate else queryset
