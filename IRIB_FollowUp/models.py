@@ -72,7 +72,7 @@ class Session(models.Model):
         presents = ''
         for member in Member.objects.filter(session=self.session):
             if Attendant.objects.filter(user=member.user, session=self).count() != 0:
-                presents += '%s, ' % (member.user.get_full_name() or member.user.get_username())
+                presents += '%s, ' % member.user
         return presents[0: presents.__len__() - 2] if presents else _('All absent')
 
     presents.short_description = _('Presents')
@@ -81,7 +81,7 @@ class Session(models.Model):
         absents = ''
         for member in Member.objects.filter(session=self.session):
             if Attendant.objects.filter(user=member.user, session=self).count() == 0:
-                absents += '%s, ' % (member.user.get_full_name() or member.user.get_username())
+                absents += '%s, ' % member.user
         return absents[0: absents.__len__() - 2] if absents else _('All ready')
 
     absents.short_description = _('Absents')
@@ -171,7 +171,8 @@ class User(AbstractUser):
     date_joined_jalali.short_description = _('date joined')
 
     def __str__(self):
-        return self.get_full_name() or self.get_username()
+        return '%s %s' % (
+        self.last_name, self.first_name) if self.last_name or self.first_name else  self.get_username()
 
     def __unicode__(self):
         return self.__str__()
@@ -245,6 +246,7 @@ class Enactment(models.Model):
 
     def session_absents(self):
         return self.session.absents()
+
     session_absents.short_description = _('Absents')
 
     def session_presents(self):

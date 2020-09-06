@@ -73,7 +73,7 @@ class CommitteeMember(models.Model):
         verbose_name_plural = _('Committee Members')
 
     def __str__(self):
-        return self.user.get_full_name() or self.user.get_username()
+        return self.user
 
     def __unicode__(self):
         return self.__str__()
