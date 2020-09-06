@@ -52,8 +52,8 @@ class Session(models.Model):
     _date = models.DateTimeField(verbose_name=_('Attended Date'), blank=False, default=set_now)
 
     class Meta:
-        verbose_name = _('Session')
-        verbose_name_plural = _('Sessions')
+        verbose_name = _('Meeting')
+        verbose_name_plural = _('Meetings')
         ordering = ['session__name', '_date']
 
     def __str__(self):
@@ -69,26 +69,32 @@ class Session(models.Model):
     date.admin_order_field = '_date'
 
     def presents(self):
-        presents = ''
-        for member in Member.objects.filter(session=self.session):
-            if Attendant.objects.filter(user=member.user, session=self).count() != 0:
-                presents += '%s, ' % member.user
-        return presents[0: presents.__len__() - 2] if presents else _('All absent')
+        if self.pk:
+            presents = ''
+            for member in Member.objects.filter(session=self.session):
+                if Attendant.objects.filter(user=member.user, session=self).count() != 0:
+                    presents += '%s, ' % member.user
+            return presents[0: presents.__len__() - 2] if presents else _('All absent')
+        else:
+            return '-'
 
     presents.short_description = _('Presents')
 
     def absents(self):
-        absents = ''
-        for member in Member.objects.filter(session=self.session):
-            if Attendant.objects.filter(user=member.user, session=self).count() == 0:
-                absents += '%s, ' % member.user
-        return absents[0: absents.__len__() - 2] if absents else _('All ready')
+        if self.pk:
+            absents = ''
+            for member in Member.objects.filter(session=self.session):
+                if Attendant.objects.filter(user=member.user, session=self).count() == 0:
+                    absents += '%s, ' % member.user
+            return absents[0: absents.__len__() - 2] if absents else _('All ready')
+        else:
+            return '-'
 
     absents.short_description = _('Absents')
 
 
 class Attendant(models.Model):
-    session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
+    session = models.ForeignKey(Session, verbose_name=_('Meeting'), on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey('User', verbose_name=_('User'), on_delete=models.SET_NULL, null=True)
 
     class Meta:
@@ -195,7 +201,7 @@ class Enactment(models.Model):
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
     follow_grade = models.CharField(verbose_name=_('Follow Grade'), max_length=100, blank=False, null=False, default=1)
-    session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
+    session = models.ForeignKey(Session, verbose_name=_('Meeting'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(User, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
     review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)
     _type = models.CharField(verbose_name=_('Type'), choices=EnactmentType.choices,

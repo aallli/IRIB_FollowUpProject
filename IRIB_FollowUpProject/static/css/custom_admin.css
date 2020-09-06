@@ -165,3 +165,7 @@
 :lang(fa) .admin-interface .submit-row div.close-enactment {
     float: right;
 }
+
+p.datetime {
+    margin-top: -8px !important;
+}

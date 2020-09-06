@@ -39,6 +39,16 @@ class MemberInline(admin.TabularInline):
     insert_after_fieldset = _('Important dates')
 
 
+class SessionInline(ModelAdminJalaliMixin, admin.TabularInline):
+    model = Session
+    fields = ['_date', 'absents']
+    readonly_fields = ['date', 'absents']
+    extra = 0
+
+    def get_max_num(self, request, obj=None, **kwargs):
+        return Session.objects.filter(session=obj).count()
+
+
 class GroupUserInline(admin.TabularInline):
     model = GroupUser
     insert_after_fieldset = _('Important dates')
@@ -67,7 +77,7 @@ class SupervisorFilter(SimpleListFilter):
 class SessionAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Session
     search_fields = ['session__name', ]
-    fields = ['session', '_date', 'absents']
+    fields = [('session', '_date'), 'absents']
     list_display = ['session', 'date']
     list_display_links = ['session', 'date']
     readonly_fields = ['date', 'absents']
@@ -87,7 +97,7 @@ class SessionAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 class SessionBaseAdmin(BaseModelAdmin):
     model = Session
     search_fields = ['name', ]
-    inlines = [MemberInline]
+    inlines = [MemberInline, SessionInline]
 
     @atomic()
     def save_model(self, request, obj, form, change):
@@ -98,16 +108,18 @@ class SessionBaseAdmin(BaseModelAdmin):
                 group.save()
         else:
             Group.objects.get_or_create(name=obj.name)
-        super(SessionBaseAdmin, self).save_model(request, obj, form, change)
+        return super(SessionBaseAdmin, self).save_model(request, obj, form, change)
 
     @atomic()
     def save_formset(self, request, form, formset, change):
-        if formset.model._meta.model_name == 'attendant':
+        if formset.model._meta.model_name == 'member':
             group = Group.objects.get_or_create(name=formset.instance.name)[0]
             for item in formset.cleaned_data:
                 if 'user' in item:
                     GroupUser.objects.get_or_create(group=group, user=item['user'])
-        super(SessionBaseAdmin, self).save_formset(request, form, formset, change)
+        if formset.model._meta.model_name == 'session':
+            pass
+        return super(SessionBaseAdmin, self).save_formset(request, form, formset, change)
 
 
 @admin.register(Subject)
