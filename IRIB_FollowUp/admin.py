@@ -17,6 +17,18 @@ from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, 
     GroupUser, GroupFollowUp, SessionBase, Attendant
 
 
+class SupervisorFilter(SimpleListFilter):
+    title = _('Supervisor Unit')
+    parameter_name = 'supervisor'
+
+    def lookups(self, request, model_admin):
+        return [(supervisor.pk, supervisor.name) for supervisor in Supervisor.objects.all()]
+
+    def queryset(self, request, queryset):
+        return queryset.filter(pk__in=FollowUp.objects.filter(actor__supervisor__pk=self.value()).values(
+            'enactment__pk')) if self.value() else queryset
+
+
 class ActorFilter(SimpleListFilter):
     title = _('Supervisor')
     parameter_name = 'actor'
@@ -61,16 +73,15 @@ class GroupFollowUpInline(admin.TabularInline):
     template = 'admin/custom/edit_inline/tabular.html'
 
 
-class SupervisorFilter(SimpleListFilter):
-    title = _('Supervisor Unit')
-    parameter_name = 'supervisor'
+class AttachmentInline(admin.TabularInline):
+    model = Attachment
 
-    def lookups(self, request, model_admin):
-        return [(supervisor.pk, supervisor.name) for supervisor in Supervisor.objects.all()]
-
-    def queryset(self, request, queryset):
-        return queryset.filter(pk__in=FollowUp.objects.filter(actor__supervisor__pk=self.value()).values(
-            'enactment__pk')) if self.value() else queryset
+    def get_readonly_fields(self, request, obj=None):
+        if FollowUp.objects.filter(actor=request.user, enactment=obj).count() == 0:
+            self.extra = 0
+            self.max_num = 0
+            return ['description', 'file']
+        return self.readonly_fields
 
 
 @admin.register(Session)
@@ -134,16 +145,19 @@ class SupervisorAdmin(BaseModelAdmin):
     search_fields = ['name', ]
 
 
-class AttachmentInline(admin.TabularInline):
-    model = Attachment
-
-
 def get_followup_inline(request):
     class FollowUpInline(ModelAdminJalaliMixin, admin.TabularInline):
         model = FollowUp
         form = get_followup_inline_form(request)
         fields = ['actor', 'supervisor', 'result', 'date_jalali']
         readonly_fields = ['supervisor', 'date_jalali']
+
+        def get_queryset(self, request):
+            queryset = super(FollowUpInline, self).get_queryset(request)
+            if request.user.is_superuser or request.user.is_secretary:
+                return queryset
+            else:
+                return queryset.filter(actor=request.user)
 
         def has_add_permission(self, request, obj):
             user = request.user
@@ -266,7 +280,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_filter = ['_type',
                    get_jalali_filter('review_date', _('Review Date')), get_jalali_filter('date', _('Assignment Date')),
                    ActorFilter, SupervisorFilter, 'session__session', 'subject', 'assigner']
-    search_fields = ['session__session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name',
+    search_fields = ['session__session__name', 'subject__name', 'description', 'assigner__first_name',
+                     'assigner__last_name',
                      'id']
     readonly_fields = ['row', 'type', 'description_short', 'date_jalali', 'review_date_jalali', 'session_presents',
                        'session_absents', 'session_date']
@@ -298,11 +313,12 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                queryset.filter(session__session__in=Member.objects.filter(user=request.user).values('session'))
 
     def get_readonly_fields(self, request, obj=None):
+        extra_readonly = ['date', 'review_date']
         if not (request.user.is_superuser or request.user.is_secretary):
-            return self.readonly_fields + ['session', 'date', 'review_date', 'assigner', 'subject',
-                                           'description', 'follow_grade', '_type']
+            return self.readonly_fields + extra_readonly + ['session', 'assigner', 'subject',
+                                                            'description', 'follow_grade', '_type']
         elif obj:
-            return self.readonly_fields + ['date', 'review_date']
+            return self.readonly_fields + extra_readonly
 
         return self.readonly_fields
 

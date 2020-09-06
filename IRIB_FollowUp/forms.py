@@ -28,7 +28,7 @@ def get_followup_inline_form(request):
             model = FollowUp
             fields = '__all__'
 
-        def __init__(self,*args, **kwargs):
+        def __init__(self, *args, **kwargs):
             super(FollowUpInlineForm, self).__init__(*args, **kwargs)
             self.request = request
             if self.instance and self.instance.actor and self.instance.actor.pk == request.user.pk:
