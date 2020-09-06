@@ -292,7 +292,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
             return self.readonly_fields + ['session', 'date', 'review_date', 'assigner', 'subject',
-                                           'description', 'follow_grade', 'type']
+                                           'description', 'follow_grade', '_type']
         elif obj:
             return self.readonly_fields + ['date', 'review_date']
 
