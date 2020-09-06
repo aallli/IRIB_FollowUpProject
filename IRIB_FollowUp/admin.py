@@ -146,8 +146,8 @@ def get_followup_inline(request):
     class FollowUpInline(ModelAdminJalaliMixin, admin.TabularInline):
         model = FollowUp
         form = get_followup_inline_form(request)
-        fields = ['actor', 'supervisor', 'result', 'date_jalali']
-        readonly_fields = ['supervisor', 'date_jalali']
+        fields = ['actor', 'supervisor', 'result', 'date']
+        readonly_fields = ['supervisor', 'date']
 
         def get_queryset(self, request):
             queryset = super(FollowUpInline, self).get_queryset(request)
@@ -272,16 +272,16 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             'fields': (('row', 'review_date', 'assigner', 'subject'), ('_type', 'description'))}),
     )
 
-    list_display = ['row', 'type', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
-    list_display_links = ['row', 'type', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
+    list_display = ['row', 'type', 'session', 'session_date', 'review_date', 'subject', 'description_short']
+    list_display_links = ['row', 'type', 'session', 'session_date', 'review_date', 'subject', 'description_short']
     list_filter = ['_type',
-                   get_jalali_filter('review_date', _('Review Date')), get_jalali_filter('date', _('Assignment Date')),
+                   get_jalali_filter('_review_date', _('Review Date')),
+                   get_jalali_filter('session___date', _('Assignment Date')),
                    ActorFilter, SupervisorFilter, 'session__session', 'subject', 'assigner']
     search_fields = ['session__session__name', 'subject__name', 'description', 'assigner__first_name',
-                     'assigner__last_name',
-                     'id']
-    readonly_fields = ['row', 'type', 'description_short', 'date_jalali', 'review_date_jalali', 'session_presents',
-                       'session_absents', 'session_date']
+                     'assigner__last_name', 'id']
+    readonly_fields = ['row', 'type', 'description_short', 'review_date', 'session_presents', 'session_absents',
+                       'session_date']
     form = EnactmentAdminForm
 
     def get_inline_instances(self, request, obj=None):
@@ -310,7 +310,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                queryset.filter(session__session__in=Member.objects.filter(user=request.user).values('session'))
 
     def get_readonly_fields(self, request, obj=None):
-        extra_readonly = ['date', 'review_date']
+        extra_readonly = ['_review_date']
         if not (request.user.is_superuser or request.user.is_secretary):
             return self.readonly_fields + extra_readonly + ['session', 'assigner', 'subject',
                                                             'description', 'follow_grade', '_type']

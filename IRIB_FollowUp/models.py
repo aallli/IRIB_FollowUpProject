@@ -167,12 +167,12 @@ class User(AbstractUser):
                                    null=True)
 
     def last_login_jalali(self):
-        return to_jalali(self.last_login)
+        return to_jalali(self.last_login) if translation.get_language() == 'fa' else format_date(self.last_login)
 
     last_login_jalali.short_description = _('last login')
 
     def date_joined_jalali(self):
-        return to_jalali(self.date_joined)
+        return to_jalali(self.date_joined) if translation.get_language() == 'fa' else format_date(self.date_joined)
 
     date_joined_jalali.short_description = _('date joined')
 
@@ -199,18 +199,17 @@ class User(AbstractUser):
 class Enactment(models.Model):
     description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True)
-    date = models.DateTimeField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
     follow_grade = models.CharField(verbose_name=_('Follow Grade'), max_length=100, blank=False, null=False, default=1)
     session = models.ForeignKey(Session, verbose_name=_('Minute'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(User, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
-    review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)
+    _review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)
     _type = models.CharField(verbose_name=_('Type'), choices=EnactmentType.choices,
                              default=EnactmentType.FI, max_length=30, null=False)
 
     class Meta:
         verbose_name = _('Enactment')
         verbose_name_plural = _('Enactments')
-        ordering = ['-review_date', '-date', 'session', 'subject', 'id']
+        ordering = ['-_review_date', 'session', 'subject', 'id']
 
     def __str__(self):
         return '%s: %s' % (self.session, self.pk)
@@ -233,21 +232,15 @@ class Enactment(models.Model):
 
     row.short_description = _('Row')
 
-    def date_jalali(self):
-        return to_jalali(self.date)
+    def review_date(self):
+        return to_jalali(self._review_date) if translation.get_language() == 'fa' else format_date(self._review_date)
 
-    date_jalali.short_description = _('Assignment Date')
-    date_jalali.admin_order_field = 'date'
-
-    def review_date_jalali(self):
-        return to_jalali(self.review_date)
-
-    review_date_jalali.short_description = _('Review Date')
-    review_date_jalali.admin_order_field = 'review_date'
+    review_date.short_description = _('Review Date')
+    review_date.admin_order_field = 'review_date'
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        self.review_date = timezone.now()
+        self._review_date = timezone.now()
         super(Enactment, self).save(force_insert, force_update, using, update_fields)
 
     def session_date(self):
@@ -268,7 +261,7 @@ class Enactment(models.Model):
 
 class FollowUp(models.Model):
     actor = models.ForeignKey(User, verbose_name=_('Actor'), on_delete=models.SET_NULL, blank=True, null=True)
-    date = models.DateTimeField(verbose_name=_('Response Date'), blank=True, null=True)
+    _date = models.DateTimeField(verbose_name=_('Response Date'), blank=True, null=True)
     result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=True, null=True)
     enactment = models.ForeignKey(Enactment, verbose_name=_('Enactment'), on_delete=models.CASCADE)
 
@@ -284,11 +277,11 @@ class FollowUp(models.Model):
     def __unicode__(self):
         return self.__str__()
 
-    def date_jalali(self):
-        return to_jalali(self.date)
+    def date(self):
+        return to_jalali(self._date) if translation.get_language() == 'fa' else format_date(self._date)
 
-    date_jalali.short_description = _('Response Date')
-    date_jalali.admin_order_field = 'date'
+    date.short_description = _('Response Date')
+    date.admin_order_field = 'date'
 
     def supervisor(self):
         return self.actor.supervisor or '-'

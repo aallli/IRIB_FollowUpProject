@@ -16,8 +16,7 @@ class EnactmentAdminForm(forms.ModelForm):
                     'session': last_obj.session,
                     'subject': last_obj.subject,
                     'assigner': last_obj.assigner,
-                    'date': last_obj.date,
-                    'review_date': last_obj.review_date
+                    '_review_date': last_obj.review_date
                 })
         super(EnactmentAdminForm, self).__init__(*args, **kwargs)
 
@@ -38,7 +37,7 @@ def get_followup_inline_form(request):
 
         def save(self, commit=True):
             if 'result' in self.changed_data:
-                self.instance.date = timezone.now()
+                self.instance._date = timezone.now()
             return super(FollowUpInlineForm, self).save(commit)
 
     return FollowUpInlineForm
