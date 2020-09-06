@@ -1,8 +1,5 @@
-import datetime
 from django.contrib import admin
-from django.utils import timezone
 from django.contrib import messages
-from jalali_date import datetime2jalali
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -12,7 +9,7 @@ from django.contrib.auth.models import Group as _Group
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 from .forms import EnactmentAdminForm, get_followup_inline_form
-from IRIB_FollowUpProject.utils import get_admin_url, get_jalali_filter, BaseModelAdmin
+from IRIB_FollowUpProject.utils import get_jalali_filter, BaseModelAdmin
 from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, Attachment, Member, FollowUp, Group, \
     GroupUser, GroupFollowUp, SessionBase, Attendant
 
@@ -92,7 +89,7 @@ class SessionAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_display = ['session', 'date']
     list_display_links = ['session', 'date']
     readonly_fields = ['date', 'absents']
-    list_filter = [get_jalali_filter('_date', _('Attended Date'))]
+    list_filter = ['session', get_jalali_filter('_date', _('Attended Date'))]
     inlines = [AttendantInline]
 
     def save_model(self, request, obj, form, change):
@@ -193,7 +190,7 @@ class AttachmentAdmin(BaseModelAdmin):
     model = Attachment
     fields = ['description', 'file', 'enactment']
     search_fields = ['description', 'file',
-                     'enactment__session__name', 'enactment__subject__name',
+                     'enactment__session__session__name', 'enactment__subject__name',
                      'enactment__assigner__name', 'enactment__description', 'enactment__result',
                      'enactment__second_supervisor__name', ]
 
@@ -201,7 +198,7 @@ class AttachmentAdmin(BaseModelAdmin):
         if db_field.name == "enactment" and not (request.user.is_superuser or request.user.is_secretary):
             queryset = Enactment.objects.filter(follow_grade=1)
             kwargs["queryset"] = queryset.filter(
-                session__pk__in=Member.objects.filter(user=request.user).values('session'))
+                session__session__pk__in=Member.objects.filter(user=request.user).values('session'))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -325,40 +322,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
         from django.urls import path
-        return [path('first/', self.first, name="first"),
-                path('previous/', self.previous, name="previous"),
-                path('next/', self.next, name="next"),
-                path('last/', self.last, name="last"),
-                path('close/', self.close, name="close"),
-                ] + urls
-
-    def first(self, request):
-        queryset = self.get_queryset(request)
-        return HttpResponseRedirect(get_admin_url(queryset.first()))
-
-    def previous(self, request):
-        pk = int(request.GET['pk'])
-        queryset = self.get_queryset(request)
-        index = list(queryset.values_list('pk', flat=True)).index(pk)
-        if index == 0:
-            obj = queryset[index]
-        else:
-            obj = queryset[index - 1]
-        return HttpResponseRedirect(get_admin_url(obj))
-
-    def next(self, request):
-        pk = int(request.GET['pk'])
-        queryset = self.get_queryset(request)
-        index = list(queryset.values_list('pk', flat=True)).index(pk)
-        if index == queryset.count() - 1:
-            obj = queryset[index]
-        else:
-            obj = queryset[index + 1]
-        return HttpResponseRedirect(get_admin_url(obj))
-
-    def last(self, request):
-        queryset = self.get_queryset(request)
-        return HttpResponseRedirect(get_admin_url(queryset.last()))
+        return [path('close/', self.close, name="close"), ] + urls
 
     @atomic
     def close(self, request):

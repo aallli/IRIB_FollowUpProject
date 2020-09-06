@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-06 12:14+0430\n"
+"POT-Creation-Date: 2020-09-06 13:19+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,60 +62,60 @@ msgstr "سه ماه گذشته"
 msgid "Last 6 months"
 msgstr "شش ماه گذشته"
 
-#: .\IRIB_FollowUp\admin.py:21
-msgid "Supervisor"
-msgstr "مسوول پیگیری"
-
-#: .\IRIB_FollowUp\admin.py:34 .\IRIB_FollowUp\admin.py:39
-#: .\IRIB_FollowUp\admin.py:54 .\IRIB_FollowUp\admin.py:202
-msgid "Important dates"
-msgstr "تاریخهای مهم"
-
-#: .\IRIB_FollowUp\admin.py:65 .\IRIB_FollowUp\models.py:149
+#: .\IRIB_FollowUp\admin.py:18 .\IRIB_FollowUp\models.py:149
 #: .\IRIB_FollowUp\models.py:166 .\IRIB_FollowUp\models.py:296
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\IRIB_FollowUp\admin.py:84 .\IRIB_FollowUp\models.py:52
+#: .\IRIB_FollowUp\admin.py:30
+msgid "Supervisor"
+msgstr "مسوول پیگیری"
+
+#: .\IRIB_FollowUp\admin.py:43 .\IRIB_FollowUp\admin.py:48
+#: .\IRIB_FollowUp\admin.py:63 .\IRIB_FollowUp\admin.py:213
+msgid "Important dates"
+msgstr "تاریخهای مهم"
+
+#: .\IRIB_FollowUp\admin.py:92 .\IRIB_FollowUp\models.py:52
 #: .\IRIB_FollowUp\models.py:68 .\IRIB_FollowUp\models.py:256
 msgid "Attended Date"
 msgstr "تاریخ برگزاری جلسه"
 
-#: .\IRIB_FollowUp\admin.py:197
+#: .\IRIB_FollowUp\admin.py:208
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: .\IRIB_FollowUp\admin.py:200
+#: .\IRIB_FollowUp\admin.py:211
 msgid "Address Info"
 msgstr "نشانیهای دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:204
+#: .\IRIB_FollowUp\admin.py:215
 msgid "Permissions"
 msgstr "سطوح دسترسی"
 
-#: .\IRIB_FollowUp\admin.py:206
+#: .\IRIB_FollowUp\admin.py:217
 msgid "Sensitive Info"
 msgstr "اطلاعات حساس"
 
-#: .\IRIB_FollowUp\admin.py:258
+#: .\IRIB_FollowUp\admin.py:269
 msgid "Session info"
 msgstr "اطلاعات جلسه"
 
-#: .\IRIB_FollowUp\admin.py:260
+#: .\IRIB_FollowUp\admin.py:271
 msgid "Enactment Info"
 msgstr "اطلاعات مصوبه"
 
-#: .\IRIB_FollowUp\admin.py:267 .\IRIB_FollowUp\models.py:206
+#: .\IRIB_FollowUp\admin.py:278 .\IRIB_FollowUp\models.py:206
 #: .\IRIB_FollowUp\models.py:245
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
-#: .\IRIB_FollowUp\admin.py:267 .\IRIB_FollowUp\models.py:202
+#: .\IRIB_FollowUp\admin.py:278 .\IRIB_FollowUp\models.py:202
 #: .\IRIB_FollowUp\models.py:239
 msgid "Assignment Date"
 msgstr "تاریخ مصوبه"
 
-#: .\IRIB_FollowUp\admin.py:357
+#: .\IRIB_FollowUp\admin.py:342
 #, python-format
 msgid "Followup added for all %(group)s users."
 msgstr "پیگیری برای اعضای گروه %(group)s ایجاد شد."
@@ -168,22 +168,21 @@ msgid "Name"
 msgstr "نام"
 
 #: .\IRIB_FollowUp\models.py:39 .\IRIB_FollowUp\models.py:51
-#: .\IRIB_FollowUp\models.py:114
-msgid "Session Base"
+msgid "Meeeting"
 msgstr "جلسه"
 
 #: .\IRIB_FollowUp\models.py:40
-msgid "Session Bases"
+msgid "Meeetings"
 msgstr "جلسات"
 
 #: .\IRIB_FollowUp\models.py:55 .\IRIB_FollowUp\models.py:97
 #: .\IRIB_FollowUp\models.py:204
-msgid "Meeting"
-msgstr "نوبت جلسه"
+msgid "Minute"
+msgstr "صورتجلسه"
 
 #: .\IRIB_FollowUp\models.py:56
-msgid "Meetings"
-msgstr "نوبت جلسات"
+msgid "Minutes"
+msgstr "صورتجلسات"
 
 #: .\IRIB_FollowUp\models.py:77
 msgid "All absent"
@@ -208,6 +207,10 @@ msgstr "حاضر در جلسه"
 #: .\IRIB_FollowUp\models.py:102
 msgid "Attendants"
 msgstr "حاضرین جلسه"
+
+#: .\IRIB_FollowUp\models.py:114
+msgid "Session"
+msgstr " جلسه"
 
 #: .\IRIB_FollowUp\models.py:118
 msgid "Member"

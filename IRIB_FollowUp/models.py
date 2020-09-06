@@ -36,8 +36,8 @@ class SessionBase(models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
 
     class Meta:
-        verbose_name = _('Session Base')
-        verbose_name_plural = _('Session Bases')
+        verbose_name = _('Meeeting')
+        verbose_name_plural = _('Meeetings')
         ordering = ['name']
 
     def __str__(self):
@@ -48,12 +48,12 @@ class SessionBase(models.Model):
 
 
 class Session(models.Model):
-    session = models.ForeignKey(SessionBase, verbose_name=_('Session Base'), on_delete=models.CASCADE, blank=False)
+    session = models.ForeignKey(SessionBase, verbose_name=_('Meeeting'), on_delete=models.CASCADE, blank=False)
     _date = models.DateTimeField(verbose_name=_('Attended Date'), blank=False, default=set_now)
 
     class Meta:
-        verbose_name = _('Meeting')
-        verbose_name_plural = _('Meetings')
+        verbose_name = _('Minute')
+        verbose_name_plural = _('Minutes')
         ordering = ['session__name', '_date']
 
     def __str__(self):
@@ -94,7 +94,7 @@ class Session(models.Model):
 
 
 class Attendant(models.Model):
-    session = models.ForeignKey(Session, verbose_name=_('Meeting'), on_delete=models.SET_NULL, null=True)
+    session = models.ForeignKey(Session, verbose_name=_('Minute'), on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey('User', verbose_name=_('User'), on_delete=models.SET_NULL, null=True)
 
     class Meta:
@@ -111,7 +111,7 @@ class Attendant(models.Model):
 
 
 class Member(models.Model):
-    session = models.ForeignKey(SessionBase, verbose_name=_('Session Base'), on_delete=models.SET_NULL, null=True)
+    session = models.ForeignKey(SessionBase, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey('User', verbose_name=_('User'), on_delete=models.SET_NULL, null=True)
 
     class Meta:
@@ -201,7 +201,7 @@ class Enactment(models.Model):
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
     follow_grade = models.CharField(verbose_name=_('Follow Grade'), max_length=100, blank=False, null=False, default=1)
-    session = models.ForeignKey(Session, verbose_name=_('Meeting'), on_delete=models.SET_NULL, null=True)
+    session = models.ForeignKey(Session, verbose_name=_('Minute'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(User, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
     review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)
     _type = models.CharField(verbose_name=_('Type'), choices=EnactmentType.choices,
