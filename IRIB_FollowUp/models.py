@@ -3,9 +3,10 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.dispatch import receiver
-from IRIB_FollowUpProject.utils import to_jalali
+from django.utils import translation
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
+from IRIB_FollowUpProject.utils import to_jalali, format_date
 
 locale.setlocale(locale.LC_ALL, '')
 
@@ -27,30 +28,89 @@ class Title(models.TextChoices):
 class EnactmentType(models.TextChoices):
     AG = 'AGENDA', _('Agenda')
     EN = 'ENACTMENT', _('Enactment')
+    FI = 'FOR_INFORMATION', _('For Information')
+    RG = 'REGULATIONS', _('Regulations')
+
+
+class SessionBase(models.Model):
+    name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
+
+    class Meta:
+        verbose_name = _('Session Base')
+        verbose_name_plural = _('Session Bases')
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.__str__()
 
 
 class Session(models.Model):
-    name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
+    session = models.ForeignKey(SessionBase, verbose_name=_('Session Base'), on_delete=models.CASCADE, blank=False)
+    _date = models.DateTimeField(verbose_name=_('Attended Date'), blank=False, default=set_now)
 
     class Meta:
         verbose_name = _('Session')
         verbose_name_plural = _('Sessions')
-        ordering = ['name']
+        ordering = ['session__name', '_date']
 
     def __str__(self):
-        return _(self.name).__str__()
+        return '%s (%s)' % (self.session.name, self.date())
 
     def __unicode__(self):
-        return _(self.name).__str__()
+        return self.__str__()
+
+    def date(self):
+        return to_jalali(self._date) if translation.get_language() == 'fa' else format_date(self._date)
+
+    date.short_description = _('Attended Date')
+    date.admin_order_field = '_date'
+
+    def presents(self):
+        presents = ''
+        for member in Member.objects.filter(session=self.session):
+            if Attendant.objects.filter(user=member.user, session=self).count() != 0:
+                presents += '%s, ' % (member.user.get_full_name() or member.user.get_username())
+        return presents[0: presents.__len__() - 2] if presents else _('All absent')
+
+    presents.short_description = _('Presents')
+
+    def absents(self):
+        absents = ''
+        for member in Member.objects.filter(session=self.session):
+            if Attendant.objects.filter(user=member.user, session=self).count() == 0:
+                absents += '%s, ' % (member.user.get_full_name() or member.user.get_username())
+        return absents[0: absents.__len__() - 2] if absents else _('All ready')
+
+    absents.short_description = _('Absents')
 
 
 class Attendant(models.Model):
-    session = models.ForeignKey('Session', verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
+    session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey('User', verbose_name=_('User'), on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = _('Attendant')
         verbose_name_plural = _('Attendants')
+        ordering = ['session__session__name', 'user__last_name', 'user__first_name']
+        unique_together = ['session', 'user']
+
+    def __str__(self):
+        return '%s: %s' % (self.session, self.user)
+
+    def __unicode__(self):
+        return self.__str__()
+
+
+class Member(models.Model):
+    session = models.ForeignKey(SessionBase, verbose_name=_('Session Base'), on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey('User', verbose_name=_('User'), on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name = _('Member')
+        verbose_name_plural = _('Members')
         ordering = ['session__name', 'user__last_name', 'user__first_name']
         unique_together = ['session', 'user']
 
@@ -58,7 +118,7 @@ class Attendant(models.Model):
         return '%s: %s' % (self.session, self.user)
 
     def __unicode__(self):
-        return '%s: %s' % (self.session, self.user)
+        return self.__str__()
 
 
 class Subject(models.Model):
@@ -73,7 +133,7 @@ class Subject(models.Model):
         return _(self.name).__str__()
 
     def __unicode__(self):
-        return _(self.name).__str__()
+        return self.__str__()
 
 
 class Supervisor(models.Model):
@@ -88,7 +148,7 @@ class Supervisor(models.Model):
         return _(self.name).__str__()
 
     def __unicode__(self):
-        return _(self.name).__str__()
+        return self.__str__()
 
 
 class User(AbstractUser):
@@ -113,6 +173,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name() or self.get_username()
 
+    def __unicode__(self):
+        return self.__str__()
+
     def title(self):
         return Title(self._title).label
 
@@ -134,8 +197,8 @@ class Enactment(models.Model):
     session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(User, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
     review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)
-    _type= models.CharField(verbose_name=_('Type'), choices=EnactmentType.choices,
-                              default=EnactmentType.EN, max_length=30, null=False)
+    _type = models.CharField(verbose_name=_('Type'), choices=EnactmentType.choices,
+                             default=EnactmentType.FI, max_length=30, null=False)
 
     class Meta:
         verbose_name = _('Enactment')
@@ -146,7 +209,7 @@ class Enactment(models.Model):
         return '%s: %s' % (self.session, self.pk)
 
     def __unicode__(self):
-        return '%s: %s' % (self.session, self.pk)
+        return self.__str__()
 
     def description_short(self):
         return '%s...' % self.description[:50] if self.description else ''
@@ -175,6 +238,20 @@ class Enactment(models.Model):
     review_date_jalali.short_description = _('Review Date')
     review_date_jalali.admin_order_field = 'review_date'
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.review_date = timezone.now()
+        super(Enactment, self).save(force_insert, force_update, using, update_fields)
+
+    def session_absents(self):
+        return self.session.absents()
+    session_absents.short_description = _('Absents')
+
+    def session_presents(self):
+        return self.session.presents()
+
+    session_presents.short_description = _('Presents')
+
 
 class FollowUp(models.Model):
     actor = models.ForeignKey(User, verbose_name=_('Actor'), on_delete=models.SET_NULL, blank=True, null=True)
@@ -192,7 +269,7 @@ class FollowUp(models.Model):
         return '%s: %s' % (self.enactment, self.actor)
 
     def __unicode__(self):
-        return '%s: %s' % (self.enactment, self.actor)
+        return self.__str__()
 
     def date_jalali(self):
         return to_jalali(self.date)
@@ -223,7 +300,7 @@ class Attachment(models.Model):
         return self.filename()
 
     def __unicode__(self):
-        return self.filename()
+        return self.__str__()
 
     def filename(self):
         parts = self.file.name.split('/')
@@ -284,7 +361,7 @@ class Group(models.Model):
         return self.name
 
     def __unicode__(self):
-        return self.name
+        return self.__str__()
 
 
 class GroupUser(models.Model):
@@ -301,7 +378,7 @@ class GroupUser(models.Model):
         return '%s: %s' % (self.group, self.user)
 
     def __unicode__(self):
-        return '%s: %s' % (self.group, self.user)
+        return self.__str__()
 
 
 class GroupFollowUp(models.Model):
@@ -316,4 +393,4 @@ class GroupFollowUp(models.Model):
         return '%s: %s' % (self.group, self.enactment)
 
     def __unicode__(self):
-        return '%s: %s' % (self.group, self.enactment)
+        return self.__str__()

@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import admin
 from django.utils import timezone
 from jalali_date import datetime2jalali
@@ -15,12 +16,21 @@ def get_admin_url(self):
     return reverse('admin:%s_%s_change' % info, args=(self.pk,))
 
 
-def to_jalali(date, no_time=False):
+def format_date(date, second=False):
+    if second:
+        return date.strftime('%Y/%m/%d %H:%M:%S')
+    else:
+        return date.strftime('%Y/%m/%d %H:%M')
+
+
+def to_jalali(date, no_time=False, second=False):
     if date:
         if no_time:
             return datetime2jalali(date).strftime('%Y/%m/%d')
-        else:
+        elif second:
             return datetime2jalali(date).strftime('%H:%M:%S %Y/%m/%d')
+        else:
+            return datetime2jalali(date).strftime('%H:%M %Y/%m/%d')
     return ''
 
 
@@ -94,37 +104,43 @@ class BaseModelAdmin(admin.ModelAdmin):
                 ] + urls
 
 
-class JalaliDateFilter(SimpleListFilter):
-    title = _('Assignment Date')
-    parameter_name = 'date'
+def get_jalali_filter(field, filter_title):
+    class JalaliDateFilter(SimpleListFilter):
+        title = filter_title
+        parameter_name = field
 
-    def lookups(self, request, model_admin):
-        return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
-                ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
-                ('180days', _('Last 6 months'))]
+        def lookups(self, request, model_admin):
+            return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
+                    ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
+                    ('180days', _('Last 6 months'))]
 
-    def queryset(self, request, queryset):
-        startdate = timezone.now()
-        enddate = None
-        if self.value() == 'today':
-            enddate = startdate
+        def queryset(self, request, queryset):
+            startdate = timezone.now()
+            enddate = None
+            if self.value() == 'today':
+                enddate = startdate - datetime.timedelta(hours=startdate.hour) - datetime.timedelta(
+                    minutes=startdate.minute) - datetime.timedelta(seconds=startdate.second)
 
-        if self.value() == 'this_week':
-            enddate = startdate - datetime.timedelta(days=(startdate.weekday() + 2) % 7)
+            if self.value() == 'this_week':
+                enddate = startdate - datetime.timedelta(days=(startdate.weekday() + 2) % 7)
 
-        if self.value() == '10days':
-            enddate = startdate - datetime.timedelta(days=9)
+            if self.value() == '10days':
+                enddate = startdate - datetime.timedelta(days=9)
 
-        if self.value() == 'this_month':
-            enddate = startdate - datetime.timedelta(days=datetime2jalali(startdate).day - 1)
+            if self.value() == 'this_month':
+                enddate = startdate - datetime.timedelta(days=datetime2jalali(startdate).day - 1)
 
-        if self.value() == '30days':
-            enddate = startdate - datetime.timedelta(days=29)
+            if self.value() == '30days':
+                enddate = startdate - datetime.timedelta(days=29)
 
-        if self.value() == '90days':
-            enddate = startdate - datetime.timedelta(days=89)
+            if self.value() == '90days':
+                enddate = startdate - datetime.timedelta(days=89)
 
-        if self.value() == '180days':
-            enddate = startdate - datetime.timedelta(days=179)
+            if self.value() == '180days':
+                enddate = startdate - datetime.timedelta(days=179)
 
-        return queryset.filter(date__range=[enddate, startdate]) if enddate else queryset
+            kwargs = {'{0}__range'.format(self.parameter_name): [enddate, startdate],}
+
+            return queryset.filter(**kwargs) if enddate else queryset
+
+    return JalaliDateFilter

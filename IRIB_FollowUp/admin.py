@@ -8,86 +8,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
-from IRIB_FollowUpProject.utils import get_admin_url
-from IRIB_FollowUpProject.utils import BaseModelAdmin
 from django.contrib.auth.models import Group as _Group
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 from .forms import EnactmentAdminForm, get_followup_inline_form
-from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, \
-    Attachment, Attendant, FollowUp, Group, GroupUser, GroupFollowUp
-
-
-class JalaliDateFilter(SimpleListFilter):
-    title = _('Assignment Date')
-    parameter_name = 'date'
-
-    def lookups(self, request, model_admin):
-        return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
-                ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
-                ('180days', _('Last 6 months'))]
-
-    def queryset(self, request, queryset):
-        startdate = timezone.now()
-        enddate = None
-        if self.value() == 'today':
-            enddate = startdate
-
-        if self.value() == 'this_week':
-            enddate = startdate - datetime.timedelta(days=(startdate.weekday() + 2) % 7)
-
-        if self.value() == '10days':
-            enddate = startdate - datetime.timedelta(days=9)
-
-        if self.value() == 'this_month':
-            enddate = startdate - datetime.timedelta(days=datetime2jalali(startdate).day - 1)
-
-        if self.value() == '30days':
-            enddate = startdate - datetime.timedelta(days=29)
-
-        if self.value() == '90days':
-            enddate = startdate - datetime.timedelta(days=89)
-
-        if self.value() == '180days':
-            enddate = startdate - datetime.timedelta(days=179)
-
-        return queryset.filter(date__range=[enddate, startdate]) if enddate else queryset
-
-
-class ReviewJalaliDateFilter(SimpleListFilter):
-    title = _('Review Date')
-    parameter_name = 'review_date'
-
-    def lookups(self, request, model_admin):
-        return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
-                ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
-                ('180days', _('Last 6 months'))]
-
-    def queryset(self, request, queryset):
-        startdate = timezone.now()
-        enddate = None
-        if self.value() == 'today':
-            enddate = startdate
-
-        if self.value() == 'this_week':
-            enddate = startdate - datetime.timedelta(days=(startdate.weekday() + 2) % 7)
-
-        if self.value() == '10days':
-            enddate = startdate - datetime.timedelta(days=9)
-
-        if self.value() == 'this_month':
-            enddate = startdate - datetime.timedelta(days=datetime2jalali(startdate).day - 1)
-
-        if self.value() == '30days':
-            enddate = startdate - datetime.timedelta(days=29)
-
-        if self.value() == '90days':
-            enddate = startdate - datetime.timedelta(days=89)
-
-        if self.value() == '180days':
-            enddate = startdate - datetime.timedelta(days=179)
-
-        return queryset.filter(review_date__range=[enddate, startdate]) if enddate else queryset
+from IRIB_FollowUpProject.utils import get_admin_url, get_jalali_filter, BaseModelAdmin
+from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, Attachment, Member, FollowUp, Group, \
+    GroupUser, GroupFollowUp, SessionBase, Attendant
 
 
 class ActorFilter(SimpleListFilter):
@@ -104,6 +31,11 @@ class ActorFilter(SimpleListFilter):
 
 class AttendantInline(admin.TabularInline):
     model = Attendant
+    insert_after_fieldset = _('Important dates')
+
+
+class MemberInline(admin.TabularInline):
+    model = Member
     insert_after_fieldset = _('Important dates')
 
 
@@ -132,21 +64,41 @@ class SupervisorFilter(SimpleListFilter):
 
 
 @admin.register(Session)
-class SessionAdmin(BaseModelAdmin):
+class SessionAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
+    model = Session
+    search_fields = ['session__name', ]
+    fields = ['session', '_date', 'absents']
+    list_display = ['session', 'date']
+    list_display_links = ['session', 'date']
+    readonly_fields = ['date', 'absents']
+    list_filter = [get_jalali_filter('_date', _('Attended Date'))]
+    inlines = [AttendantInline]
+
+    def save_model(self, request, obj, form, change):
+        new_session = not obj.pk
+        result = super(SessionAdmin, self).save_model(request, obj, form, change)
+        if new_session:
+            for member in Member.objects.filter(session=obj.session):
+                Attendant.objects.get_or_create(user=member.user, session=obj)
+        return result
+
+
+@admin.register(SessionBase)
+class SessionBaseAdmin(BaseModelAdmin):
     model = Session
     search_fields = ['name', ]
-    inlines = [AttendantInline]
+    inlines = [MemberInline]
 
     @atomic()
     def save_model(self, request, obj, form, change):
         if obj.pk:
             if 'name' in form.initial:
-                group = get_object_or_404(Group, name=form.initial['name'])
+                group = Group.objects.get_or_create(name=form.initial['name'])[0]
                 group.name = obj.name
                 group.save()
         else:
             Group.objects.get_or_create(name=obj.name)
-        super(SessionAdmin, self).save_model(request, obj, form, change)
+        super(SessionBaseAdmin, self).save_model(request, obj, form, change)
 
     @atomic()
     def save_formset(self, request, form, formset, change):
@@ -155,7 +107,7 @@ class SessionAdmin(BaseModelAdmin):
             for item in formset.cleaned_data:
                 if 'user' in item:
                     GroupUser.objects.get_or_create(group=group, user=item['user'])
-        super(SessionAdmin, self).save_formset(request, form, formset, change)
+        super(SessionBaseAdmin, self).save_formset(request, form, formset, change)
 
 
 @admin.register(Subject)
@@ -245,7 +197,7 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
     list_display_links = ['username', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
     list_filter = ('supervisor', 'access_level', 'is_active', 'is_superuser', 'groups')
     readonly_fields = ['last_login_jalali', 'date_joined_jalali']
-    inlines = [AttendantInline, GroupUserInline]
+    inlines = [MemberInline, GroupUserInline]
     change_form_template = 'admin/custom/change_form.html'
 
     def get_readonly_fields(self, request, obj=None):
@@ -291,15 +243,18 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
 class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Enactment
     fields = (('row', 'session', 'date', 'review_date'),
+              'session_presents', 'session_absents',
               ('assigner', 'subject', '_type'), 'description',
               )
     list_display = ['row', 'type', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
     list_display_links = ['row', 'type', 'session', 'date_jalali', 'review_date_jalali', 'subject', 'description_short']
-    list_filter = ['_type', ReviewJalaliDateFilter, JalaliDateFilter, ActorFilter, SupervisorFilter, 'session',
-                   'subject',
-                   'assigner']
-    search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name', 'id' ]
-    readonly_fields = ['row', 'type', 'description_short', 'date_jalali', 'review_date_jalali', ]
+    list_filter = ['_type',
+                   get_jalali_filter('review_date', _('Review Date')), get_jalali_filter('date', _('Assignment Date')),
+                   ActorFilter, SupervisorFilter, 'session__session', 'subject', 'assigner']
+    search_fields = ['session__name', 'subject__name', 'description', 'assigner__first_name', 'assigner__last_name',
+                     'id']
+    readonly_fields = ['row', 'type', 'description_short', 'date_jalali', 'review_date_jalali', 'session_presents',
+                       'session_absents']
     form = EnactmentAdminForm
 
     def get_inline_instances(self, request, obj=None):

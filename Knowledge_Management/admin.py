@@ -4,7 +4,7 @@ from django.contrib import messages
 from jalali_date.admin import ModelAdminJalaliMixin
 from .forms import get_activity_assessment_inline_form
 from django.utils.translation import ugettext_lazy as _
-from IRIB_FollowUpProject.utils import JalaliDateFilter, BaseModelAdmin
+from IRIB_FollowUpProject.utils import get_jalali_filter, BaseModelAdmin
 
 
 class SubCategoryInline(admin.TabularInline):
@@ -87,7 +87,7 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_display_links = ['row', 'activity', 'date_jalali', 'status']
     search_fields = ['row', 'activity', 'description']
     readonly_fields = ['row', 'date', 'max_score', 'score', 'date_jalali', 'status', 'user']
-    list_filter = [JalaliDateFilter, '_status', 'activity']
+    list_filter = [get_jalali_filter('date', _('Creation Date')), '_status', 'activity']
 
     def get_queryset(self, request):
         user = request.user
