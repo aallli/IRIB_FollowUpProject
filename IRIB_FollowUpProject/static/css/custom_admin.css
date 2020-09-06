@@ -172,3 +172,48 @@
 p.datetime {
     margin-top: -8px !important;
 }
+
+.list-reports .result_list {
+    width: 100%;
+}
+
+.list-reports {
+    margin-right: 0 !important;
+}
+
+:lang(fa) .list-reports {
+    margin-left: 0 !important;
+}
+
+.column-row, .field-row {
+    width: 5%;
+}
+
+.column-type, .field-type {
+    width: 5%;
+}
+
+.column-subject, .field-subject {
+    width: 20%;
+}
+
+.column-description, .field-description {
+    width: 40%;
+}
+
+.column-followups, .field-followups {
+    width: 25%;
+}
+
+.object-tools-print {
+    margin-right: 160px;
+}
+
+.object-tools-print a {
+    width: 70px;
+    text-align: center;
+}
+
+:lang(fa) .object-tools-print {
+    margin-left: 160px;
+}

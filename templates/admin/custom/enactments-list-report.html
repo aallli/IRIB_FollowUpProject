@@ -1,0 +1,146 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_interface_tags simple_tag %}
+
+{% block branding %}
+    {% get_admin_interface_theme as theme %}
+    <div id="branding">
+        <h1 id="site-name">
+            {% if theme.logo_visible %}
+                {% if theme.logo %}
+                    <img class="logo" style="display:none;" src="{{ theme.logo.url }}"
+                         {% if theme.logo.width %}width="{{ theme.logo.width }}"{% endif %}
+                         {% if theme.logo.height %}height="{{ theme.logo.height }}"{% endif %}>
+                {% else %}
+                    <img class="logo default" style="display:none;"
+                         src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         width="104"
+                         height="36">
+                {% endif %}
+            {% endif %}
+            <span class="blocking-logo">
+            {% version as version %}
+            {% if theme.title_visible %}
+                <div>{% if theme.title %}{% trans theme.title %}{% else %}
+                    {{ site_header }}{% endif %}
+                </div>
+                <div class="blocking-version">{% trans 'Version' %}: {{ version }}</div>
+            {% endif %}
+        </span>
+        </h1>
+    </div>
+{% endblock %}
+
+{% block usertools %}
+    <div id="user-tools">
+        <div>
+            <strong>{% trans 'Reported by' %}: {{ user.title }} {% firstof user.get_full_name user.get_username %}</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>{% trans 'Date' %}: {{ date }}</strong></div>
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block content %}
+
+    <!-- Content -->
+    <div id="content" class="flex">
+        {% for item in minutes %}
+            {#            {% admin_list_filter cl spec %}#}
+            <h1>
+                {% trans 'Minute' %} {{ item.minute.session.name }} {{ item.minute.date }}
+            </h1>
+
+            <div id="content-main">
+
+                <div class="module filtered" id="changelist-{{ item.minute.pk }}">
+                    <form id="changelist-form-{{ item.minute.pk }}" method="post" novalidate="">
+                        {% csrf_token %}
+
+                        <div class="results list-reports">
+                            <table class="result_list">
+                                <thead>
+                                <tr>
+
+                                    <th scope="col" class="column-row">
+
+                                        <div class="text"><span>#</span></div>
+                                        <div class="clear"></div>
+                                    </th>
+                                    <th scope="col" class="column-row nowrap">
+
+                                        <div class="text"><span>{% trans 'Row' %}</span></div>
+                                        <div class="clear"></div>
+                                    </th>
+                                    <th scope="col" class="column-type">
+
+                                        <div class="text"><span>{% trans 'Type' %}</span></div>
+                                        <div class="clear"></div>
+                                    </th>
+                                    <th scope="col" class="sortable column-subject">
+                                        <div class="text"><span>{% trans 'Subject' %}</span></div>
+                                        <div class="clear"></div>
+                                    </th>
+                                    <th scope="col" class="column-description">
+                                        <div class="text"><span>{% trans 'Description' %}</span></div>
+                                        <div class="clear"></div>
+                                    </th>
+                                    <th scope="col" class="column-followups">
+                                        <div class="text"><span>{% trans 'Follow Ups' %}</span></div>
+                                        <div class="clear"></div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for enactment in item.enactments %}
+                                    <tr class="{% cycle "row1" "row2" %}">
+
+                                        <td class="action-checkbox">{{ forloop.counter }}</td>
+                                        <th class="field-row nowrap">
+                                            <a target="_blank"
+                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                                {{ enactment.id }}
+                                            </a>
+                                        </th>
+                                        <td class="field-type">
+                                            <a target="_blank"
+                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                                {{ enactment.type }}
+                                            </a>
+                                        </td>
+                                        <td class="field-subject">
+                                            <a target="_blank"
+                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                                {{ enactment.subject }}
+                                            </a>
+                                        </td>
+                                        <td class="field-description">
+                                            <a target="_blank"
+                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                                {{ enactment.description }}
+                                            </a>
+                                        </td>
+                                        <td class="field-followups">
+                                            <a target="_blank"
+                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                                {{ enactment.followups }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+            <br class="clear">
+            <br class="clear">
+        {% endfor %}
+    </div>
+
+{% endblock %}

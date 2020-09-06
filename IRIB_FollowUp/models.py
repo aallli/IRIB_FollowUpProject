@@ -258,6 +258,11 @@ class Enactment(models.Model):
 
     session_presents.short_description = _('Presents')
 
+    def followups(self):
+        return ', '.join(followup.actor.__str__() for followup in FollowUp.objects.filter(enactment=self))
+
+    followups.short_description = _('Follow Ups')
+
 
 class FollowUp(models.Model):
     actor = models.ForeignKey(User, verbose_name=_('Actor'), on_delete=models.SET_NULL, blank=True, null=True)

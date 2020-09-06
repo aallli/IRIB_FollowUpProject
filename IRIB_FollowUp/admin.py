@@ -1,15 +1,20 @@
+from django.urls import path
 from django.contrib import admin
+from django.utils import timezone
+from django.core import serializers
 from django.contrib import messages
+from django.utils import translation
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
+from django.template.response import TemplateResponse
 from django.contrib.auth.models import Group as _Group
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 from .forms import EnactmentAdminForm, get_followup_inline_form
-from IRIB_FollowUpProject.utils import get_jalali_filter, BaseModelAdmin
+from IRIB_FollowUpProject.utils import get_jalali_filter, BaseModelAdmin, to_jalali, format_date
 from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, Attachment, Member, FollowUp, Group, \
     GroupUser, GroupFollowUp, SessionBase, Attendant
 
@@ -301,6 +306,12 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 AttachmentInline(self.model, self.admin_site),
             ]
 
+    def changelist_view(self, request, extra_context=None):
+        response = super(EnactmentAdmin, self).changelist_view(request, extra_context)
+        filtered_query_set = response.context_data["cl"].queryset
+        request.session['filtered_query_set'] = serializers.serialize('json', filtered_query_set)
+        return response
+
     def get_queryset(self, request):
         queryset = Enactment.objects.filter(follow_grade=1)
         if request.user.is_superuser or request.user.is_secretary:
@@ -319,10 +330,27 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
         return self.readonly_fields
 
+    def report(self, request):
+        queryset = Enactment.objects.none()
+        for obj in serializers.deserialize('json', request.session['filtered_query_set']):
+            queryset |= Enactment.objects.filter(pk=obj.object.pk)
+
+        minutes = []
+        for minute in Session.objects.filter(pk__in=queryset.values('session')):
+            minutes.append({'minute': minute, 'enactments': queryset.filter(session=minute)})
+
+        context = dict(
+            minutes=minutes,
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+        )
+        return TemplateResponse(request, 'admin/custom/enactments-list-report.html', context)
+
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
-        from django.urls import path
-        return [path('close/', self.close, name="close"), ] + urls
+        return [
+                   path('close/', self.close, name="close"),
+                   path('report/', self.report, name="report"),
+               ] + urls
 
     @atomic
     def close(self, request):

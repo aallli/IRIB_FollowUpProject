@@ -21,7 +21,7 @@
             {% endif %}
         {% endif %}
         <span class="blocking-logo">
-    {% version as version %}
+            {% version as version %}
             {% if theme.title_visible %}
                 <div>{% if theme.title %}{% trans theme.title %}{% else %}
                     {{ site_header }}{% endif %}
@@ -35,13 +35,13 @@
 {% block userlinks %}
     <span class="{% if LANGUAGE_CODE == 'en' %}invisible-lang{% endif %}">
         <a href="{{ request|switch_i18n:'en' }}">{% trans 'En' %}
-{#            <img class="i18n_flag" src="{% static 'img/en.png' %}"/>#}
+            {#            <img class="i18n_flag" src="{% static 'img/en.png' %}"/>#}
         </a> /
     </span>
 
     <span class="{% if LANGUAGE_CODE == 'fa' %}invisible-lang{% endif %}">
         <a href="{{ request|switch_i18n:'fa' }}">{% trans 'Fa' %}
-{#            <img class="i18n_flag" src="{% static 'img/fa.png' %}"/>#}
+            {#            <img class="i18n_flag" src="{% static 'img/fa.png' %}"/>#}
         </a> /
     </span>
 
