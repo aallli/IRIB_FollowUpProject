@@ -187,7 +187,7 @@ class AttachmentAdmin(BaseModelAdmin):
         if db_field.name == "enactment" and not (request.user.is_superuser or request.user.is_secretary):
             queryset = Enactment.objects.filter(follow_grade=1)
             kwargs["queryset"] = queryset.filter(
-                session__pk__in=Attendant.objects.filter(user=request.user).values('session'))
+                session__pk__in=Member.objects.filter(user=request.user).values('session'))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -282,7 +282,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return queryset
 
         return queryset.filter(pk__in=FollowUp.objects.filter(actor=request.user).values('enactment')) | \
-               queryset.filter(session__in=Attendant.objects.filter(user=request.user).values('session'))
+               queryset.filter(session__in=Member.objects.filter(user=request.user).values('session'))
 
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
