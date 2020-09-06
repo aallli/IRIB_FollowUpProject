@@ -113,6 +113,9 @@
 .fieldBox.field-box.field-follow_grade,
 .fieldBox.field-box.field-first_supervisor,
 .fieldBox.field-box.field-second_supervisor,
+.fieldBox.field-box.field-_type,
+.fieldBox.field-box.field-session_date,
+.fieldBox.field-box.field-session_absents,
 .fieldBox.field-box.field-row {
     white-space: nowrap;
 }

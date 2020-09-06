@@ -250,6 +250,11 @@ class Enactment(models.Model):
         self.review_date = timezone.now()
         super(Enactment, self).save(force_insert, force_update, using, update_fields)
 
+    def session_date(self):
+        return self.session.date()
+
+    session_date.short_description = _('Attended Date')
+
     def session_absents(self):
         return self.session.absents()
 
