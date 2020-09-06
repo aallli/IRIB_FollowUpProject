@@ -270,11 +270,16 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     form = EnactmentAdminForm
 
     def get_inline_instances(self, request, obj=None):
-        return [
-            GroupFollowUpInline(self.model, self.admin_site),
-            get_followup_inline(request)(self.model, self.admin_site),
-            AttachmentInline(self.model, self.admin_site),
-        ]
+        if request.user.is_superuser or request.user.is_secretary:
+            return [
+                GroupFollowUpInline(self.model, self.admin_site),
+                get_followup_inline(request)(self.model, self.admin_site),
+                AttachmentInline(self.model, self.admin_site),
+            ]
+        else:
+            return [
+                AttachmentInline(self.model, self.admin_site),
+            ]
 
     def get_queryset(self, request):
         queryset = Enactment.objects.filter(follow_grade=1)
@@ -287,7 +292,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
             return self.readonly_fields + ['session', 'date', 'review_date', 'assigner', 'subject',
-                                           'description', 'follow_grade']
+                                           'description', 'follow_grade', 'type']
         elif obj:
             return self.readonly_fields + ['date', 'review_date']
 
