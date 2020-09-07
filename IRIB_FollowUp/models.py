@@ -227,22 +227,25 @@ class Enactment(models.Model):
         return '%s...' % self.description[:50] if self.description else ''
 
     description_short.short_description = _('Description')
+    description_short.admin_order_field = 'description'
 
     def type(self):
         return EnactmentType(self._type).label
 
     type.short_description = _('Type')
+    type.admin_order_field = '_type'
 
     def row(self):
         return self.id if self.id else '-'
 
     row.short_description = _('Row')
+    row.admin_order_field = 'id'
 
     def review_date(self):
         return to_jalali(self._review_date) if translation.get_language() == 'fa' else format_date(self._review_date)
 
     review_date.short_description = _('Review Date')
-    review_date.admin_order_field = 'review_date'
+    review_date.admin_order_field = '_review_date'
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -253,6 +256,7 @@ class Enactment(models.Model):
         return self.session.date()
 
     session_date.short_description = _('Attended Date')
+    session_date.admin_order_field = 'session___date'
 
     def session_absents(self):
         return self.session.absents()
