@@ -19,12 +19,12 @@
             {% endif %}
             <span class="blocking-logo">
             {% version as version %}
-            {% if theme.title_visible %}
-                <div>{% if theme.title %}{% trans theme.title %}{% else %}
-                    {{ site_header }}{% endif %}
-                </div>
-                <div class="blocking-version">{% trans 'Version' %}: {{ version }}</div>
-            {% endif %}
+                {% if theme.title_visible %}
+                    <div>{% if theme.title %}{% trans theme.title %}{% else %}
+                        {{ site_header }}{% endif %}
+                    </div>
+                    <div class="blocking-version">{% trans 'Version' %}: {{ version }}</div>
+                {% endif %}
         </span>
         </h1>
     </div>
@@ -48,11 +48,14 @@
     <!-- Content -->
     <div id="content" class="flex">
         {% for item in minutes %}
-            {#            {% admin_list_filter cl spec %}#}
-            <h1>
-                {% trans 'Minute' %} {{ item.minute.session.name }} {{ item.minute.date }}
-            </h1>
+            <h1> {% trans 'Minute' %} {{ item.minute.session.name }}</h1>
 
+            <h3>{% trans 'Attended Date' %}: {{ item.minute.date }}</h3>
+
+            <h3>{% trans 'Presents' %}: {{ item.minute.presents }}</h3>
+
+            <h3>{% trans 'Absents' %}: {{ item.minute.absents }}</h3>
+            <br/>
             <div id="content-main">
 
                 <div class="module filtered" id="changelist-{{ item.minute.pk }}">

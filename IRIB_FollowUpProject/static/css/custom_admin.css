@@ -205,17 +205,25 @@ p.datetime {
     width: 25%;
 }
 
-.object-tools-print {
-    margin-right: 160px;
-}
-
 .object-tools-print a {
     width: 70px;
     text-align: center;
 }
 
+.object-tools-print {
+    margin-right: 160px;
+}
+
 :lang(fa) .object-tools-print {
     margin-left: 160px;
+}
+
+.object-tools-print-detail {
+    margin-right: 80px;
+}
+
+:lang(fa) .object-tools-print-detail {
+    margin-left: 80px;
 }
 
 div.field-assigner.field-review_date.field-row.field-subject.form-row,

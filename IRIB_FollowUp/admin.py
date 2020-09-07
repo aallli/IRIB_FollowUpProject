@@ -105,6 +105,19 @@ class SessionAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 Attendant.objects.get_or_create(user=member.user, session=obj)
         return result
 
+    def report(self, request, pk=None):
+        minute = Session.objects.get(pk=pk)
+        enactments = Enactment.objects.filter(session=minute)
+        context = dict(
+            minutes=[{'minute': minute, 'enactments': enactments}],
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+        )
+        return TemplateResponse(request, 'admin/custom/enactments-list-report.html', context)
+
+    def get_urls(self):
+        urls = super(SessionAdmin, self).get_urls()
+        return [path('<int:pk>/report/', self.report, name="session-report"), ] + urls
+
 
 @admin.register(SessionBase)
 class SessionBaseAdmin(BaseModelAdmin):
@@ -349,7 +362,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         urls = super(EnactmentAdmin, self).get_urls()
         return [
                    path('close/', self.close, name="close"),
-                   path('report/', self.report, name="report"),
+                   path('report/', self.report, name="enactment-report"),
                ] + urls
 
     @atomic

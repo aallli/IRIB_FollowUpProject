@@ -1,5 +1,5 @@
 {% extends "admin/change_form.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% if opts.model_name == 'enactment' %}
     {% block extrahead %}
@@ -10,3 +10,15 @@
         <script type="text/javascript" src="{% static 'js/custom_admin.js' %}"/>
     {% endblock %}
 {% endif %}
+
+{% block object-tools %}
+    {% if opts.model_name == 'session' %}
+        <ul class="object-tools object-tools-print object-tools-print-detail">
+            <li>
+                <a href="{% url 'admin:session-report' pk=original.pk %}" title="{% trans 'Print' %}"
+                   target="_blank">{% trans 'Print' %}</a>
+            </li>
+        </ul>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}
