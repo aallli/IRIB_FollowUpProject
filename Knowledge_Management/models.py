@@ -1,9 +1,9 @@
 from django.db import models
 from django.conf import settings
-
+from django.utils import translation
 from IRIB_FollowUp.models import User
 from django.utils.translation import ugettext_lazy as _
-from IRIB_FollowUpProject.utils import to_jalali, set_now
+from IRIB_FollowUpProject.utils import to_jalali, set_now, format_date
 
 
 class ActivityStatus(models.TextChoices):
@@ -73,7 +73,7 @@ class CommitteeMember(models.Model):
         verbose_name_plural = _('Committee Members')
 
     def __str__(self):
-        return self.user
+        return self.user.__str__()
 
     def __unicode__(self):
         return self.__str__()
@@ -126,9 +126,9 @@ class ActivityIndicator(models.Model):
 
 class CardtableBase(models.Model):
     activity = models.ForeignKey(Activity, verbose_name=_('Activity'), on_delete=models.SET_NULL, null=True)
-    date = models.DateTimeField(verbose_name=_('Creation Date'), blank=False, default=set_now)
+    _date = models.DateTimeField(verbose_name=_('Creation Date'), blank=False, default=set_now)
     description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
-    user = models.OneToOneField(User, verbose_name=_('Knowledge User'), on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, verbose_name=_('Knowledge User'), on_delete=models.SET_NULL, null=True)
     _status = models.CharField(verbose_name=_('Status'), choices=ActivityStatus.choices,
                                default=ActivityStatus.DR, max_length=30, null=False)
 
@@ -138,7 +138,7 @@ class CardtableBase(models.Model):
         ordering = ['activity']
 
     def __str__(self):
-        return '%s: %s' % (self.activity, self.date)
+        return '%s: %s' % (self.activity, self.date())
 
     def __unicode__(self):
         return self.__str__()
@@ -163,11 +163,22 @@ class CardtableBase(models.Model):
 
     score.short_description = _('Score')
 
-    def date_jalali(self):
-        return to_jalali(self.date)
+    def limit(self):
+        return self.activity.limit if self.activity else 0
 
-    date_jalali.short_description = _('Creation Date')
-    date_jalali.admin_order_field = 'date'
+    limit.short_description = _('Limit')
+
+    def quantity(self):
+        return CardtableBase.objects.filter(user=self.user, activity=self.activity, _date__year=self._date.year,
+                                            _status=ActivityStatus.DR).count()
+
+    quantity.short_description = _('Quantity')
+
+    def date(self):
+        return to_jalali(self._date) if translation.get_language() == 'fa' else format_date(self._date)
+
+    date.short_description = _('Creation Date')
+    date.admin_order_field = 'date'
 
     def status(self):
         return ActivityStatus(self._status).label

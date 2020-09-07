@@ -1,6 +1,7 @@
 from . import models
 from django.contrib import admin
 from django.contrib import messages
+from django.db.transaction import atomic
 from jalali_date.admin import ModelAdminJalaliMixin
 from .forms import get_activity_assessment_inline_form
 from django.utils.translation import ugettext_lazy as _
@@ -55,6 +56,20 @@ class CategoryAdmin(BaseModelAdmin):
     inlines = [SubCategoryInline]
 
 
+@admin.register(models.Attachment)
+class AttachmentAdmin(BaseModelAdmin):
+    model = models.Attachment
+    fields = ['description', 'file', 'cardtable']
+    search_fields = ['description', 'file',
+                     'cardtable__activity__name', 'cardtable__description',
+                     'cardtable__user__first_name', 'cardtable__user__last_name', 'cardtable__user__username', ]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "cardtable" and not (request.user.is_superuser or request.user.is_km_operator):
+            kwargs["queryset"] = models.CardtableBase.objects.filter(user=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 @admin.register(models.Activity)
 class ActivityAdmin(BaseModelAdmin):
     model = models.Activity
@@ -81,13 +96,14 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = models.PersonalCardtable
     fieldsets = (
         (_('Main info'), {
-            'fields': (('row', 'date', 'status'), ('activity', 'max_score', 'score'), 'description',)}),
+            'fields': (('row', 'date', 'status'), ('activity', 'max_score', 'score', 'limit', 'quantity'),
+                       'description',)}),
     )
-    list_display = ['row', 'activity', 'date_jalali', 'status']
-    list_display_links = ['row', 'activity', 'date_jalali', 'status']
+    list_display = ['row', 'activity', 'date', 'status']
+    list_display_links = ['row', 'activity', 'date', 'status']
     search_fields = ['row', 'activity', 'description']
-    readonly_fields = ['row', 'date', 'max_score', 'score', 'date_jalali', 'status', 'user']
-    list_filter = [get_jalali_filter('date', _('Creation Date')), '_status', 'activity']
+    readonly_fields = ['row', 'max_score', 'score', 'limit', 'quantity', 'date', 'status', 'user']
+    list_filter = [get_jalali_filter('_date', _('Creation Date')), '_status', 'activity']
 
     def get_queryset(self, request):
         user = request.user
@@ -102,7 +118,8 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return (
                 (_('Main info'), {
                     'fields': (
-                        ('row', 'user', 'date', 'status'), ('activity', 'max_score', 'score'), 'description',)}),)
+                        ('row', 'date', 'status'), ('activity', 'max_score', 'score', 'limit', 'quantity'),
+                        'description',)}),)
         return self.fieldsets
 
     def get_readonly_fields(self, request, obj=None):
@@ -132,15 +149,20 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return self.list_filter + ['user']
         return self.list_filter
 
+    @atomic
     def save_model(self, request, obj, form, change):
         new_model = not obj.pk
-        if new_model:
-            obj.user = request.user
-        result = super(PersonalCardtableAdmin, self).save_model(request, obj, form, change)
-        if new_model:
-            for member in models.CommitteeMember.objects.all():
-                models.ActivityAssessment.objects.get_or_create(cardtable=obj, member=member)
-        return result
+        try:
+            if new_model:
+                obj.user = request.user
+                if obj.quantity() == obj.limit():
+                    raise Exception(_('Maximum exceeded, Invalid operations.'))
+            super(PersonalCardtableAdmin, self).save_model(request, obj, form, change)
+            if new_model:
+                for member in models.CommitteeMember.objects.all():
+                    models.ActivityAssessment.objects.get_or_create(cardtable=obj, member=member)
+        except Exception as e:
+            self.message_user(request, e, messages.ERROR)
 
     def save_formset(self, request, form, formset, change):
         try:
@@ -162,10 +184,10 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         (_('Main info'), {
             'fields': (('row', 'date', 'user', 'status'), ('activity', 'max_score', 'score'), 'description',)}),
     )
-    list_display = ['row', 'user', 'activity', 'date_jalali', 'status']
-    list_display_links = ['row', 'user', 'activity', 'date_jalali', 'status']
+    list_display = ['row', 'user', 'activity', 'date', 'status']
+    list_display_links = ['row', 'user', 'activity', 'date', 'status']
     search_fields = ['row', 'activity', 'description']
-    readonly_fields = ['row', 'date', 'max_score', 'score', 'user', 'date_jalali', 'status']
+    readonly_fields = ['row', 'max_score', 'score', 'user', 'date', 'status']
     list_filter = ['_status', 'activity']
 
     def save_model(self, request, obj, form, change):

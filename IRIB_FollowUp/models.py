@@ -178,7 +178,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return '%s %s' % (
-        self.last_name, self.first_name) if self.last_name or self.first_name else  self.get_username()
+            self.last_name, self.first_name) if self.last_name or self.first_name else  self.get_username()
 
     def __unicode__(self):
         return self.__str__()
@@ -189,6 +189,10 @@ class User(AbstractUser):
     @property
     def is_secretary(self):
         return self.access_level == AccessLevel.SECRETARY
+
+    @property
+    def is_km_operator(self):
+        return self.groups.filter(name=settings.OPERATOR_GROUP_NAME) > 0
 
     def delete(self, using=None, keep_parents=False):
         if self.is_superuser:

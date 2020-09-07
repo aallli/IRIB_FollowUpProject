@@ -116,6 +116,12 @@
 .fieldBox.field-box.field-_type,
 .fieldBox.field-box.field-session_date,
 .fieldBox.field-box.field-session_absents,
+.fieldBox.field-box.field-status,
+.fieldBox.field-box.field-max_score,
+.fieldBox.field-box.field-score,
+.fieldBox.field-box.field-user,
+.fieldBox.field-box.field-limit,
+.fieldBox.field-box.field-quantity,
 .fieldBox.field-box.field-row {
     white-space: nowrap;
 }
@@ -227,6 +233,7 @@ p.datetime {
 }
 
 div.field-assigner.field-review_date.field-row.field-subject.form-row,
+div.form-row.field-row.field-date.field-status,
 div.form-row.field-_type.field-description {
     width: 100%;
 }
