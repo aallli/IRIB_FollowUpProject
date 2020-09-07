@@ -217,3 +217,9 @@ p.datetime {
 :lang(fa) .object-tools-print {
     margin-left: 160px;
 }
+
+div.field-assigner.field-review_date.field-row.field-subject.form-row,
+div.form-row.field-_type.field-description {
+    width: 100%;
+}
+
