@@ -21,6 +21,10 @@ class ActivityIndicatorInline(admin.TabularInline):
     model = models.ActivityIndicator
 
 
+class ActivitySubCategoryInline(admin.TabularInline):
+    model = models.ActivitySubCategory
+
+
 def get_activity_assessment_inline(request):
     class ActivityAssessmentInline(ModelAdminJalaliMixin, admin.TabularInline):
         fields = ['member', 'score', 'scores', 'description', 'date_jalali', ]
@@ -173,6 +177,7 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_inline_instances(self, request, obj=None):
         return [
             AttachmentInline(self.model, self.admin_site),
+            ActivitySubCategoryInline(self.model, self.admin_site),
             get_activity_assessment_inline(request)(self.model, self.admin_site),
         ]
 
