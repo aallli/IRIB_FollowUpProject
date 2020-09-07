@@ -170,11 +170,13 @@ class User(AbstractUser):
         return to_jalali(self.last_login) if translation.get_language() == 'fa' else format_date(self.last_login)
 
     last_login_jalali.short_description = _('last login')
+    last_login_jalali.admin_order_field = 'last_login'
 
     def date_joined_jalali(self):
         return to_jalali(self.date_joined) if translation.get_language() == 'fa' else format_date(self.date_joined)
 
     date_joined_jalali.short_description = _('date joined')
+    date_joined_jalali.admin_order_field = 'date_joined'
 
     def __str__(self):
         return '%s %s' % (
