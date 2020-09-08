@@ -149,6 +149,7 @@ class Supervisor(models.Model):
         verbose_name = _('Supervisor Unit')
         verbose_name_plural = _('Supervisor Units')
         ordering = ['name']
+        db_table = 'IRIB_Auth_supervisor'
 
     def __str__(self):
         return _(self.name).__str__()
@@ -165,6 +166,9 @@ class User(AbstractUser):
                               default=Title.MR, max_length=100, null=False)
     supervisor = models.ForeignKey('Supervisor', verbose_name=_('Supervisor Unit'), on_delete=models.SET_NULL,
                                    null=True)
+
+    class Meta:
+        db_table = 'IRIB_Auth_user'
 
     def last_login_jalali(self):
         return to_jalali(self.last_login) if translation.get_language() == 'fa' else format_date(self.last_login)
