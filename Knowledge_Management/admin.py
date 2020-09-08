@@ -106,25 +106,11 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_display = ['row', 'activity', 'date', 'status']
     list_display_links = ['row', 'activity', 'date', 'status']
     search_fields = ['row', 'activity', 'description']
-    readonly_fields = ['row', 'max_score', 'score', 'limit', 'quantity', 'date', 'status', 'user']
+    readonly_fields = ['row', 'max_score', 'score', 'limit', 'quantity', 'date', 'status']
     list_filter = [get_jalali_filter('_date', _('Creation Date')), '_status', 'activity']
 
     def get_queryset(self, request):
-        user = request.user
-        if user.is_superuser or models.CommitteeMember.is_committee_member(user):
-            return models.PersonalCardtable.objects.all()
-        else:
-            return models.PersonalCardtable.objects.filter(user=user)
-
-    def get_fieldsets(self, request, obj=None):
-        user = request.user
-        if user.is_superuser or models.CommitteeMember.is_committee_member(user):
-            return (
-                (_('Main info'), {
-                    'fields': (
-                        ('row', 'date', 'status'), ('activity', 'max_score', 'score', 'limit', 'quantity'),
-                        'description',)}),)
-        return self.fieldsets
+        return models.PersonalCardtable.objects.filter(user=request.user)
 
     def get_readonly_fields(self, request, obj=None):
         user = request.user
@@ -132,26 +118,6 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return self.readonly_fields + ['activity', 'description']
 
         return self.readonly_fields
-
-    def get_list_display(self, request):
-        user = request.user
-        if user.is_superuser or models.CommitteeMember.is_committee_member(user):
-            list_display = self.list_display.copy()
-            list_display.insert(1, 'user')
-            return list_display
-        return self.list_display
-
-    def get_list_display_links(self, request, list_display):
-        user = request.user
-        if user.is_superuser or models.CommitteeMember.is_committee_member(user):
-            return self.list_display_links + ['user']
-        return self.list_display_links
-
-    def get_list_filter(self, request):
-        user = request.user
-        if user.is_superuser or models.CommitteeMember.is_committee_member(user):
-            return self.list_filter + ['user']
-        return self.list_filter
 
     @atomic
     def save_model(self, request, obj, form, change):
@@ -187,13 +153,21 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = models.AssessmentCardtable
     fieldsets = (
         (_('Main info'), {
-            'fields': (('row', 'date', 'user', 'status'), ('activity', 'max_score', 'score'), 'description',)}),
+            'fields': (('row', 'date', 'user,' 'status'), ('activity', 'max_score', 'score', 'limit', 'quantity'),
+                       'description',)}),
     )
     list_display = ['row', 'user', 'activity', 'date', 'status']
     list_display_links = ['row', 'user', 'activity', 'date', 'status']
     search_fields = ['row', 'activity', 'description']
-    readonly_fields = ['row', 'max_score', 'score', 'user', 'date', 'status']
-    list_filter = ['_status', 'activity']
+    readonly_fields = ['row', 'max_score', 'score', 'limit', 'quantity', 'date', 'status', 'user']
+    list_filter = ['user', get_jalali_filter('_date', _('Creation Date')), '_status', 'activity']
+
+    def get_queryset(self, request):
+        user = request.user
+        if user.is_superuser or models.CommitteeMember.is_committee_member(user):
+            return models.PersonalCardtable.objects.exclude(_status=models.ActivityStatus.DR)
+        else:
+            return models.PersonalCardtable.objects.none()
 
     def save_model(self, request, obj, form, change):
         return super(AssessmentCardtableAdmin, self).save_model(request, obj, form, change)
@@ -201,5 +175,6 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_inline_instances(self, request, obj=None):
         return [
             AttachmentInline(self.model, self.admin_site),
+            ActivitySubCategoryInline(self.model, self.admin_site),
             get_activity_assessment_inline(request)(self.model, self.admin_site),
         ]
