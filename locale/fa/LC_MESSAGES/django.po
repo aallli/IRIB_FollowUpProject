@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-07 12:59+0430\n"
+"POT-Creation-Date: 2020-09-07 13:10+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,7 +132,7 @@ msgstr "سامانه پیگیری"
 msgid "User"
 msgstr "کاربر"
 
-#: .\IRIB_FollowUp\models.py:20
+#: .\IRIB_FollowUp\models.py:20 .\Knowledge_Management\models.py:61
 msgid "Secretary"
 msgstr "دبیر"
 
@@ -165,7 +165,7 @@ msgstr "آیین نامه"
 #: .\IRIB_FollowUp\models.py:36 .\IRIB_FollowUp\models.py:131
 #: .\IRIB_FollowUp\models.py:146 .\IRIB_FollowUp\models.py:374
 #: .\Knowledge_Management\models.py:19 .\Knowledge_Management\models.py:31
-#: .\Knowledge_Management\models.py:45 .\Knowledge_Management\models.py:83
+#: .\Knowledge_Management\models.py:45 .\Knowledge_Management\models.py:89
 msgid "Name"
 msgstr "نام"
 
@@ -266,8 +266,8 @@ msgid "Delete failed, Immutable user: (%s)"
 msgstr "خطا! کاربر '%s' غیر قابل حذف است."
 
 #: .\IRIB_FollowUp\models.py:206 .\IRIB_FollowUp\models.py:229
-#: .\IRIB_FollowUp\models.py:311 .\Knowledge_Management\models.py:126
-#: .\Knowledge_Management\models.py:187 .\Knowledge_Management\models.py:222
+#: .\IRIB_FollowUp\models.py:311 .\Knowledge_Management\models.py:118
+#: .\Knowledge_Management\models.py:179 .\Knowledge_Management\models.py:214
 #: .\static\admin\custom\enactments-list-report.html:79
 #: .\templates\admin\custom\enactments-list-report.html:90
 msgid "Description"
@@ -291,7 +291,7 @@ msgstr "نوع"
 msgid "Enactments"
 msgstr "مصوبات"
 
-#: .\IRIB_FollowUp\models.py:241 .\Knowledge_Management\models.py:142
+#: .\IRIB_FollowUp\models.py:241 .\Knowledge_Management\models.py:134
 #: .\static\admin\custom\enactments-list-report.html:66
 #: .\templates\admin\custom\enactments-list-report.html:77
 msgid "Row"
@@ -319,15 +319,15 @@ msgstr "نتیجه"
 msgid "Follow Up"
 msgstr "پیگیری"
 
-#: .\IRIB_FollowUp\models.py:312 .\Knowledge_Management\models.py:223
+#: .\IRIB_FollowUp\models.py:312 .\Knowledge_Management\models.py:180
 msgid "File"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:316 .\Knowledge_Management\models.py:227
+#: .\IRIB_FollowUp\models.py:316 .\Knowledge_Management\models.py:184
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: .\IRIB_FollowUp\models.py:317 .\Knowledge_Management\models.py:228
+#: .\IRIB_FollowUp\models.py:317 .\Knowledge_Management\models.py:185
 msgid "Attachments"
 msgstr "ضمایم"
 
@@ -429,17 +429,17 @@ msgstr ""
 "نمی تواند کلمه عبور شما را مشاهده کند.  کلمه عبور خود را می توانید از طریق "
 "<a href=\"{}\">این لینک</a> تغییر دهید."
 
-#: .\Knowledge_Management\admin.py:98 .\Knowledge_Management\admin.py:119
-#: .\Knowledge_Management\admin.py:184
+#: .\Knowledge_Management\admin.py:102 .\Knowledge_Management\admin.py:123
+#: .\Knowledge_Management\admin.py:189
 msgid "Main info"
 msgstr "اطلاعات اصلی"
 
-#: .\Knowledge_Management\admin.py:106 .\Knowledge_Management\models.py:125
-#: .\Knowledge_Management\models.py:173
+#: .\Knowledge_Management\admin.py:110 .\Knowledge_Management\models.py:117
+#: .\Knowledge_Management\models.py:165
 msgid "Creation Date"
 msgstr "تاریخ ثبت"
 
-#: .\Knowledge_Management\admin.py:159
+#: .\Knowledge_Management\admin.py:163
 msgid "Maximum exceeded, Invalid operations."
 msgstr "به دلیل احراز سقف تکرار، عملیات غیر مجاز است."
 
@@ -483,7 +483,7 @@ msgstr "سرفصلهای دانشی"
 msgid "Category"
 msgstr "سرفصل"
 
-#: .\Knowledge_Management\models.py:35 .\Knowledge_Management\models.py:111
+#: .\Knowledge_Management\models.py:35 .\Knowledge_Management\models.py:198
 msgid "Knowledge Sub-Category"
 msgstr "موضوع دانشی"
 
@@ -491,11 +491,11 @@ msgstr "موضوع دانشی"
 msgid "Knowledge Sub-Categories"
 msgstr "موضوعات دانشی"
 
-#: .\Knowledge_Management\models.py:46 .\Knowledge_Management\models.py:148
+#: .\Knowledge_Management\models.py:46 .\Knowledge_Management\models.py:140
 msgid "Maximum Score"
 msgstr "حداکثر امتیاز"
 
-#: .\Knowledge_Management\models.py:47 .\Knowledge_Management\models.py:162
+#: .\Knowledge_Management\models.py:47 .\Knowledge_Management\models.py:154
 msgid "Limit"
 msgstr "سقف تکرار"
 
@@ -511,109 +511,109 @@ msgstr "فعالیتهای دانشی"
 msgid "Chairman"
 msgstr "رییس"
 
-#: .\Knowledge_Management\models.py:63 .\Knowledge_Management\models.py:184
+#: .\Knowledge_Management\models.py:64 .\Knowledge_Management\models.py:211
 msgid "Committee Member"
 msgstr "عضو کمیته"
 
-#: .\Knowledge_Management\models.py:64
+#: .\Knowledge_Management\models.py:65
 msgid "Committee Members"
 msgstr "اعضای کمیته"
 
-#: .\Knowledge_Management\models.py:86 .\Knowledge_Management\models.py:96
+#: .\Knowledge_Management\models.py:92 .\Knowledge_Management\models.py:102
 msgid "Indicator"
 msgstr "شاخص ارزیابی"
 
-#: .\Knowledge_Management\models.py:87
+#: .\Knowledge_Management\models.py:93
 msgid "Indicators"
 msgstr "شاخصهای ارزیابی"
 
-#: .\Knowledge_Management\models.py:95 .\Knowledge_Management\models.py:110
-#: .\Knowledge_Management\models.py:124
+#: .\Knowledge_Management\models.py:101 .\Knowledge_Management\models.py:116
+#: .\Knowledge_Management\models.py:197
 msgid "Activity"
 msgstr "فعالیت"
 
-#: .\Knowledge_Management\models.py:97
+#: .\Knowledge_Management\models.py:103
 msgid "Weight"
 msgstr "وزن"
 
-#: .\Knowledge_Management\models.py:100
+#: .\Knowledge_Management\models.py:106
 msgid "Activity Indicator"
 msgstr "شاخص ارزیابی فعالیت"
 
-#: .\Knowledge_Management\models.py:101
+#: .\Knowledge_Management\models.py:107
 msgid "Activity Indicators"
 msgstr "شاخصهای ارزیابی فعالیت"
 
-#: .\Knowledge_Management\models.py:114
-msgid "Activity SubCategory"
-msgstr "موضوع دانشی فعالیت"
-
-#: .\Knowledge_Management\models.py:115
-msgid "Activity SubCategories"
-msgstr "موضوعات دانشی فعالیت"
-
-#: .\Knowledge_Management\models.py:127
+#: .\Knowledge_Management\models.py:119
 msgid "Knowledge User"
 msgstr "کاربر دانشی"
 
-#: .\Knowledge_Management\models.py:128 .\Knowledge_Management\models.py:179
+#: .\Knowledge_Management\models.py:120 .\Knowledge_Management\models.py:171
 msgid "Status"
 msgstr "وضعیت"
 
-#: .\Knowledge_Management\models.py:132
+#: .\Knowledge_Management\models.py:124
 msgid "Cardtable Base"
 msgstr "کارتابل پایه"
 
-#: .\Knowledge_Management\models.py:133
+#: .\Knowledge_Management\models.py:125
 msgid "Cardtable Bases"
 msgstr "کارتابل پایه"
 
-#: .\Knowledge_Management\models.py:157 .\Knowledge_Management\models.py:215
+#: .\Knowledge_Management\models.py:149 .\Knowledge_Management\models.py:242
 msgid "Score"
 msgstr "امتیاز"
 
-#: .\Knowledge_Management\models.py:168
+#: .\Knowledge_Management\models.py:160
 msgid "Quantity"
 msgstr "سابقه تکرار"
 
-#: .\Knowledge_Management\models.py:185 .\Knowledge_Management\models.py:202
-msgid "Assessment Date"
-msgstr "تاریخ ارزیابی"
-
-#: .\Knowledge_Management\models.py:186
-msgid "Scores"
-msgstr "امتیازات"
-
-#: .\Knowledge_Management\models.py:188 .\Knowledge_Management\models.py:224
-#: .\Knowledge_Management\models.py:241
+#: .\Knowledge_Management\models.py:181 .\Knowledge_Management\models.py:215
+#: .\Knowledge_Management\models.py:247
 msgid "Personal Cardtable"
 msgstr "کارتابل شخصی"
 
-#: .\Knowledge_Management\models.py:191
+#: .\Knowledge_Management\models.py:201
+msgid "Activity SubCategory"
+msgstr "موضوع دانشی فعالیت"
+
+#: .\Knowledge_Management\models.py:202
+msgid "Activity SubCategories"
+msgstr "موضوعات دانشی فعالیت"
+
+#: .\Knowledge_Management\models.py:212 .\Knowledge_Management\models.py:229
+msgid "Assessment Date"
+msgstr "تاریخ ارزیابی"
+
+#: .\Knowledge_Management\models.py:213
+msgid "Scores"
+msgstr "امتیازات"
+
+#: .\Knowledge_Management\models.py:218
 msgid "Activity Assessment"
 msgstr "ارزیابی فعالیت"
 
-#: .\Knowledge_Management\models.py:192
+#: .\Knowledge_Management\models.py:219
 msgid "Activity Assessments"
 msgstr "ارزیابی فعالیتها"
 
-#: .\Knowledge_Management\models.py:242
+#: .\Knowledge_Management\models.py:248
 msgid "Personal Cardtables"
 msgstr "کارتابل شخصی"
 
-#: .\Knowledge_Management\models.py:248
+#: .\Knowledge_Management\models.py:254
 msgid "Assessment Cardtable"
 msgstr "کارتابل ارزیابی"
 
-#: .\Knowledge_Management\models.py:249
+#: .\Knowledge_Management\models.py:255
 msgid "Assessment Cardtables"
 msgstr "کارتابل ارزیابی"
 
-#: .\Knowledge_Management\models.py:255
+#: .\Knowledge_Management\models.py:261
 msgid "Financial Cardtable"
 msgstr "کارتابل مالی"
 
-#: .\Knowledge_Management\models.py:256
+#: .\Knowledge_Management\models.py:262
 msgid "Financial Cardtables"
 msgstr "کارتابل مالی"
 

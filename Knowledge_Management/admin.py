@@ -84,8 +84,8 @@ class ActivityAdmin(BaseModelAdmin):
 @admin.register(models.CommitteeMember)
 class CommitteeMemberAdmin(BaseModelAdmin):
     model = models.CommitteeMember
-    list_display = ['user', 'chairman']
-    list_display_links = ['user', 'chairman']
+    list_display = ['user', 'chairman', 'secretary']
+    list_display_links = ['user', 'chairman', 'secretary']
     search_fields = ['user__first_name', 'user__last_name', 'user__username']
 
 

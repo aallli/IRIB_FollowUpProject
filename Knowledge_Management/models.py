@@ -58,6 +58,7 @@ class Activity(models.Model):
 class CommitteeMember(models.Model):
     user = models.OneToOneField(User, verbose_name=_('User'), on_delete=models.CASCADE, unique=True)
     chairman = models.BooleanField(verbose_name=_('Chairman'), default=False)
+    secretary = models.BooleanField(verbose_name=_('Secretary'), default=False)
 
     class Meta:
         verbose_name = _('Committee Member')
@@ -67,11 +68,16 @@ class CommitteeMember(models.Model):
         return self.user.__str__()
 
     def save(self, *args, **kwargs):
-        if self.chairman:
+        if not 'no_recursion' in kwargs:
             for cm in CommitteeMember.objects.all():
                 if cm.pk != self.pk:
-                    cm.chairman = False
-                    cm.save()
+                    if self.chairman:
+                        cm.chairman = False
+
+                    if self.secretary:
+                        cm.secretary = False
+                    cm.save(**{'no_recursion': False})
+        kwargs = {}
         return super(CommitteeMember, self).save(*args, **kwargs)
 
     @staticmethod
