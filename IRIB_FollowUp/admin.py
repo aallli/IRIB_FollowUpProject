@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.core import serializers
 from django.contrib import messages
 from django.utils import translation
+from IRIB_Auth.models import Supervisor
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -15,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 from .forms import EnactmentAdminForm, get_followup_inline_form
 from IRIB_FollowUpProject.utils import get_jalali_filter, BaseModelAdmin, to_jalali, format_date
-from IRIB_FollowUp.models import User, Enactment, Session, Subject, Supervisor, Attachment, Member, FollowUp, Group, \
+from IRIB_FollowUp.models import User, Enactment, Session, Subject, Attachment, Member, FollowUp, Group, \
     GroupUser, GroupFollowUp, SessionBase, Attendant
 
 
@@ -151,12 +152,6 @@ class SessionBaseAdmin(BaseModelAdmin):
 @admin.register(Subject)
 class SubjectAdmin(BaseModelAdmin):
     model = Subject
-    search_fields = ['name', ]
-
-
-@admin.register(Supervisor)
-class SupervisorAdmin(BaseModelAdmin):
-    model = Supervisor
     search_fields = ['name', ]
 
 

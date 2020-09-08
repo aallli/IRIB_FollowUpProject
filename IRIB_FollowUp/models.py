@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.dispatch import receiver
 from django.utils import translation
+from IRIB_Auth.models import Supervisor
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from IRIB_FollowUpProject.utils import to_jalali, format_date
@@ -142,29 +143,13 @@ class Subject(models.Model):
         return self.__str__()
 
 
-class Supervisor(models.Model):
-    name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
-
-    class Meta:
-        verbose_name = _('Supervisor Unit')
-        verbose_name_plural = _('Supervisor Units')
-        ordering = ['name']
-        db_table = 'IRIB_Auth_supervisor'
-
-    def __str__(self):
-        return _(self.name).__str__()
-
-    def __unicode__(self):
-        return self.__str__()
-
-
 class User(AbstractUser):
     user_id = models.IntegerField(verbose_name=_('User ID'), blank=True, null=True)
     access_level = models.CharField(verbose_name=_('Access Level'), choices=AccessLevel.choices,
                                     default=AccessLevel.USER, max_length=20, null=False)
     _title = models.CharField(verbose_name=_('Title'), choices=Title.choices,
                               default=Title.MR, max_length=100, null=False)
-    supervisor = models.ForeignKey('Supervisor', verbose_name=_('Supervisor Unit'), on_delete=models.SET_NULL,
+    supervisor = models.ForeignKey(Supervisor, verbose_name=_('Supervisor Unit'), on_delete=models.SET_NULL,
                                    null=True)
 
     class Meta:
