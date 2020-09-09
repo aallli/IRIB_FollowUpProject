@@ -4,7 +4,9 @@ from .models import Supervisor
 # from django.contrib.auth.models import Group
 # from django.shortcuts import get_object_or_404
 # from jalali_date.admin import ModelAdminJalaliMixin
-from IRIB_FollowUpProject.utils import BaseModelAdmin
+from IRIB_FollowUpProject.admin import BaseModelAdmin
+
+
 # from django.utils.translation import ugettext_lazy as _
 # from django.contrib.auth.admin import UserAdmin as _UserAdmin
 # from IRIB_FollowUp.admin import GroupUserInline, MemberInline

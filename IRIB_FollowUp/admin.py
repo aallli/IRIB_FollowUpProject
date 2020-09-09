@@ -1,7 +1,6 @@
 from django.urls import path
 from django.contrib import admin
 from django.utils import timezone
-from django.core import serializers
 from django.contrib import messages
 from django.utils import translation
 from IRIB_Auth.models import Supervisor
@@ -11,11 +10,12 @@ from django.shortcuts import get_object_or_404
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.template.response import TemplateResponse
+from IRIB_FollowUpProject.admin import BaseModelAdmin
 from django.contrib.auth.models import Group as _Group
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 from .forms import EnactmentAdminForm, get_followup_inline_form
-from IRIB_FollowUpProject.utils import get_jalali_filter, BaseModelAdmin, to_jalali, format_date
+from IRIB_FollowUpProject.utils import get_jalali_filter, to_jalali, format_date
 from IRIB_FollowUp.models import User, Enactment, Session, Subject, Attachment, Member, FollowUp, Group, \
     GroupUser, GroupFollowUp, SessionBase, Attendant
 
@@ -315,13 +315,18 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             ]
 
     def changelist_view(self, request, extra_context=None):
+        request.session['filtered_query_set'] = None
         response = super(EnactmentAdmin, self).changelist_view(request, extra_context)
-        filtered_query_set = response.context_data["cl"].queryset
-        request.session['filtered_query_set'] = serializers.serialize('json', filtered_query_set)
+        if self.get_preserved_filters(request):
+            request.session['filtered_query_set'] = list(response.context_data["cl"].queryset.values('pk'))
         return response
 
     def get_queryset(self, request):
         queryset = Enactment.objects.filter(follow_grade=1)
+        if not request.session['filtered_query_set'] is None:
+            pks = [enactment['pk'] for enactment in request.session['filtered_query_set']]
+            queryset = queryset.filter(pk__in=pks)
+
         if request.user.is_superuser or request.user.is_secretary:
             return queryset
 
@@ -339,10 +344,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         return self.readonly_fields
 
     def report(self, request):
-        queryset = Enactment.objects.none()
-        for obj in serializers.deserialize('json', request.session['filtered_query_set']):
-            queryset |= Enactment.objects.filter(pk=obj.object.pk)
-
+        queryset = self.get_queryset(request)
         minutes = []
         for minute in Session.objects.filter(pk__in=queryset.values('session')):
             minutes.append({'minute': minute, 'enactments': queryset.filter(session=minute)})

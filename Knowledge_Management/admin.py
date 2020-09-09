@@ -5,7 +5,8 @@ from django.db.transaction import atomic
 from jalali_date.admin import ModelAdminJalaliMixin
 from .forms import get_activity_assessment_inline_form
 from django.utils.translation import ugettext_lazy as _
-from IRIB_FollowUpProject.utils import get_jalali_filter, BaseModelAdmin
+from IRIB_FollowUpProject.utils import get_jalali_filter
+from IRIB_FollowUpProject.admin import BaseModelAdmin
 
 
 class SubCategoryInline(admin.TabularInline):
