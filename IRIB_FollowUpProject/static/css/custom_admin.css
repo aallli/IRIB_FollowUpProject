@@ -200,15 +200,15 @@ p.datetime {
 }
 
 .column-subject, .field-subject {
-    width: 20%;
+    width: 15%;
 }
 
 .column-description, .field-description {
-    width: 40%;
+    width: 55%;
 }
 
 .column-followups, .field-followups {
-    width: 25%;
+    width: 15%;
 }
 
 .object-tools-print a {

@@ -174,6 +174,9 @@ class User(AbstractUser):
     def __unicode__(self):
         return self.__str__()
 
+    def full_titled_name(self):
+        return '%s %s' % (self.title(), self.__str__())
+
     def title(self):
         return Title(self._title).label
 
@@ -258,7 +261,7 @@ class Enactment(models.Model):
     session_presents.short_description = _('Presents')
 
     def followups(self):
-        return ', '.join(followup.actor.__str__() for followup in FollowUp.objects.filter(enactment=self))
+        return ', '.join(followup.actor.full_titled_name() for followup in FollowUp.objects.filter(enactment=self))
 
     followups.short_description = _('Follow Ups')
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-08 14:03+0430\n"
+"POT-Creation-Date: 2020-09-09 09:56+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,7 +304,6 @@ msgstr "کد مصوبه"
 
 #: .\IRIB_FollowUp\models.py:263 .\IRIB_FollowUp\models.py:274
 #: .\static\admin\custom\enactments-list-report.html:83
-#: .\templates\admin\custom\enactments-list-report.html:94
 msgid "Follow Ups"
 msgstr "پیگیریها"
 
@@ -722,3 +721,13 @@ msgstr "قبلی"
 #: .\templates\admin\submit_line.html:25 .\templates\admin\submit_line.html:28
 msgid "First"
 msgstr "اولین"
+
+#: .\templates\admin\custom\enactments-list-report.html:72
+msgid "#"
+msgstr "شماره"
+
+#: .\templates\admin\custom\enactments-list-report.html:94
+#, fuzzy
+#| msgid "Actor"
+msgid "Actors"
+msgstr "پیگیری کنندگان"
