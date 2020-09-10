@@ -1,5 +1,5 @@
 {% extends "admin/submit_line.html" %}
-{% load i18n static admin_urls %}
+{% load i18n static admin_urls simple_tag %}
 
 {% block submit-row %}
     {{ block.super }}
@@ -16,24 +16,31 @@
     {% if opts.app_label == 'IRIB_FollowUp' or opts.app_label == 'Knowledge_Management'%}
         <div class="center">
             {% if LANGUAGE_CODE == 'fa' %}
-                <input type="button" value="◄◄" class="close-enactment" title="{% trans 'Last' %}"
+                <input type="button" value="◄◄" class="navigation" title="{% trans 'Last' %}"
                        onclick='javascript: location.href="{% url 'admin:last-'|add:opts.model_name %}"'>
-                <input type="button" value="◄" class="close-enactment" title="{% trans 'Next' %}"
+                <input type="button" value="◄" class="navigation" title="{% trans 'Next' %}"
                        onclick='javascript: location.href="{% url 'admin:next-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►" class="close-enactment" title="{% trans 'Previous' %}"
+                <input type="button" value="►" class="navigation" title="{% trans 'Previous' %}"
                        onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►►" class="close-enactment" title="{% trans 'First' %}"
+                <input type="button" value="►►" class="navigation" title="{% trans 'First' %}"
                        onclick='javascript: location.href="{% url 'admin:first-'|add:opts.model_name %}"'>
             {% else %}
-                <input type="button" value="◄◄" class="close-enactment" title="{% trans 'First' %}"
+                <input type="button" value="◄◄" class="navigation" title="{% trans 'First' %}"
                        onclick='javascript: location.href="{% url 'admin:first-'|add:opts.model_name %}"'>
-                <input type="button" value="◄" class="close-enactment" title="{% trans 'Previous' %}"
+                <input type="button" value="◄" class="navigation" title="{% trans 'Previous' %}"
                        onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►" class="close-enactment" title="{% trans 'Next' %}"
+                <input type="button" value="►" class="navigation" title="{% trans 'Next' %}"
                        onclick='javascript: location.href="{% url 'admin:next-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►►" class="close-enactment" title="{% trans 'Last' %}"
+                <input type="button" value="►►" class="navigation" title="{% trans 'Last' %}"
                        onclick='javascript: location.href="{% url 'admin:last-'|add:opts.model_name %}"'>
             {% endif %}
+        </div>
+        {% navigation_counter request original.pk as navigation_counter %}
+        <div class="center">
+            <p class="navigation paginator">
+                {% trans 'Item' %} {{ navigation_counter.item }} {% trans 'of' %} {{ navigation_counter.items }}
+                {% if navigation_counter.filtered %} <span class="filtered">({% trans 'Filtered' %})</span>{% endif %}
+            </p>
         </div>
     {% endif %}
 {% endblock %}

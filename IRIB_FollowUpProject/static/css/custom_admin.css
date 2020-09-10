@@ -167,12 +167,32 @@
     margin: 0 5px;
 }
 
-.admin-interface .submit-row div.close-enactment {
+.admin-interface .submit-row input.navigation
+{
+    margin: 0 5px;
+    height: 25px;
+    line-height: 7px;
+}
+
+.admin-interface .submit-row div.close-enactment,
+.admin-interface .submit-row div.navigation
+{
     float: left;
 }
 
-:lang(fa) .admin-interface .submit-row div.close-enactment {
+:lang(fa) .admin-interface .submit-row div.close-enactment,
+:lang(fa) .admin-interface .submit-row div.navigation
+{
     float: right;
+}
+
+p.navigation.paginator{
+    line-height: 25px;
+    margin-bottom: -30px;
+}
+
+span.filtered {
+    color: red;
 }
 
 p.datetime {
