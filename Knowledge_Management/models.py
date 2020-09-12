@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
+from IRIB_Auth.models import User
 from django.utils import translation
-from IRIB_FollowUp.models import User
 from django.utils.translation import ugettext_lazy as _
 from IRIB_FollowUpProject.utils import to_jalali, set_now, format_date
 

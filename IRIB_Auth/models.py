@@ -41,31 +41,7 @@ class User(AbstractUser):
     _title = models.CharField(verbose_name=_('Title'), choices=Title.choices,
                               default=Title.MR, max_length=100, null=False)
     supervisor = models.ForeignKey(Supervisor, verbose_name=_('Supervisor Unit'), on_delete=models.SET_NULL,
-                                   null=True, related_name='auth_user_set')
-    groups = models.ManyToManyField(
-        Group,
-        verbose_name=_('groups'),
-        blank=True,
-        help_text=_(
-            'The groups this user belongs to. A user will get all permissions '
-            'granted to each of their groups.'
-        ),
-        related_name="auth_user_set",
-        related_query_name="user",
-        db_table='IIRIB_Auth_user_groups'
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        verbose_name=_('user permissions'),
-        blank=True,
-        help_text=_('Specific permissions for this user.'),
-        related_name="auth_user_set",
-        related_query_name="user",
-        db_table='IIRIB_Auth_user_user_permissions'
-    )
-
-    class Meta:
-        db_table = 'IRIB_Auth_user'
+                                   null=True)
 
     def last_login_jalali(self):
         return to_jalali(self.last_login) if translation.get_language() == 'fa' else format_date(self.last_login)
