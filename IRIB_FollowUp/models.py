@@ -150,7 +150,7 @@ class User(AbstractUser):
     _title = models.CharField(verbose_name=_('Title'), choices=Title.choices,
                               default=Title.MR, max_length=100, null=False)
     supervisor = models.ForeignKey(Supervisor, verbose_name=_('Supervisor Unit'), on_delete=models.SET_NULL,
-                                   null=True)
+                                   null=True, related_name='user_set')
 
     class Meta:
         db_table = 'IRIB_Auth_user'

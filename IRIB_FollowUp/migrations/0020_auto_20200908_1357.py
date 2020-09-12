@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='supervisor',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='IRIB_Auth.Supervisor', verbose_name='Supervisor Unit'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_set', to='IRIB_Auth.Supervisor', verbose_name='Supervisor Unit'),
         ),
         migrations.DeleteModel(
             name='Supervisor',

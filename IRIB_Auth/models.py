@@ -52,7 +52,7 @@ class User(AbstractUser):
         ),
         related_name="auth_user_set",
         related_query_name="user",
-        db_table='IRIB_Auth1_user_groups'
+        db_table='IIRIB_Auth_user_groups'
     )
     user_permissions = models.ManyToManyField(
         Permission,
@@ -61,7 +61,7 @@ class User(AbstractUser):
         help_text=_('Specific permissions for this user.'),
         related_name="auth_user_set",
         related_query_name="user",
-        db_table='IRIB_Auth1_user_user_permissions'
+        db_table='IIRIB_Auth_user_user_permissions'
     )
 
     class Meta:
