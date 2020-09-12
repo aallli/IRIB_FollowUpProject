@@ -252,12 +252,14 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             ]
 
     def changelist_view(self, request, extra_context=None):
-        request.session['filtered_enactment_query_set'] = False
+        queryset_name = '%s_query_set' % self.model._meta.model_name
+        filtered_queryset_name = 'filtered_%s_query_set' % self.model._meta.model_name
+        request.session[filtered_queryset_name] = False
         response = super(EnactmentAdmin, self).changelist_view(request, extra_context)
         if hasattr(response, 'context_data') and 'cl' in response.context_data:
-            request.session['enactment_query_set'] = list(response.context_data["cl"].queryset.values('pk'))
+            request.session[queryset_name] = list(response.context_data["cl"].queryset.values('pk'))
             if self.get_preserved_filters(request):
-                request.session['filtered_enactment_query_set'] = True
+                request.session[filtered_queryset_name] = True
         return response
 
     def get_queryset(self, request):

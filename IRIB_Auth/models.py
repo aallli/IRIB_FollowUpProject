@@ -1,10 +1,7 @@
-import locale, os
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
-from django.dispatch import receiver
 from django.utils import translation
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from IRIB_FollowUpProject.utils import to_jalali, format_date
 
@@ -74,7 +71,11 @@ class User(AbstractUser):
 
     @property
     def is_km_operator(self):
-        return self.groups.filter(name=settings.OPERATOR_GROUP_NAME) > 0
+        return self.groups.filter(name=settings.KM_OPERATOR_GROUP_NAME) > 0
+
+    @property
+    def is_km_committee_member(self):
+        return models.CommitteeMember.objects.filter(user=self).count() > 0
 
     def delete(self, using=None, keep_parents=False):
         if self.is_superuser:

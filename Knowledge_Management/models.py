@@ -80,10 +80,6 @@ class CommitteeMember(models.Model):
         kwargs = {}
         return super(CommitteeMember, self).save(*args, **kwargs)
 
-    @staticmethod
-    def is_committee_member(user):
-        return CommitteeMember.objects.filter(user=user).count() > 0
-
 
 class Indicator(models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
@@ -123,7 +119,7 @@ class CardtableBase(models.Model):
     class Meta:
         verbose_name = _('Cardtable Base')
         verbose_name_plural = _('Cardtable Bases')
-        ordering = ['activity']
+        ordering = ['id']
 
     def __str__(self):
         return '%s: %s' % (self.activity, self.date())

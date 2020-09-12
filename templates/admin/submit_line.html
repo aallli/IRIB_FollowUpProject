@@ -13,7 +13,7 @@
             </div>
         {% endif %}
     {% endif %}
-    {% if opts.app_label == 'IRIB_FollowUp' or opts.app_label == 'Knowledge_Management'%}
+    {% if opts.app_label == 'IRIB_FollowUp' or opts.app_label == 'Knowledge_Management' %}
         <div class="center">
             {% if LANGUAGE_CODE == 'fa' %}
                 <input type="button" value="◄◄" class="navigation" title="{% trans 'Last' %}"
@@ -35,12 +35,15 @@
                        onclick='javascript: location.href="{% url 'admin:last-'|add:opts.model_name %}"'>
             {% endif %}
         </div>
-        {% navigation_counter request original.pk as navigation_counter %}
-        <div class="center">
-            <p class="navigation paginator">
-                {% trans 'Item' %} {{ navigation_counter.item }} {% trans 'of' %} {{ navigation_counter.items }}
-                {% if navigation_counter.filtered %} <span class="filtered">({% trans 'Filtered' %})</span>{% endif %}
-            </p>
-        </div>
+        {% navigation_counter request opts.model_name original.pk as navigation_counter %}
+        {% if navigation_counter.status %}
+            <div class="center">
+                <p class="navigation paginator">
+                    {% trans 'Item' %} {{ navigation_counter.item }} {% trans 'of' %} {{ navigation_counter.items }}
+                    {% if navigation_counter.filtered %}
+                        <span class="filtered">({% trans 'Filtered' %})</span>{% endif %}
+                </p>
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock %}

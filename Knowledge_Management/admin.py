@@ -3,10 +3,10 @@ from django.contrib import admin
 from django.contrib import messages
 from django.db.transaction import atomic
 from jalali_date.admin import ModelAdminJalaliMixin
+from IRIB_FollowUpProject.admin import BaseModelAdmin
 from .forms import get_activity_assessment_inline_form
 from django.utils.translation import ugettext_lazy as _
 from IRIB_FollowUpProject.utils import get_jalali_filter
-from IRIB_FollowUpProject.admin import BaseModelAdmin
 
 
 class SubCategoryInline(admin.TabularInline):
@@ -113,6 +113,17 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_queryset(self, request):
         return models.PersonalCardtable.objects.filter(user=request.user)
 
+    def changelist_view(self, request, extra_context=None):
+        queryset_name = '%s_query_set' % self.model._meta.model_name
+        filtered_queryset_name = 'filtered_%s_query_set' % self.model._meta.model_name
+        request.session[filtered_queryset_name] = False
+        response = super(PersonalCardtableAdmin, self).changelist_view(request, extra_context)
+        if hasattr(response, 'context_data') and 'cl' in response.context_data:
+            request.session[queryset_name] = list(response.context_data["cl"].queryset.values('pk'))
+            if self.get_preserved_filters(request):
+                request.session[filtered_queryset_name] = True
+        return response
+
     def get_readonly_fields(self, request, obj=None):
         user = request.user
         if obj and obj.user != user:
@@ -165,7 +176,7 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     def get_queryset(self, request):
         user = request.user
-        if user.is_superuser or models.CommitteeMember.is_committee_member(user):
+        if user.is_superuser or user.is_km_committee_member:
             return models.PersonalCardtable.objects.exclude(_status=models.ActivityStatus.DR)
         else:
             return models.PersonalCardtable.objects.none()
