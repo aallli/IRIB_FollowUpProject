@@ -143,6 +143,11 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             if new_model:
                 for member in models.CommitteeMember.objects.all():
                     models.ActivityAssessment.objects.get_or_create(cardtable=obj, member=member)
+
+                queryset_name = '%s_query_set' % self.model._meta.model_name
+                enactment_query_set = request.session[queryset_name]
+                enactment_query_set.append({'pk': obj.pk})
+                request.session[queryset_name] = list(enactment_query_set)
         except Exception as e:
             self.message_user(request, e, messages.ERROR)
 

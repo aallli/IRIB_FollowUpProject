@@ -326,9 +326,10 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         new_obj = not obj.pk
         super(EnactmentAdmin, self).save_model(request, obj, form, change)
         if new_obj:
-            enactment_query_set = request.session['enactment_query_set']
+            queryset_name = '%s_query_set' % self.model._meta.model_name
+            enactment_query_set = request.session[queryset_name]
             enactment_query_set.append({'pk': obj.pk})
-            request.session['enactment_query_set'] = list(enactment_query_set)
+            request.session[queryset_name] = list(enactment_query_set)
 
 
 @admin.register(Group)
