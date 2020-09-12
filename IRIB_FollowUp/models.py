@@ -153,6 +153,7 @@ class User(AbstractUser):
                                    null=True, related_name='user_set')
 
     class Meta:
+        managed = False
         db_table = 'IRIB_Auth_user'
 
     def last_login_jalali(self):
