@@ -1,3 +1,4 @@
+pyodbc==4.0.30
 django==3.0.8
 django-jalali-date==0.3.1
 django-admin-interface==0.12.3

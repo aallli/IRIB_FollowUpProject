@@ -1,5 +1,5 @@
 from django import template
-from IRIB_FollowUp import utils
+from EIRIB_FollowUp import utils
 from IRIB_FollowUpProject import settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,7 +28,7 @@ def data_loading():
 
 @register.simple_tag()
 def navigation_counter(request, model, pk):
-    status = model in ['enactment', ]
+    status = model in ['enactment', 'personalcardtable']
     if status:
         queryset_name = '%s_query_set' % model
         filtered_queryset_name = 'filtered_%s_query_set' % model

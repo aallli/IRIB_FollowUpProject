@@ -34,7 +34,6 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
     list_display_links = ['username', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
     list_filter = ('supervisor', 'access_level', 'is_active', 'is_superuser', 'groups')
     readonly_fields = ['last_login_jalali', 'date_joined_jalali']
-    # inlines = [MemberInline, GroupUserInline]
     change_form_template = 'admin/custom/change_form.html'
 
     def get_readonly_fields(self, request, obj=None):
