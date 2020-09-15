@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib import messages
 from .models import Supervisor, User
+from django.db.transaction import atomic
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 from jalali_date.admin import ModelAdminJalaliMixin
 from IRIB_FollowUpProject.admin import BaseModelAdmin
 from django.utils.translation import ugettext_lazy as _
-from IRIB_FollowUp.admin import GroupUserInline, MemberInline
+from EIRIB_FollowUp.utils import save_user, delete_user
 from django.contrib.auth.admin import UserAdmin as _UserAdmin
 
 
@@ -41,10 +42,22 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             return self.readonly_fields + ['is_staff', 'is_superuser', 'groups', 'user_permissions']
         return self.readonly_fields
 
+    @atomic
     def save_model(self, request, obj, form, change):
+        password = None
         if not obj.pk:
             obj.is_staff = True
+            password = obj._password
+
         super(UserAdmin, self).save_model(request, obj, form, change)
+
+        if password:
+            obj._password = password
+        try:
+            save_user(obj)
+        except Exception as e:
+            self.message_user(request, _('Error in creating/updating user in MS Acceess Database'), messages.WARNING)
+
 
     def save_related(self, request, form, formsets, change):
         user = form.instance
@@ -61,6 +74,11 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
 
     def delete_model(self, request, obj):
         try:
+            try:
+                delete_user(obj)
+            except Exception as e:
+                self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
+
             return super(UserAdmin, self).delete_model(request, obj)
         except Exception as e:
             messages.set_level(request, messages.ERROR)
@@ -69,6 +87,10 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
     def delete_queryset(self, request, queryset):
         for obj in queryset.all():
             try:
+                try:
+                    delete_user(obj)
+                except Exception as e:
+                    self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
                 obj.delete()
             except Exception as e:
                 messages.set_level(request, messages.ERROR)

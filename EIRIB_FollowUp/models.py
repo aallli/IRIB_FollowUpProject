@@ -127,7 +127,7 @@ class User(models.Model):
     access_level.short_description = _('Access Level')
 
     def supervisor(self):
-        return self.user.supervisor.name
+        return self.user.supervisor.name if self.user.supervisor else ''
 
     supervisor.short_description = _('Supervisor Unit')
 

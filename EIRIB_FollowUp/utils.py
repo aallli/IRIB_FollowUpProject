@@ -195,7 +195,10 @@ def user_exists(user_name):
 
 
 def save_user(user):
-    _user = User.objects.get_or_create(user=user)[0]
+    try:
+        _user = User.objects.get(user=user)
+    except:
+        _user = User.objects.create(user=user, query_name=user.username)
 
     if user_exists(user.username):
         query = '''
@@ -209,7 +212,7 @@ def save_user(user):
                 , tblUser.username = ?
                 WHERE username = ?
                '''
-        params = (user.first_name, user.last_name, user.supervisor.name, _user.query_name,
+        params = (user.first_name, user.last_name, user.supervisor.name if user.supervisor else '', _user.query_name,
                   1 if user.access_level == AccessLevel.USER else 4, str(user.title()), user.username, user.username)
         execute_query(query, params, update=True)
     else:
@@ -217,8 +220,9 @@ def save_user(user):
                 INSERT INTO tblUser (FName, LName, Password, Moavenat, openningformP, AccessLevelID, envan, P, username)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
                 '''
-        params = (user.first_name, user.last_name, user._password, user.supervisor.name, _user.query_name,
-                  1 if user.access_level == AccessLevel.USER else 4, str(user.title()), 'p', user.username)
+        params = (user.first_name, user.last_name, user._password, user.supervisor.name if user.supervisor else '',
+                  _user.query_name, 1 if user.access_level == AccessLevel.USER else 4, str(user.title()), 'p',
+                  user.username)
         execute_query(query, params, insert=True)
 
 

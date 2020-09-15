@@ -146,16 +146,28 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         super(UserAdmin, self).save_model(request, obj, form, change)
         try:
             save_user(obj.user)
-        except:
+        except Exception as e:
             self.message_user(request, _('Error in creating/updating user in MS Acceess Database'), messages.WARNING)
 
     @atomic
     def delete_model(self, request, obj):
         try:
             delete_user(obj.user)
-        except:
+        except Exception as e:
             self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
         super(UserAdmin, self).delete_model(request, obj)
+
+    def delete_queryset(self, request, queryset):
+        for obj in queryset.all():
+            try:
+                try:
+                    delete_user(obj.user)
+                except Exception as e:
+                    self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
+                obj.delete()
+            except Exception as e:
+                messages.set_level(request, messages.ERROR)
+                messages.error(request, e)
 
 
 @admin.register(Enactment)
