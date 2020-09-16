@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.10.2'
+VERSION = '1.10.3'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -196,5 +196,14 @@ JALALI_DATE_DEFAULTS = {
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+# EIRIB Followup Configurations
+EIRIB_FU_OPERATOR_GROUP_NAME = 'EIRIB FU - Operators'
+EIRIB_FU_USER_GROUP_NAME = 'EIRIB FU - Users'
+
+# IRIB Followup Configurations
+IRIB_FU_OPERATOR_GROUP_NAME = 'IRIB FU - Operators'
+IRIB_FU_USER_GROUP_NAME = 'IRIB FU - Users'
+
 # Knowledge Management Configurations
-KM_OPERATOR_GROUP_NAME = 'KM Operators'
+KM_OPERATOR_GROUP_NAME = 'KM - Operators'
+KM_USER_GROUP_NAME = 'KM - Users'
