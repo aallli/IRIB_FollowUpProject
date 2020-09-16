@@ -12,7 +12,7 @@
 {% endif %}
 
 {% block object-tools %}
-    {% if opts.model_name == 'session' %}
+    {% if opts.model_name == 'session' and original.pk %}
         <ul class="object-tools object-tools-print object-tools-print-detail">
             <li>
                 <a href="{% url 'admin:session-report' pk=original.pk %}" title="{% trans 'Print' %}"
