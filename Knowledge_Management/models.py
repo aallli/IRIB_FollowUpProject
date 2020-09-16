@@ -1,9 +1,10 @@
-from django.db import models
 from django.conf import settings
-from IRIB_Auth.models import User
+from django.db import models
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
-from IRIB_FollowUpProject.utils import to_jalali, set_now, format_date
+
+from IRIB_Auth.models import User
+from IRIB_Shared_Lib.utils import to_jalali, set_now, format_date
 
 
 class ActivityStatus(models.TextChoices):

@@ -1,14 +1,17 @@
 from django import template
 from django.template.defaultfilters import stringfilter
-from IRIB_FollowUpProject.utils import switch_lang_code
+
+from IRIB_Shared_Lib.utils import switch_lang_code
 
 register = template.Library()
+
 
 @register.filter
 @stringfilter
 def switch_i18n_prefix(path, language):
     """takes in a string path"""
     return switch_lang_code(path, language)
+
 
 @register.filter
 def switch_i18n(request, language):

@@ -15,6 +15,10 @@ def get_admin_url(self):
     return reverse('admin:%s_%s_change' % info, args=(self.pk,))
 
 
+def get_model_fullname(self):
+    return '%s_%s' % (self.opts.app_label, self.model._meta.model_name)
+
+
 def format_date(date, second=False):
     if second:
         return date.strftime('%Y/%m/%d %H:%M:%S')

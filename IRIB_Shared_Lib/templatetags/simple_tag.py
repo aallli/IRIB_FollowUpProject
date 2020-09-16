@@ -1,6 +1,5 @@
 from django import template
-from IRIB_FollowUp import utils
-from IRIB_FollowUpProject import settings
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
@@ -22,16 +21,11 @@ def admin_email():
 
 
 @register.simple_tag()
-def data_loading():
-    return utils.data_loading()
-
-
-@register.simple_tag()
-def navigation_counter(request, model, pk):
-    status = model in ['enactment', ]
+def navigation_counter(request, app, model, pk):
+    status = '%s_%s' % (app, model) in settings.NAVIGATED_MODELS
     if status:
-        queryset_name = '%s_query_set' % model
-        filtered_queryset_name = 'filtered_%s_query_set' % model
+        queryset_name = '%s_%s_query_set' % (app, model)
+        filtered_queryset_name = 'filtered_%s_%s_query_set' % (app, model)
 
         if pk:
             return {

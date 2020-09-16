@@ -1,20 +1,21 @@
+from django.conf import settings
 from django.urls import path
 from django.contrib import admin
-from django.utils import timezone
-from django.utils import translation
 from IRIB_Auth.models import Supervisor
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
+from django.utils import timezone, translation
 from django.shortcuts import get_object_or_404
+from IRIB_Shared_Lib.admin import BaseModelAdmin
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
+
 from django.template.response import TemplateResponse
-from IRIB_FollowUpProject.admin import BaseModelAdmin
 from django.utils.translation import ugettext_lazy as _
 from .forms import EnactmentAdminForm, get_followup_inline_form
-from IRIB_FollowUpProject.utils import get_jalali_filter, to_jalali, format_date
-from IRIB_FollowUp.models import User, Enactment, Session, Subject, Attachment, Member, FollowUp, Group, \
-    GroupUser, GroupFollowUp, SessionBase, Attendant
+from IRIB_Shared_Lib.utils import get_jalali_filter, to_jalali, format_date, get_model_fullname
+from .models import User, Enactment, Session, Subject, Attachment, Member, FollowUp, Group, GroupUser, GroupFollowUp, \
+    SessionBase, Attendant
 
 
 class SupervisorFilter(SimpleListFilter):
@@ -251,22 +252,19 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 AttachmentInline(self.model, self.admin_site),
             ]
 
-    def changelist_view(self, request, extra_context=None):
-        queryset_name = '%s_query_set' % self.model._meta.model_name
-        filtered_queryset_name = 'filtered_%s_query_set' % self.model._meta.model_name
-        request.session[filtered_queryset_name] = False
-        response = super(EnactmentAdmin, self).changelist_view(request, extra_context)
-        if hasattr(response, 'context_data') and 'cl' in response.context_data:
-            request.session[queryset_name] = list(response.context_data["cl"].queryset.values('pk'))
-            if self.get_preserved_filters(request):
-                request.session[filtered_queryset_name] = True
-        return response
+    # def changelist_view(self, request, extra_context=None):
+    #     queryset_name = '%s_query_set' % self.model._meta.model_name
+    #     filtered_queryset_name = 'filtered_%s_query_set' % self.model._meta.model_name
+    #     request.session[filtered_queryset_name] = False
+    #     response = super(EnactmentAdmin, self).changelist_view(request, extra_context)
+    #     if hasattr(response, 'context_data') and 'cl' in response.context_data:
+    #         request.session[queryset_name] = list(response.context_data["cl"].queryset.values('pk'))
+    #         if self.get_preserved_filters(request):
+    #             request.session[filtered_queryset_name] = True
+    #     return response
 
     def get_queryset(self, request):
-        queryset = Enactment.objects.filter(follow_grade=1)
-
-        if request.session['filtered_enactment_query_set']:
-            queryset = queryset.filter(pk__in=[enactment['pk'] for enactment in request.session['enactment_query_set']])
+        queryset = super(EnactmentAdmin, self).get_queryset(request).filter(follow_grade=1)
 
         if request.user.is_superuser or request.user.is_secretary:
             return queryset

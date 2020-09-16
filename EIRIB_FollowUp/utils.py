@@ -3,9 +3,8 @@ from threading import Timer
 from django.conf import settings
 from django.utils import timezone
 from IRIB_FollowUp.models import AccessLevel
-
 from django.shortcuts import get_object_or_404
-from IRIB_FollowUpProject.utils import execute_query
+from IRIB_Shared_Lib.utils import execute_query
 from django.utils.translation import ugettext_lazy as _
 from .models import Enactment, Session, Assigner, Subject, Actor, Supervisor
 

@@ -1,19 +1,17 @@
 import datetime
-from django.contrib import admin
 from .models import User as _User
 from django.utils import timezone
-from django.contrib import messages
 from .forms import EnactmentAdminForm
 from jalali_date import datetime2jalali
 from django.db.transaction import atomic
+from django.contrib import admin, messages
 from django.shortcuts import get_object_or_404
+from IRIB_Shared_Lib.admin import BaseModelAdmin
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
-from IRIB_FollowUpProject.admin import BaseModelAdmin
 from django.utils.translation import ugettext_lazy as _
 from EIRIB_FollowUp.utils import save_user, delete_user
-from IRIB_FollowUpProject.utils import get_jalali_filter
-from IRIB_FollowUpProject.utils import execute_query, to_jalali
+from IRIB_Shared_Lib.utils import execute_query, to_jalali, get_jalali_filter
 from EIRIB_FollowUp.models import Enactment, Session, Assigner, Subject, Actor, Supervisor, \
     Attachment
 
@@ -194,22 +192,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                        'second_supervisor']
     form = EnactmentAdminForm
 
-    def changelist_view(self, request, extra_context=None):
-        queryset_name = '%s_query_set' % self.model._meta.model_name
-        filtered_queryset_name = 'filtered_%s_query_set' % self.model._meta.model_name
-        request.session[filtered_queryset_name] = False
-        response = super(EnactmentAdmin, self).changelist_view(request, extra_context)
-        if hasattr(response, 'context_data') and 'cl' in response.context_data:
-            request.session[queryset_name] = list(response.context_data["cl"].queryset.values('pk'))
-            if self.get_preserved_filters(request):
-                request.session[filtered_queryset_name] = True
-        return response
-
     def get_queryset(self, request):
-        queryset = Enactment.objects.filter(follow_grade=1)
-
-        if request.session['filtered_enactment_query_set']:
-            queryset = queryset.filter(pk__in=[enactment['pk'] for enactment in request.session['enactment_query_set']])
+        queryset = super(EnactmentAdmin, self).get_queryset(request).filter(follow_grade=1)
 
         if request.user.is_superuser or request.user.is_secretary:
             return queryset

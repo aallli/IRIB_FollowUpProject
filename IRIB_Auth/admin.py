@@ -1,12 +1,11 @@
 from django.conf import settings
-from django.contrib import admin
-from django.contrib import messages
 from .models import Supervisor, User
 from django.db.transaction import atomic
+from django.contrib import admin, messages
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
+from IRIB_Shared_Lib.admin import BaseModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
-from IRIB_FollowUpProject.admin import BaseModelAdmin
 from django.utils.translation import ugettext_lazy as _
 from EIRIB_FollowUp.utils import save_user, delete_user
 from django.contrib.auth.admin import UserAdmin as _UserAdmin

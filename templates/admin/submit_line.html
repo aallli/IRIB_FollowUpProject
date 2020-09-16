@@ -17,25 +17,25 @@
         <div class="center">
             {% if LANGUAGE_CODE == 'fa' %}
                 <input type="button" value="◄◄" class="navigation" title="{% trans 'Last' %}"
-                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.model_name %}"'>
+                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
                 <input type="button" value="◄" class="navigation" title="{% trans 'Next' %}"
-                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►" class="navigation" title="{% trans 'Previous' %}"
-                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►►" class="navigation" title="{% trans 'First' %}"
-                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.model_name %}"'>
+                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
             {% else %}
                 <input type="button" value="◄◄" class="navigation" title="{% trans 'First' %}"
-                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.model_name %}"'>
+                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
                 <input type="button" value="◄" class="navigation" title="{% trans 'Previous' %}"
-                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►" class="navigation" title="{% trans 'Next' %}"
-                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
                 <input type="button" value="►►" class="navigation" title="{% trans 'Last' %}"
-                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.model_name %}"'>
+                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
             {% endif %}
         </div>
-        {% navigation_counter request opts.model_name original.pk as navigation_counter %}
+        {% navigation_counter request opts.app_label opts.model_name original.pk as navigation_counter %}
         {% if navigation_counter.status %}
             <div class="center">
                 <p class="navigation paginator">

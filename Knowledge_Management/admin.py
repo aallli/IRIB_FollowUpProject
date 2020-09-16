@@ -1,12 +1,12 @@
-from . import models
 from django.contrib import admin
 from django.contrib import messages
 from django.db.transaction import atomic
-from jalali_date.admin import ModelAdminJalaliMixin
-from IRIB_FollowUpProject.admin import BaseModelAdmin
-from .forms import get_activity_assessment_inline_form
 from django.utils.translation import ugettext_lazy as _
-from IRIB_FollowUpProject.utils import get_jalali_filter
+from jalali_date.admin import ModelAdminJalaliMixin
+from IRIB_Shared_Lib.admin import BaseModelAdmin
+from IRIB_Shared_Lib.utils import get_jalali_filter
+from . import models
+from .forms import get_activity_assessment_inline_form
 
 
 class SubCategoryInline(admin.TabularInline):
@@ -111,18 +111,7 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_filter = [get_jalali_filter('_date', _('Creation Date')), '_status', 'activity']
 
     def get_queryset(self, request):
-        return models.PersonalCardtable.objects.filter(user=request.user)
-
-    def changelist_view(self, request, extra_context=None):
-        queryset_name = '%s_query_set' % self.model._meta.model_name
-        filtered_queryset_name = 'filtered_%s_query_set' % self.model._meta.model_name
-        request.session[filtered_queryset_name] = False
-        response = super(PersonalCardtableAdmin, self).changelist_view(request, extra_context)
-        if hasattr(response, 'context_data') and 'cl' in response.context_data:
-            request.session[queryset_name] = list(response.context_data["cl"].queryset.values('pk'))
-            if self.get_preserved_filters(request):
-                request.session[filtered_queryset_name] = True
-        return response
+        return super(PersonalCardtableAdmin, self).get_queryset(request).filter(user=request.user)
 
     def get_readonly_fields(self, request, obj=None):
         user = request.user

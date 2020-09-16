@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils import translation
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
-from IRIB_FollowUpProject.utils import to_jalali, format_date
+from IRIB_Shared_Lib.utils import to_jalali, format_date
 
 
 class AccessLevel(models.TextChoices):
