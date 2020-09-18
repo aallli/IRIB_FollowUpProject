@@ -29,9 +29,14 @@ def navigation_counter(request, app, model, pk):
         filtered_queryset_name = 'filtered_%s_%s_query_set' % (app, model)
 
         if pk:
+            try:
+                index = request.session[queryset_name].index({'pk': pk}) + 1
+            except:
+                index = '?'
+
             return {
                 'status': status,
-                'item': request.session[queryset_name].index({'pk': pk}) + 1,
+                'item': index,
                 'items': len(request.session[queryset_name]),
                 'filtered': request.session[filtered_queryset_name]
             }
