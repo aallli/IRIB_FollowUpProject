@@ -24,7 +24,7 @@
                     {% endfor %}
                     {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
                         <th>{% trans "Delete?" %}</th>{% endif %}
-                <th>action</th>
+                <th></th>
                 </tr>
                 </thead>
 
@@ -88,7 +88,7 @@
                         {% endif %}
                         <td>
                             <div>
-                                <input type="submit" value="{% trans 'Add group followup' %}" name="add-group-followup">
+                                <input type="submit" value="{% trans 'View details' %}" name="add-group-followup">
                             </div>
 
                         </td>

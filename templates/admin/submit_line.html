@@ -1,47 +1,68 @@
 {% extends "admin/submit_line.html" %}
-{% load i18n static admin_urls irib_shared_tag %}
+{% load i18n static admin_urls irib_shared_tag knowledge_management %}
 
 {% block submit-row %}
     {{ block.super }}
-    {% if  opts.model_name == 'enactment' %}
+    {#    @todo: distinct irib_followup and eirib_followup #}
+    {% if opts.model_name == 'enactment' and original.pk %}
         {% if user.is_superuser or user.is_secretary %}
-            <div class="">
-                <p class="deletelink-box">
+            <div class="custom-command">
+                <p class="">
                     <input type="button" value="{% trans 'Close enactment' %}" class="close-enactment"
                            onclick='javascript: location.href="{% url 'admin:close' %}?pk={{ original.pk }}"'>
                 </p>
             </div>
         {% endif %}
     {% endif %}
+    {% if opts.model_name == 'personalcardtable' %}
+        {% can_send original as can_send %}
+        {% if can_send %}
+            <div class="custom-command">
+                <p class="">
+                    <input type="button" value="{% trans 'Send' %}" class="close-enactment"
+                           onclick='javascript: location.href="{% url 'admin:send' %}?pk={{ original.pk }}"'>
+                </p>
+            </div>
+        {% endif %}
+    {% endif %}
     {% navigation_counter request opts.app_label opts.model_name original.pk as navigation_counter %}
     {% if navigation_counter.status %}
-        <div class="center">
-            {% if LANGUAGE_CODE == 'fa' %}
-                <input type="button" value="◄◄" class="navigation" title="{% trans 'Last' %}"
-                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
-                <input type="button" value="◄" class="navigation" title="{% trans 'Next' %}"
-                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►" class="navigation" title="{% trans 'Previous' %}"
-                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►►" class="navigation" title="{% trans 'First' %}"
-                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
-            {% else %}
-                <input type="button" value="◄◄" class="navigation" title="{% trans 'First' %}"
-                       onclick='javascript: location.href="{% url 'admin:first-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
-                <input type="button" value="◄" class="navigation" title="{% trans 'Previous' %}"
-                       onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►" class="navigation" title="{% trans 'Next' %}"
-                       onclick='javascript: location.href="{% url 'admin:next-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
-                <input type="button" value="►►" class="navigation" title="{% trans 'Last' %}"
-                       onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
-            {% endif %}
-        </div>
-        <div class="center">
-            <p class="navigation paginator">
-                {% trans 'Item' %} {{ navigation_counter.item }} {% trans 'of' %} {{ navigation_counter.items }}
-                {% if navigation_counter.filtered %}
-                    <span class="filtered">({% trans 'Filtered' %})</span>{% endif %}
-            </p>
+        <div class="container">
+            <div class="center">
+                {% if original.pk %}
+                    {% if LANGUAGE_CODE == 'fa' %}
+                        <input type="button" value="◄◄" class="navigation" title="{% trans 'Last' %}"
+                               onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
+                        <input type="button" value="◄" class="navigation" title="{% trans 'Next' %}"
+                               onclick='javascript: location.href="{% url 'admin:next-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                        <input type="button" value="►" class="navigation" title="{% trans 'Previous' %}"
+                               onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                        <input type="button" value="►►" class="navigation" title="{% trans 'First' %}"
+                               onclick='javascript: location.href="{% url 'admin:first-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
+                    {% else %}
+                        <input type="button" value="◄◄" class="navigation" title="{% trans 'First' %}"
+                               onclick='javascript: location.href="{% url 'admin:first-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
+                        <input type="button" value="◄" class="navigation" title="{% trans 'Previous' %}"
+                               onclick='javascript: location.href="{% url 'admin:previous-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                        <input type="button" value="►" class="navigation" title="{% trans 'Next' %}"
+                               onclick='javascript: location.href="{% url 'admin:next-'|add:opts.app_label|add:'-'|add:opts.model_name %}?pk={{ original.pk }}"'>
+                        <input type="button" value="►►" class="navigation" title="{% trans 'Last' %}"
+                               onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}"'>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="center">
+                <p>
+                    {% if original.pk %}
+                        {% trans 'Item' %} {{ navigation_counter.item }} {% trans 'of' %} {{ navigation_counter.items }}
+                        {% if navigation_counter.filtered %}
+                            <span class="filtered">({% trans 'Filtered' %})</span>
+                        {% endif %}
+                    {% else %}
+                        {% trans 'Item' %} {{ navigation_counter.item }}
+                    {% endif %}
+                </p>
+            </div>
         </div>
     {% endif %}
 {% endblock %}

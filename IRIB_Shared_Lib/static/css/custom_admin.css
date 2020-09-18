@@ -170,13 +170,22 @@ div.form-row.field-_type.field-description {
     padding: 3px;
 }
 
+.container {
+    position: relative;
+    height: 0;
+}
+
 .center {
-    margin: -32px auto auto;
+    margin: 5px auto;
     width: fit-content;
 }
 
-:lang(fa) .center {
-    margin-top: auto;
+.submit-row a.closelink {
+    float: right;
+}
+
+:lang(fa) .submit-row a.closelink {
+    float: left;
 }
 
 .admin-interface .submit-row input.close-enactment {
@@ -197,11 +206,6 @@ div.form-row.field-_type.field-description {
 :lang(fa) .admin-interface .submit-row div.close-enactment,
 :lang(fa) .admin-interface .submit-row div.navigation {
     float: right;
-}
-
-p.navigation.paginator {
-    line-height: 25px;
-    margin-bottom: -30px;
 }
 
 span.filtered {
@@ -263,4 +267,13 @@ p.datetime {
 
 :lang(fa) .object-tools-print-detail {
     margin-left: 80px;
+}
+
+.custom-command {
+    float: left;
+    margin-top: -4px;
+}
+
+:lang(fa) .custom-command {
+    float: right;
 }

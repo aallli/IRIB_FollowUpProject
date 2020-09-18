@@ -1,7 +1,7 @@
 from django import template
+from django.apps import apps
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from EIRIB_FollowUp import utils
 
 register = template.Library()
 
@@ -33,14 +33,13 @@ def navigation_counter(request, app, model, pk):
                 'status': status,
                 'item': request.session[queryset_name].index({'pk': pk}) + 1,
                 'items': len(request.session[queryset_name]),
-                'filtered': request.session[filtered_queryset_name]}
+                'filtered': request.session[filtered_queryset_name]
+            }
         else:
+            model = apps.get_model(app, model)
             return {
                 'status': status,
-                'item': _('New'),
-                'items': len(request.session[queryset_name]),
-                'filtered': request.session[filtered_queryset_name]}
+                'item': '%s %s' % (_(model._meta.verbose_name), _('New'))
+            }
 
     return {'status': False}
-
-

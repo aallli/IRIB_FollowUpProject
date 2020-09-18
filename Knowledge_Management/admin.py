@@ -1,12 +1,14 @@
+from . import models
+from django.urls import path
 from django.contrib import admin
 from django.contrib import messages
 from django.db.transaction import atomic
-from django.utils.translation import ugettext_lazy as _
-from jalali_date.admin import ModelAdminJalaliMixin
+from django.shortcuts import get_object_or_404
 from IRIB_Shared_Lib.admin import BaseModelAdmin
+from jalali_date.admin import ModelAdminJalaliMixin
 from IRIB_Shared_Lib.utils import get_jalali_filter
-from . import models
 from .forms import get_activity_assessment_inline_form
+from django.utils.translation import ugettext_lazy as _
 
 
 class SubCategoryInline(admin.TabularInline):
@@ -113,6 +115,12 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_queryset(self, request):
         return super(PersonalCardtableAdmin, self).get_queryset(request).filter(user=request.user)
 
+    def has_change_permission(self, request, obj=None):
+        return obj and obj._status == models.ActivityStatus.DR
+
+    def has_delete_permission(self, request, obj=None):
+        return obj and obj._status == models.ActivityStatus.DR
+
     def get_readonly_fields(self, request, obj=None):
         user = request.user
         if obj and obj.user != user:
@@ -152,6 +160,19 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             ActivitySubCategoryInline(self.model, self.admin_site),
             get_activity_assessment_inline(request)(self.model, self.admin_site),
         ]
+
+    def get_urls(self):
+        urls = super(PersonalCardtableAdmin, self).get_urls()
+        return [path('send/', self.send, name="send"), ] + urls
+
+    @atomic
+    def send(self, request):
+        result = self.next(request)
+        pk = int(request.GET['pk'])
+        personalcardtable = get_object_or_404(models.CardtableBase, pk=pk)
+        personalcardtable._status = models.ActivityStatus.NW
+        personalcardtable.save()
+        return result
 
 
 @admin.register(models.AssessmentCardtable)
