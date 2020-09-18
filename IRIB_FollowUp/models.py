@@ -74,7 +74,8 @@ class Session(models.Model):
             presents = ''
             for member in Member.objects.filter(session=self.session):
                 if Attendant.objects.filter(user=member.user, session=self).count() != 0:
-                    presents += '%s, ' % member.user
+                    if member.user:
+                        presents += '%s, ' % member.user
             return presents[0: presents.__len__() - 2] if presents else _('All absent')
         else:
             return '-'
@@ -86,7 +87,8 @@ class Session(models.Model):
             absents = ''
             for member in Member.objects.filter(session=self.session):
                 if Attendant.objects.filter(user=member.user, session=self).count() == 0:
-                    absents += '%s, ' % member.user
+                    if member.user:
+                        absents += '%s, ' % member.user
             return absents[0: absents.__len__() - 2] if absents else _('All ready')
         else:
             return '-'

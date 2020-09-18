@@ -3,13 +3,16 @@
 
 {% block submit-row %}
     {{ block.super }}
-    {#    @todo: distinct irib_followup and eirib_followup #}
     {% if opts.model_name == 'enactment' and original.pk %}
         {% if user.is_superuser or user.is_secretary %}
             <div class="custom-command">
-                <p class="">
+                <p>
                     <input type="button" value="{% trans 'Close enactment' %}" class="close-enactment"
-                           onclick='javascript: location.href="{% url 'admin:close' %}?pk={{ original.pk }}"'>
+                           onclick="javascript: location.href={% if opts.app_label == 'EIRIB_FollowUp' %}
+                               '{% url "admin:eirib-enactment-close" %}?pk={{ original.pk }}'
+                           {% elif opts.app_label == 'IRIB_FollowUp' %}
+                               '{% url "admin:irib-enactment-close" %}?pk={{ original.pk }}'
+                           {% endif %}">
                 </p>
             </div>
         {% endif %}
@@ -18,7 +21,7 @@
         {% can_send original as can_send %}
         {% if can_send %}
             <div class="custom-command">
-                <p class="">
+                <p>
                     <input type="button" value="{% trans 'Send' %}" class="close-enactment"
                            onclick='javascript: location.href="{% url 'admin:send' %}?pk={{ original.pk }}"'>
                 </p>

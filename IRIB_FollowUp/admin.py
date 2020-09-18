@@ -285,7 +285,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
         return [
-                   path('close/', self.close, name="close"),
+                   path('close/', self.close, name="irib-enactment-close"),
                    path('report/', self.report, name="enactment-report"),
                ] + urls
 

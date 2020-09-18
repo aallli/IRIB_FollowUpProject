@@ -308,7 +308,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
         from django.urls import path
-        return [path('close/', self.close, name="close"), ] + urls
+        return [path('close/', self.close, name="eirib-enactment-close"), ] + urls
 
     @atomic
     def close(self, request):
