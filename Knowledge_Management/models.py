@@ -64,6 +64,7 @@ class CommitteeMember(models.Model):
     class Meta:
         verbose_name = _('Committee Member')
         verbose_name_plural = _('Committee Members')
+        ordering = ['user']
 
     def __str__(self):
         return self.user.__str__()

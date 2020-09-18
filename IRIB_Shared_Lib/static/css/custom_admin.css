@@ -103,6 +103,9 @@
     width: fit-content;
 }
 
+.fieldBox.field-box.field-activity,
+.fieldBox.field-box.field-_date,
+.fieldBox.field-box.field-_review_date,
 .fieldBox.field-box.field-session,
 .fieldBox.field-box.field-date,
 .fieldBox.field-box.field-review_date,
@@ -122,8 +125,21 @@
 .fieldBox.field-box.field-user,
 .fieldBox.field-box.field-limit,
 .fieldBox.field-box.field-quantity,
+.fieldBox.field-box.field-subject,
 .fieldBox.field-box.field-row {
     white-space: nowrap;
+}
+
+div.field-assigner.field-review_date.field-row.field-subject.form-row,
+div.form-row.field-row.field-session.field-_date.field-_review_date,
+div.form-row.field-assigner.field-subject.field-code,
+div.form-row.field-row.field-date.field-status,
+div.form-row.field-_type.field-description {
+    width: 100%;
+}
+
+.fieldBox.field-box.field-subject {
+    width: auto;
 }
 
 .form-row.field-description div div {
@@ -167,26 +183,23 @@
     margin: 0 5px;
 }
 
-.admin-interface .submit-row input.navigation
-{
+.admin-interface .submit-row input.navigation {
     margin: 0 5px;
     height: 25px;
     line-height: 7px;
 }
 
 .admin-interface .submit-row div.close-enactment,
-.admin-interface .submit-row div.navigation
-{
+.admin-interface .submit-row div.navigation {
     float: left;
 }
 
 :lang(fa) .admin-interface .submit-row div.close-enactment,
-:lang(fa) .admin-interface .submit-row div.navigation
-{
+:lang(fa) .admin-interface .submit-row div.navigation {
     float: right;
 }
 
-p.navigation.paginator{
+p.navigation.paginator {
     line-height: 25px;
     margin-bottom: -30px;
 }
@@ -251,10 +264,3 @@ p.datetime {
 :lang(fa) .object-tools-print-detail {
     margin-left: 80px;
 }
-
-div.field-assigner.field-review_date.field-row.field-subject.form-row,
-div.form-row.field-row.field-date.field-status,
-div.form-row.field-_type.field-description {
-    width: 100%;
-}
-

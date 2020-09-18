@@ -1,6 +1,7 @@
 from django import template
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from EIRIB_FollowUp import utils
 
 register = template.Library()
 
@@ -41,3 +42,5 @@ def navigation_counter(request, app, model, pk):
                 'filtered': request.session[filtered_queryset_name]}
 
     return {'status': False}
+
+

@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.10.10'
+VERSION = '1.10.21'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -197,7 +197,16 @@ JALALI_DATE_DEFAULTS = {
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-NAVIGATED_MODELS = ['IRIB_FollowUp_enactment', 'EIRIB_FollowUp_enactment', 'Knowledge_Management_personalcardtable']
+NAVIGATED_MODELS = ['EIRIB_FollowUp_session', 'EIRIB_FollowUp_assigner', 'EIRIB_FollowUp_subject',
+                    'EIRIB_FollowUp_actor', 'EIRIB_FollowUp_supervisor', 'EIRIB_FollowUp_user',
+                    'EIRIB_FollowUp_enactment',
+
+                    'IRIB_FollowUp_sessionbase', 'IRIB_FollowUp_session', 'IRIB_FollowUp_enactment',
+                    'IRIB_FollowUp_subject', 'IRIB_FollowUp_group',
+                    'Knowledge_Management_committeemember', 'Knowledge_Management_category',
+                    'Knowledge_Management_indicator', 'Knowledge_Management_activity',
+                    'Knowledge_Management_subcategory', 'Knowledge_Management_assessmentcardtable',
+                    'Knowledge_Management_personalcardtable']
 
 # EIRIB Followup Configurations
 EIRIB_FU_OPERATOR_GROUP_NAME = 'EIRIB FU - Operators'

@@ -1,5 +1,5 @@
 {% extends "admin/change_list.html" %}
-{% load i18n %}
+{% load i18n eirib_followup_tag %}
 {% block object-tools %}
     {% if opts.model_name == 'enactment' %}
         <ul class="object-tools object-tools-print">
@@ -10,4 +10,14 @@
     {% endif %}
     {{ block.super }}
 {% endblock %}
-{% block pagination %} {{ block.super }} {% endblock %}
+
+{% block result_list %}
+    {% data_loading opts.app_label as data_loading %}
+    {% block pagination %} {{ block.super }} {% endblock %}
+    {% if data_loading.0 %}
+        <div class="errornote loading-message">{% trans 'Data not loaded yet, please wait...' %}</div>
+    {% elif data_loading.1 %}
+        <div class="errornote loading-message">{% trans 'Data syncronization failed. Try later and contact administrator if failing repeats.' %}</div>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}

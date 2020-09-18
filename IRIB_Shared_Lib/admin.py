@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponseRedirect
@@ -65,6 +64,6 @@ class BaseModelAdmin(admin.ModelAdmin):
         if model_full_name in settings.NAVIGATED_MODELS:
             queryset_name = '%s_query_set' % model_full_name
             filtered_queryset_name = 'filtered_%s_query_set' % model_full_name
-            if request.session[filtered_queryset_name]:
+            if filtered_queryset_name in request.session and request.session[filtered_queryset_name]:
                 queryset = queryset.filter(pk__in=[item['pk'] for item in request.session[queryset_name]])
         return queryset
