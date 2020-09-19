@@ -7,12 +7,10 @@ from django.contrib.admin import SimpleListFilter
 from django.utils.translation import ugettext_lazy as _
 
 
-def get_admin_url(self):
-    """the url to the Django admin interface for the model instance"""
+def get_admin_url(model, pk=None):
     from django.urls import reverse
-
-    info = (self._meta.app_label, self._meta.model_name)
-    return reverse('admin:%s_%s_change' % info, args=(self.pk,))
+    info = (model._meta.app_label, model._meta.model_name)
+    return reverse('admin:%s_%s_change' % info, args=(pk,)) if pk else reverse('admin:%s_%s_changelist' % info,)
 
 
 def get_model_fullname(self):

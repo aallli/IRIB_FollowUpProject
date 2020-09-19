@@ -3,6 +3,7 @@
 
 {% block submit-row %}
     {{ block.super }}
+
     {% if opts.model_name == 'enactment' and original.pk %}
         {% if user.is_superuser or user.is_secretary %}
             <div class="custom-command">
@@ -17,6 +18,7 @@
             </div>
         {% endif %}
     {% endif %}
+
     {% if opts.model_name == 'personalcardtable' %}
         {% can_send original as can_send %}
         {% if can_send %}
@@ -28,6 +30,35 @@
             </div>
         {% endif %}
     {% endif %}
+
+    {% if opts.model_name == 'assessmentcardtable' %}
+        {% can_accept user original as can_accept %}
+        {% if can_accept %}
+            <div class="custom-command">
+                <p>
+                    <input type="button" value="{% trans 'Accept' %}" class="close-enactment"
+                           onclick='javascript: location.href="{% url 'admin:accept' %}?pk={{ original.pk }}"'>
+                    <input type="button" value="{% trans 'To Edit' %}" class="close-enactment"
+                           onclick='javascript: location.href="{% url 'admin:reject' %}?pk={{ original.pk }}"'>
+                </p>
+            </div>
+        {% endif %}
+
+        {% is_chairman user as is_chairman %}
+        {% if is_chairman %}
+            <div class="custom-command">
+                <p>
+                    <input type="button" value="{% trans 'Approve' %}" class="close-enactment"
+                           onclick='javascript: location.href="{% url 'admin:approve' %}?pk={{ original.pk }}"'>
+                    <input type="button" value="{% trans 'Conditional Approve' %}" class="close-enactment"
+                           onclick='javascript: location.href="{% url 'admin:conditional-approve' %}?pk={{ original.pk }}"'>
+                    <input type="button" value="{% trans 'Reject' %}" class="close-enactment"
+                           onclick='javascript: location.href="{% url 'admin:reject' %}?pk={{ original.pk }}"'>
+                </p>
+            </div>
+        {% endif %}
+    {% endif %}
+
     {% navigation_counter request opts.app_label opts.model_name original.pk as navigation_counter %}
     {% if navigation_counter.status %}
         <div class="container">

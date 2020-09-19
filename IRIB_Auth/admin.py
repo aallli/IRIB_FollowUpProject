@@ -58,7 +58,6 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
         except Exception as e:
             self.message_user(request, _('Error in creating/updating user in MS Acceess Database'), messages.WARNING)
 
-
     def save_related(self, request, form, formsets, change):
         user = form.instance
         super(UserAdmin, self).save_related(request, form, formsets, change)

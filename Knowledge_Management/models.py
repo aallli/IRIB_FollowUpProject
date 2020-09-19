@@ -1,9 +1,8 @@
-from django.conf import settings
 from django.db import models
+from django.conf import settings
+from IRIB_Auth.models import User
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
-
-from IRIB_Auth.models import User
 from IRIB_Shared_Lib.utils import to_jalali, set_now, format_date
 
 
@@ -11,6 +10,7 @@ class ActivityStatus(models.TextChoices):
     DR = 'DRAFT', _('Draft')
     NW = 'NEW', _('New')
     AC = 'ACCEPTED', _('Accepted')
+    EN = 'EDIT_NEEDED', _('Edit needed')
     RJ = 'REJECTED', _('Rejected')
     CN = 'CONDITIONAL', _('Conditional')
     AP = 'APPROVED', _('Approved')
@@ -82,6 +82,18 @@ class CommitteeMember(models.Model):
         kwargs = {}
         return super(CommitteeMember, self).save(*args, **kwargs)
 
+    @staticmethod
+    def is_km_committee_member(user):
+        return CommitteeMember.objects.filter(user=user).count() > 0
+
+    @staticmethod
+    def is_km_committee_secretary(user):
+        return CommitteeMember.objects.filter(user=user, secretary=True).count() > 0
+
+    @staticmethod
+    def is_km_committee_chairman(user):
+        return CommitteeMember.objects.filter(user=user, chairman=True).count() > 0
+
 
 class Indicator(models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
@@ -114,6 +126,8 @@ class CardtableBase(models.Model):
     activity = models.ForeignKey(Activity, verbose_name=_('Activity'), on_delete=models.SET_NULL, null=True)
     _date = models.DateTimeField(verbose_name=_('Creation Date'), blank=False, default=set_now)
     description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
+    secretary_description = models.TextField(verbose_name=_('Secretary Description'), max_length=4000, blank=True,
+                                             null=True)
     user = models.ForeignKey(User, verbose_name=_('Knowledge User'), on_delete=models.SET_NULL, null=True)
     _status = models.CharField(verbose_name=_('Status'), choices=ActivityStatus.choices,
                                default=ActivityStatus.DR, max_length=30, null=False)
@@ -129,7 +143,7 @@ class CardtableBase(models.Model):
     def row(self):
         return self.pk or '-'
 
-    row.short_description = _('Row')
+    row.short_description = _('Code')
     row.admin_order_field = 'id'
 
     def max_score(self):

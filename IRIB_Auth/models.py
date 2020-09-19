@@ -72,10 +72,6 @@ class User(AbstractUser):
     def is_km_operator(self):
         return self.groups.filter(name=settings.KM_OPERATOR_GROUP_NAME) > 0
 
-    @property
-    def is_km_committee_member(self):
-        return models.CommitteeMember.objects.filter(user=self).count() > 0
-
     def delete(self, using=None, keep_parents=False):
         if self.is_superuser:
             raise Exception(_('Delete failed, Immutable user: (%s)' % self.username))

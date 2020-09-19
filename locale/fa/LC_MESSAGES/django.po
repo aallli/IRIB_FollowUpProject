@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-18 17:39+0430\n"
+"POT-Creation-Date: 2020-09-19 12:36+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,35 +20,35 @@ msgstr ""
 
 #: .\EIRIB_FollowUp\admin.py:20 .\EIRIB_FollowUp\models.py:156
 #: .\EIRIB_FollowUp\models.py:188 .\IRIB_FollowUp\admin.py:228
-#: .\IRIB_FollowUp\models.py:152 .\IRIB_FollowUp\models.py:188
+#: .\IRIB_FollowUp\models.py:154 .\IRIB_FollowUp\models.py:190
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
-#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:75
+#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:73
 msgid "Today"
 msgstr "امروز"
 
-#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:75
+#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:73
 msgid "This week"
 msgstr "هفته جاری"
 
-#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:75
+#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:73
 msgid "Last 10 days"
 msgstr "ده روز گذشته"
 
-#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:76
+#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:74
 msgid "This month"
 msgstr "ماه جاری"
 
-#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:76
+#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:74
 msgid "Last 30 days"
 msgstr "30 روز گذشته"
 
-#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:76
+#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:74
 msgid "Last 3 months"
 msgstr "سه ماه گذشته"
 
-#: .\EIRIB_FollowUp\admin.py:26 .\IRIB_Shared_Lib\utils.py:77
+#: .\EIRIB_FollowUp\admin.py:26 .\IRIB_Shared_Lib\utils.py:75
 msgid "Last 6 months"
 msgstr "شش ماه گذشته"
 
@@ -60,7 +60,7 @@ msgstr "مسوول پیگیری"
 #: .\EIRIB_FollowUp\admin.py:68 .\EIRIB_FollowUp\models.py:63
 #: .\EIRIB_FollowUp\models.py:83 .\EIRIB_FollowUp\models.py:133
 #: .\IRIB_Auth\models.py:23 .\IRIB_Auth\models.py:39
-#: .\IRIB_FollowUp\admin.py:21 .\IRIB_FollowUp\models.py:245
+#: .\IRIB_FollowUp\admin.py:21 .\IRIB_FollowUp\models.py:247
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
@@ -85,14 +85,14 @@ msgstr "سامانه پیگیری معاونت فضای مجازی"
 #: .\EIRIB_FollowUp\models.py:16 .\EIRIB_FollowUp\models.py:31
 #: .\EIRIB_FollowUp\models.py:46 .\EIRIB_FollowUp\models.py:80
 #: .\IRIB_Auth\models.py:20 .\IRIB_FollowUp\models.py:37
-#: .\IRIB_FollowUp\models.py:132 .\IRIB_FollowUp\models.py:315
+#: .\IRIB_FollowUp\models.py:134 .\IRIB_FollowUp\models.py:317
 #: .\Knowledge_Management\models.py:20 .\Knowledge_Management\models.py:32
-#: .\Knowledge_Management\models.py:46 .\Knowledge_Management\models.py:87
+#: .\Knowledge_Management\models.py:46 .\Knowledge_Management\models.py:99
 msgid "Name"
 msgstr "نام"
 
 #: .\EIRIB_FollowUp\models.py:19 .\EIRIB_FollowUp\models.py:154
-#: .\IRIB_FollowUp\models.py:115
+#: .\IRIB_FollowUp\models.py:117
 msgid "Session"
 msgstr " جلسه"
 
@@ -101,7 +101,7 @@ msgid "Sessions"
 msgstr " جلسه"
 
 #: .\EIRIB_FollowUp\models.py:34 .\EIRIB_FollowUp\models.py:155
-#: .\IRIB_FollowUp\models.py:151
+#: .\IRIB_FollowUp\models.py:153
 msgid "Task Assigner"
 msgstr "گوینده"
 
@@ -110,13 +110,13 @@ msgid "Task Assigners"
 msgstr "گویندگان"
 
 #: .\EIRIB_FollowUp\models.py:49 .\EIRIB_FollowUp\models.py:146
-#: .\IRIB_FollowUp\models.py:135 .\IRIB_FollowUp\models.py:148
+#: .\IRIB_FollowUp\models.py:137 .\IRIB_FollowUp\models.py:150
 #: .\static\admin\custom\enactments-list-report.html:75
 #: .\templates\admin\custom\enactments-list-report.html:86
 msgid "Subject"
 msgstr "موضوع"
 
-#: .\EIRIB_FollowUp\models.py:50 .\IRIB_FollowUp\models.py:136
+#: .\EIRIB_FollowUp\models.py:50 .\IRIB_FollowUp\models.py:138
 msgid "Subjects"
 msgstr "موضوعات"
 
@@ -139,8 +139,8 @@ msgid "Supervisor Units"
 msgstr "واحدهای پیگیری"
 
 #: .\EIRIB_FollowUp\models.py:95 .\IRIB_Auth\models.py:10
-#: .\IRIB_FollowUp\models.py:20 .\IRIB_FollowUp\models.py:99
-#: .\IRIB_FollowUp\models.py:116 .\IRIB_FollowUp\models.py:331
+#: .\IRIB_FollowUp\models.py:20 .\IRIB_FollowUp\models.py:101
+#: .\IRIB_FollowUp\models.py:118 .\IRIB_FollowUp\models.py:333
 #: .\Knowledge_Management\models.py:60
 msgid "User"
 msgstr "کاربر"
@@ -150,8 +150,9 @@ msgid "Query Name"
 msgstr "نام کوئری"
 
 #: .\EIRIB_FollowUp\models.py:97 .\EIRIB_FollowUp\models.py:144
+#: .\Knowledge_Management\models.py:146
 msgid "Code"
-msgstr "کد مصوبه"
+msgstr "کد"
 
 #: .\EIRIB_FollowUp\models.py:101
 msgid "user"
@@ -173,18 +174,17 @@ msgstr "سطح دسترسی"
 msgid "last login"
 msgstr "آخرین ورود"
 
-#: .\EIRIB_FollowUp\models.py:143 .\IRIB_FollowUp\models.py:182
-#: .\Knowledge_Management\models.py:132
+#: .\EIRIB_FollowUp\models.py:143 .\IRIB_FollowUp\models.py:184
 #: .\static\admin\custom\enactments-list-report.html:66
 #: .\templates\admin\custom\enactments-list-report.html:77
 msgid "Row"
 msgstr "کد مصوبه"
 
 #: .\EIRIB_FollowUp\models.py:145 .\EIRIB_FollowUp\models.py:172
-#: .\EIRIB_FollowUp\models.py:206 .\IRIB_FollowUp\models.py:147
-#: .\IRIB_FollowUp\models.py:170 .\IRIB_FollowUp\models.py:252
-#: .\Knowledge_Management\models.py:116 .\Knowledge_Management\models.py:177
-#: .\Knowledge_Management\models.py:212
+#: .\EIRIB_FollowUp\models.py:206 .\IRIB_FollowUp\models.py:149
+#: .\IRIB_FollowUp\models.py:172 .\IRIB_FollowUp\models.py:254
+#: .\Knowledge_Management\models.py:128 .\Knowledge_Management\models.py:191
+#: .\Knowledge_Management\models.py:226
 #: .\static\admin\custom\enactments-list-report.html:79
 #: .\templates\admin\custom\enactments-list-report.html:90
 msgid "Description"
@@ -198,23 +198,23 @@ msgstr "پیگیری کننده اول"
 msgid "Second Actor"
 msgstr "پیگیری کننده دوم"
 
-#: .\EIRIB_FollowUp\models.py:152 .\IRIB_FollowUp\models.py:149
+#: .\EIRIB_FollowUp\models.py:152 .\IRIB_FollowUp\models.py:151
 msgid "Follow Grade"
 msgstr "لزوم پیگیری"
 
 #: .\EIRIB_FollowUp\models.py:153 .\EIRIB_FollowUp\models.py:177
-#: .\IRIB_FollowUp\models.py:221
+#: .\IRIB_FollowUp\models.py:223
 msgid "Result"
 msgstr "نتیجه"
 
 #: .\EIRIB_FollowUp\models.py:159 .\EIRIB_FollowUp\models.py:208
-#: .\IRIB_FollowUp\models.py:31 .\IRIB_FollowUp\models.py:157
-#: .\IRIB_FollowUp\models.py:222 .\IRIB_FollowUp\models.py:254
-#: .\IRIB_FollowUp\models.py:348
+#: .\IRIB_FollowUp\models.py:31 .\IRIB_FollowUp\models.py:159
+#: .\IRIB_FollowUp\models.py:224 .\IRIB_FollowUp\models.py:256
+#: .\IRIB_FollowUp\models.py:350
 msgid "Enactment"
 msgstr "مصوبه"
 
-#: .\EIRIB_FollowUp\models.py:160 .\IRIB_FollowUp\models.py:158
+#: .\EIRIB_FollowUp\models.py:160 .\IRIB_FollowUp\models.py:160
 msgid "Enactments"
 msgstr "مصوبات"
 
@@ -226,18 +226,18 @@ msgstr "واحد پیگیری اول"
 msgid "Second Supervisor"
 msgstr "واحد پیگیری دوم"
 
-#: .\EIRIB_FollowUp\models.py:207 .\IRIB_FollowUp\models.py:253
-#: .\Knowledge_Management\models.py:178
+#: .\EIRIB_FollowUp\models.py:207 .\IRIB_FollowUp\models.py:255
+#: .\Knowledge_Management\models.py:192
 msgid "File"
 msgstr "ضمیمه"
 
-#: .\EIRIB_FollowUp\models.py:211 .\IRIB_FollowUp\models.py:257
-#: .\Knowledge_Management\models.py:182
+#: .\EIRIB_FollowUp\models.py:211 .\IRIB_FollowUp\models.py:259
+#: .\Knowledge_Management\models.py:196
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: .\EIRIB_FollowUp\models.py:212 .\IRIB_FollowUp\models.py:258
-#: .\Knowledge_Management\models.py:183
+#: .\EIRIB_FollowUp\models.py:212 .\IRIB_FollowUp\models.py:260
+#: .\Knowledge_Management\models.py:197
 msgid "Attachments"
 msgstr "ضمایم"
 
@@ -358,7 +358,7 @@ msgstr "عنوان"
 msgid "date joined"
 msgstr "تاریخ عضویت"
 
-#: .\IRIB_Auth\models.py:81
+#: .\IRIB_Auth\models.py:77
 #, python-format
 msgid "Delete failed, Immutable user: (%s)"
 msgstr "خطا! کاربر '%s' غیر قابل حذف است."
@@ -382,7 +382,7 @@ msgid "Welcome to EIRIB administration system"
 msgstr "خوش آمدید..."
 
 #: .\IRIB_FollowUp\admin.py:95 .\IRIB_FollowUp\models.py:53
-#: .\IRIB_FollowUp\models.py:69 .\IRIB_FollowUp\models.py:199
+#: .\IRIB_FollowUp\models.py:69 .\IRIB_FollowUp\models.py:201
 #: .\templates\admin\custom\enactments-list-report.html:53
 msgid "Attended Date"
 msgstr "تاریخ برگزاری جلسه"
@@ -426,8 +426,8 @@ msgstr "جلسه"
 msgid "Meeetings"
 msgstr "جلسات"
 
-#: .\IRIB_FollowUp\models.py:56 .\IRIB_FollowUp\models.py:98
-#: .\IRIB_FollowUp\models.py:150
+#: .\IRIB_FollowUp\models.py:56 .\IRIB_FollowUp\models.py:100
+#: .\IRIB_FollowUp\models.py:152
 #: .\static\admin\custom\enactments-list-report.html:45
 #: .\templates\admin\custom\enactments-list-report.html:51
 msgid "Minute"
@@ -437,85 +437,85 @@ msgstr "صورتجلسه"
 msgid "Minutes"
 msgstr "صورتجلسات"
 
-#: .\IRIB_FollowUp\models.py:78
+#: .\IRIB_FollowUp\models.py:79
 msgid "All absent"
 msgstr "همه غایب"
 
-#: .\IRIB_FollowUp\models.py:82 .\IRIB_FollowUp\models.py:210
+#: .\IRIB_FollowUp\models.py:83 .\IRIB_FollowUp\models.py:212
 #: .\templates\admin\custom\enactments-list-report.html:55
 msgid "Presents"
 msgstr "حاضرین"
 
-#: .\IRIB_FollowUp\models.py:90
+#: .\IRIB_FollowUp\models.py:92
 msgid "All ready"
 msgstr "بدون غایب"
 
-#: .\IRIB_FollowUp\models.py:94 .\IRIB_FollowUp\models.py:205
+#: .\IRIB_FollowUp\models.py:96 .\IRIB_FollowUp\models.py:207
 #: .\templates\admin\custom\enactments-list-report.html:57
 msgid "Absents"
 msgstr "غایبین"
 
-#: .\IRIB_FollowUp\models.py:102
+#: .\IRIB_FollowUp\models.py:104
 msgid "Attendant"
 msgstr "حاضر در جلسه"
 
-#: .\IRIB_FollowUp\models.py:103
+#: .\IRIB_FollowUp\models.py:105
 msgid "Attendants"
 msgstr "حاضرین جلسه"
 
-#: .\IRIB_FollowUp\models.py:119
+#: .\IRIB_FollowUp\models.py:121
 msgid "Member"
 msgstr "عضو"
 
-#: .\IRIB_FollowUp\models.py:120
+#: .\IRIB_FollowUp\models.py:122
 msgid "Members"
 msgstr "اعضا"
 
-#: .\IRIB_FollowUp\models.py:153 .\IRIB_FollowUp\models.py:176
+#: .\IRIB_FollowUp\models.py:155 .\IRIB_FollowUp\models.py:178
 #: .\static\admin\custom\enactments-list-report.html:71
 #: .\templates\admin\custom\enactments-list-report.html:82
 msgid "Type"
 msgstr "نوع"
 
-#: .\IRIB_FollowUp\models.py:215 .\IRIB_FollowUp\models.py:226
+#: .\IRIB_FollowUp\models.py:217 .\IRIB_FollowUp\models.py:228
 #: .\static\admin\custom\enactments-list-report.html:83
 msgid "Follow Ups"
 msgstr "پیگیریها"
 
-#: .\IRIB_FollowUp\models.py:219
+#: .\IRIB_FollowUp\models.py:221
 msgid "Actor"
 msgstr "پیگیری کننده"
 
-#: .\IRIB_FollowUp\models.py:220 .\IRIB_FollowUp\models.py:239
+#: .\IRIB_FollowUp\models.py:222 .\IRIB_FollowUp\models.py:241
 msgid "Response Date"
 msgstr "تاریخ پاسخ دهی"
 
-#: .\IRIB_FollowUp\models.py:225
+#: .\IRIB_FollowUp\models.py:227
 msgid "Follow Up"
 msgstr "پیگیری"
 
-#: .\IRIB_FollowUp\models.py:318 .\IRIB_FollowUp\models.py:330
-#: .\IRIB_FollowUp\models.py:347
+#: .\IRIB_FollowUp\models.py:320 .\IRIB_FollowUp\models.py:332
+#: .\IRIB_FollowUp\models.py:349
 msgid "Group"
 msgstr "گروه"
 
-#: .\IRIB_FollowUp\models.py:319
+#: .\IRIB_FollowUp\models.py:321
 msgid "Groups"
 msgstr "گروهها"
 
-#: .\IRIB_FollowUp\models.py:334
+#: .\IRIB_FollowUp\models.py:336
 msgid "Group User"
 msgstr "عضو گروه"
 
-#: .\IRIB_FollowUp\models.py:335
+#: .\IRIB_FollowUp\models.py:337
 msgid "Group Users"
 msgstr "اعضای گروه"
 
-#: .\IRIB_FollowUp\models.py:351
+#: .\IRIB_FollowUp\models.py:353
 msgid "Group FollowUp"
 msgstr "پیگیری گروهی"
 
-#: .\IRIB_FollowUp\models.py:352
+#: .\IRIB_FollowUp\models.py:354
 msgid "Group FollowUps"
 msgstr "پیگیریهای گروهی"
 
@@ -523,51 +523,62 @@ msgstr "پیگیریهای گروهی"
 msgid "IRIB Shared Library"
 msgstr "کتابخانه مشترک صدا و سیما"
 
-#: .\IRIB_Shared_Lib\templatetags\irib_shared_tag.py:42
-#: .\Knowledge_Management\models.py:12
+#: .\IRIB_Shared_Lib\templatetags\irib_shared_tag.py:47
+#: .\Knowledge_Management\models.py:11
 msgid "New"
 msgstr "جدید"
 
-#: .\IRIB_Shared_Lib\utils.py:135
+#: .\IRIB_Shared_Lib\utils.py:133
 msgid "Update failed."
 msgstr "خطا در به روز رسانی"
 
-#: .\IRIB_Shared_Lib\utils.py:135
+#: .\IRIB_Shared_Lib\utils.py:133
 msgid "Successful update."
 msgstr "به روز رسانی با موفقیت انجام شد."
 
-#: .\IRIB_Shared_Lib\utils.py:142
+#: .\IRIB_Shared_Lib\utils.py:140
 msgid "Delete failed."
 msgstr "خطای حذف"
 
-#: .\IRIB_Shared_Lib\utils.py:142
+#: .\IRIB_Shared_Lib\utils.py:140
 msgid "Successful delete."
 msgstr "حذف با موفقیت انجام شد."
 
-#: .\Knowledge_Management\admin.py:105 .\Knowledge_Management\admin.py:182
+#: .\Knowledge_Management\admin.py:107 .\Knowledge_Management\admin.py:189
 msgid "Main info"
 msgstr "اطلاعات اصلی"
 
-#: .\Knowledge_Management\admin.py:113 .\Knowledge_Management\admin.py:190
-#: .\Knowledge_Management\models.py:115 .\Knowledge_Management\models.py:163
+#: .\Knowledge_Management\admin.py:115 .\Knowledge_Management\admin.py:198
+#: .\Knowledge_Management\models.py:127 .\Knowledge_Management\models.py:177
 msgid "Creation Date"
 msgstr "تاریخ ثبت"
 
-#: .\Knowledge_Management\admin.py:138
+#: .\Knowledge_Management\admin.py:140
 msgid "Maximum exceeded, Invalid operations."
 msgstr "به دلیل احراز سقف تکرار، عملیات غیر مجاز است."
+
+#: .\Knowledge_Management\admin.py:265
+#, fuzzy
+#| msgid "Type some note for knowledge user..."
+msgid ""
+"Type some note for knowledge user and save before clicking Accept button..."
+msgstr "قبل از ارجاع، توضیحاتی برای کاربر دانشی ثبت کرده و آن را ذخیره کنید..."
 
 #: .\Knowledge_Management\apps.py:7
 msgid "Knowledge Management"
 msgstr "مدیریت دانش"
 
-#: .\Knowledge_Management\models.py:11
+#: .\Knowledge_Management\models.py:10
 msgid "Draft"
 msgstr "پیش نویس"
 
-#: .\Knowledge_Management\models.py:13
+#: .\Knowledge_Management\models.py:12
 msgid "Accepted"
 msgstr "در حال بررسی"
+
+#: .\Knowledge_Management\models.py:13
+msgid "Edit needed"
+msgstr "نیازمند ویرایش"
 
 #: .\Knowledge_Management\models.py:14
 msgid "Rejected"
@@ -593,7 +604,7 @@ msgstr "سرفصلهای دانشی"
 msgid "Category"
 msgstr "سرفصل"
 
-#: .\Knowledge_Management\models.py:36 .\Knowledge_Management\models.py:196
+#: .\Knowledge_Management\models.py:36 .\Knowledge_Management\models.py:210
 msgid "Knowledge Sub-Category"
 msgstr "موضوع دانشی"
 
@@ -601,11 +612,11 @@ msgstr "موضوع دانشی"
 msgid "Knowledge Sub-Categories"
 msgstr "موضوعات دانشی"
 
-#: .\Knowledge_Management\models.py:47 .\Knowledge_Management\models.py:138
+#: .\Knowledge_Management\models.py:47 .\Knowledge_Management\models.py:152
 msgid "Maximum Score"
 msgstr "حداکثر امتیاز"
 
-#: .\Knowledge_Management\models.py:48 .\Knowledge_Management\models.py:152
+#: .\Knowledge_Management\models.py:48 .\Knowledge_Management\models.py:166
 msgid "Limit"
 msgstr "سقف تکرار"
 
@@ -621,7 +632,7 @@ msgstr "فعالیتهای دانشی"
 msgid "Chairman"
 msgstr "رییس"
 
-#: .\Knowledge_Management\models.py:65 .\Knowledge_Management\models.py:209
+#: .\Knowledge_Management\models.py:65 .\Knowledge_Management\models.py:223
 msgid "Committee Member"
 msgstr "عضو کمیته"
 
@@ -629,101 +640,105 @@ msgstr "عضو کمیته"
 msgid "Committee Members"
 msgstr "اعضای کمیته"
 
-#: .\Knowledge_Management\models.py:90 .\Knowledge_Management\models.py:100
+#: .\Knowledge_Management\models.py:102 .\Knowledge_Management\models.py:112
 msgid "Indicator"
 msgstr "شاخص ارزیابی"
 
-#: .\Knowledge_Management\models.py:91
+#: .\Knowledge_Management\models.py:103
 msgid "Indicators"
 msgstr "شاخصهای ارزیابی"
 
-#: .\Knowledge_Management\models.py:99 .\Knowledge_Management\models.py:114
-#: .\Knowledge_Management\models.py:195
+#: .\Knowledge_Management\models.py:111 .\Knowledge_Management\models.py:126
+#: .\Knowledge_Management\models.py:209
 msgid "Activity"
 msgstr "فعالیت"
 
-#: .\Knowledge_Management\models.py:101
+#: .\Knowledge_Management\models.py:113
 msgid "Weight"
 msgstr "وزن"
 
-#: .\Knowledge_Management\models.py:104
+#: .\Knowledge_Management\models.py:116
 msgid "Activity Indicator"
 msgstr "شاخص ارزیابی فعالیت"
 
-#: .\Knowledge_Management\models.py:105
+#: .\Knowledge_Management\models.py:117
 msgid "Activity Indicators"
 msgstr "شاخصهای ارزیابی فعالیت"
 
-#: .\Knowledge_Management\models.py:117
+#: .\Knowledge_Management\models.py:129
+msgid "Secretary Description"
+msgstr "توضیحات دبیر"
+
+#: .\Knowledge_Management\models.py:131
 msgid "Knowledge User"
 msgstr "کاربر دانشی"
 
-#: .\Knowledge_Management\models.py:118 .\Knowledge_Management\models.py:169
+#: .\Knowledge_Management\models.py:132 .\Knowledge_Management\models.py:183
 msgid "Status"
 msgstr "وضعیت"
 
-#: .\Knowledge_Management\models.py:122
+#: .\Knowledge_Management\models.py:136
 msgid "Cardtable Base"
 msgstr "کارتابل پایه"
 
-#: .\Knowledge_Management\models.py:123
+#: .\Knowledge_Management\models.py:137
 msgid "Cardtable Bases"
 msgstr "کارتابل پایه"
 
-#: .\Knowledge_Management\models.py:147 .\Knowledge_Management\models.py:240
+#: .\Knowledge_Management\models.py:161 .\Knowledge_Management\models.py:254
 msgid "Score"
 msgstr "امتیاز"
 
-#: .\Knowledge_Management\models.py:158
+#: .\Knowledge_Management\models.py:172
 msgid "Quantity"
 msgstr "سابقه تکرار"
 
-#: .\Knowledge_Management\models.py:179 .\Knowledge_Management\models.py:213
-#: .\Knowledge_Management\models.py:245
+#: .\Knowledge_Management\models.py:193 .\Knowledge_Management\models.py:227
+#: .\Knowledge_Management\models.py:259
 msgid "Personal Cardtable"
 msgstr "کارتابل شخصی"
 
-#: .\Knowledge_Management\models.py:199
+#: .\Knowledge_Management\models.py:213
 msgid "Activity SubCategory"
 msgstr "موضوع دانشی فعالیت"
 
-#: .\Knowledge_Management\models.py:200
+#: .\Knowledge_Management\models.py:214
 msgid "Activity SubCategories"
 msgstr "موضوعات دانشی فعالیت"
 
-#: .\Knowledge_Management\models.py:210 .\Knowledge_Management\models.py:227
+#: .\Knowledge_Management\models.py:224 .\Knowledge_Management\models.py:241
 msgid "Assessment Date"
 msgstr "تاریخ ارزیابی"
 
-#: .\Knowledge_Management\models.py:211
+#: .\Knowledge_Management\models.py:225
 msgid "Scores"
 msgstr "امتیازات"
 
-#: .\Knowledge_Management\models.py:216
+#: .\Knowledge_Management\models.py:230
 msgid "Activity Assessment"
 msgstr "ارزیابی فعالیت"
 
-#: .\Knowledge_Management\models.py:217
+#: .\Knowledge_Management\models.py:231
 msgid "Activity Assessments"
 msgstr "ارزیابی فعالیتها"
 
-#: .\Knowledge_Management\models.py:246
+#: .\Knowledge_Management\models.py:260
 msgid "Personal Cardtables"
 msgstr "کارتابل شخصی"
 
-#: .\Knowledge_Management\models.py:252
+#: .\Knowledge_Management\models.py:266
 msgid "Assessment Cardtable"
 msgstr "کارتابل ارزیابی"
 
-#: .\Knowledge_Management\models.py:253
+#: .\Knowledge_Management\models.py:267
 msgid "Assessment Cardtables"
 msgstr "کارتابل ارزیابی"
 
-#: .\Knowledge_Management\models.py:259
+#: .\Knowledge_Management\models.py:273
 msgid "Financial Cardtable"
 msgstr "کارتابل مالی"
 
-#: .\Knowledge_Management\models.py:260
+#: .\Knowledge_Management\models.py:274
 msgid "Financial Cardtables"
 msgstr "کارتابل مالی"
 
@@ -811,22 +826,22 @@ msgid "Close enactment"
 msgstr "انتقال به سیستم عملکرد"
 
 #: .\static\admin\submit_line.html:19 .\static\admin\submit_line.html:34
-#: .\templates\admin\submit_line.html:34 .\templates\admin\submit_line.html:49
+#: .\templates\admin\submit_line.html:68 .\templates\admin\submit_line.html:83
 msgid "Last"
 msgstr "آخرین"
 
 #: .\static\admin\submit_line.html:21 .\static\admin\submit_line.html:32
-#: .\templates\admin\submit_line.html:36 .\templates\admin\submit_line.html:47
+#: .\templates\admin\submit_line.html:70 .\templates\admin\submit_line.html:81
 msgid "Next"
 msgstr "بعدی"
 
 #: .\static\admin\submit_line.html:23 .\static\admin\submit_line.html:30
-#: .\templates\admin\submit_line.html:38 .\templates\admin\submit_line.html:45
+#: .\templates\admin\submit_line.html:72 .\templates\admin\submit_line.html:79
 msgid "Previous"
 msgstr "قبلی"
 
 #: .\static\admin\submit_line.html:25 .\static\admin\submit_line.html:28
-#: .\templates\admin\submit_line.html:40 .\templates\admin\submit_line.html:43
+#: .\templates\admin\submit_line.html:74 .\templates\admin\submit_line.html:77
 msgid "First"
 msgstr "اولین"
 
@@ -880,18 +895,38 @@ msgstr "اضافه"
 msgid "You don’t have permission to view or edit anything."
 msgstr "شما اجازه رویت یا تغییر هیچ موجودیتی را ندارید."
 
-#: .\templates\admin\submit_line.html:22
+#: .\templates\admin\submit_line.html:27
 msgid "Send"
 msgstr "ارسال"
 
-#: .\templates\admin\submit_line.html:57 .\templates\admin\submit_line.html:62
+#: .\templates\admin\submit_line.html:39
+msgid "Accept"
+msgstr "ارجاع به کمیته"
+
+#: .\templates\admin\submit_line.html:41
+msgid "To Edit"
+msgstr "ارجاع جهت اصلاح"
+
+#: .\templates\admin\submit_line.html:51
+msgid "Approve"
+msgstr "تایید"
+
+#: .\templates\admin\submit_line.html:53
+msgid "Conditional Approve"
+msgstr "تایید مشروط"
+
+#: .\templates\admin\submit_line.html:55
+msgid "Reject"
+msgstr "رد"
+
+#: .\templates\admin\submit_line.html:91 .\templates\admin\submit_line.html:96
 msgid "Item"
 msgstr "مورد"
 
-#: .\templates\admin\submit_line.html:57
+#: .\templates\admin\submit_line.html:91
 msgid "of"
 msgstr "از"
 
-#: .\templates\admin\submit_line.html:59
+#: .\templates\admin\submit_line.html:93
 msgid "Filtered"
 msgstr "فیلتر شده"

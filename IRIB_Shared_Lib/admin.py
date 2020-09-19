@@ -9,31 +9,43 @@ class BaseModelAdmin(admin.ModelAdmin):
 
     def first(self, request):
         queryset = self.get_queryset(request)
-        return HttpResponseRedirect(get_admin_url(queryset.first()))
+        obj = queryset.first()
+        return HttpResponseRedirect(get_admin_url(self.model, obj.pk if obj else None))
 
     def previous(self, request):
         pk = int(request.GET['pk'])
         queryset = self.get_queryset(request)
-        index = list(queryset.values_list('pk', flat=True)).index(pk)
-        if index == 0:
-            obj = queryset[index]
-        else:
-            obj = queryset[index - 1]
-        return HttpResponseRedirect(get_admin_url(obj))
+        try:
+            pks = list(queryset.values_list('pk', flat=True))
+            index = pks.index(pk)
+            if index == 0:
+                pk = pks[index]
+            else:
+                pk = pks[index - 1]
+        except:
+            pk = pks[0] if len(pks) else None
+
+        return HttpResponseRedirect(get_admin_url(self.model, pk))
 
     def next(self, request):
         pk = int(request.GET['pk'])
         queryset = self.get_queryset(request)
-        index = list(queryset.values_list('pk', flat=True)).index(pk)
-        if index == queryset.count() - 1:
-            obj = queryset[index]
-        else:
-            obj = queryset[index + 1]
-        return HttpResponseRedirect(get_admin_url(obj))
+        try:
+            pks = list(queryset.values_list('pk', flat=True))
+            index = pks.index(pk)
+            if index == queryset.count() - 1:
+                pk = pks[index]
+            else:
+                pk = pks[index + 1]
+        except:
+            pk = pks[len(pks) - 1] if len(pks) else None
+
+        return HttpResponseRedirect(get_admin_url(self.model, pk))
 
     def last(self, request):
         queryset = self.get_queryset(request)
-        return HttpResponseRedirect(get_admin_url(queryset.last()))
+        obj = queryset.last()
+        return HttpResponseRedirect(get_admin_url(self.model, obj.pk if obj else None))
 
     def get_urls(self):
         urls = super(BaseModelAdmin, self).get_urls()

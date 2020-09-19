@@ -1,14 +1,17 @@
 from . import models
+
 from django.urls import path
 from django.contrib import admin
 from django.contrib import messages
 from django.db.transaction import atomic
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from IRIB_Shared_Lib.admin import BaseModelAdmin
+from django.contrib.auth.models import Permission
 from jalali_date.admin import ModelAdminJalaliMixin
-from IRIB_Shared_Lib.utils import get_jalali_filter
 from .forms import get_activity_assessment_inline_form
 from django.utils.translation import ugettext_lazy as _
+from IRIB_Shared_Lib.utils import get_jalali_filter, get_admin_url
 
 
 class SubCategoryInline(admin.TabularInline):
@@ -91,6 +94,20 @@ class CommitteeMemberAdmin(BaseModelAdmin):
     list_display_links = ['user', 'chairman', 'secretary']
     search_fields = ['user__first_name', 'user__last_name', 'user__username']
 
+    def save_model(self, request, obj, form, change):
+        super(CommitteeMemberAdmin, self).save_model(request, obj, form, change)
+        try:
+            obj.user.user_permissions.add(Permission.objects.get(codename='change_assessmentcardtable'))
+        except:
+            pass
+
+    def delete_model(self, request, obj):
+        super(CommitteeMemberAdmin, self).delete_model(request, obj)
+        try:
+            obj.user.user_permissions.remove(Permission.objects.get(codename='change_assessmentcardtable'))
+        except:
+            pass
+
 
 @admin.register(models.Indicator)
 class IndicatorAdmin(BaseModelAdmin):
@@ -104,19 +121,19 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     fieldsets = (
         (_('Main info'), {
             'fields': (('row', 'date', 'status'), ('activity', 'max_score', 'score', 'limit', 'quantity'),
-                       'description',)}),
+                       'description', 'secretary_description')}),
     )
     list_display = ['row', 'activity', 'date', 'status']
     list_display_links = ['row', 'activity', 'date', 'status']
-    search_fields = ['row', 'activity', 'description']
-    readonly_fields = ['row', 'max_score', 'score', 'limit', 'quantity', 'date', 'status']
+    search_fields = ['id', 'activity__name', 'description', ]
+    readonly_fields = ['row', 'max_score', 'score', 'limit', 'quantity', 'date', 'status', 'secretary_description']
     list_filter = [get_jalali_filter('_date', _('Creation Date')), '_status', 'activity']
 
     def get_queryset(self, request):
         return super(PersonalCardtableAdmin, self).get_queryset(request).filter(user=request.user)
 
     def has_change_permission(self, request, obj=None):
-        return obj and obj._status == models.ActivityStatus.DR
+        return obj and obj._status in [models.ActivityStatus.DR, models.ActivityStatus.EN]
 
     def has_delete_permission(self, request, obj=None):
         return obj and obj._status == models.ActivityStatus.DR
@@ -155,11 +172,17 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             self.message_user(request, e, messages.ERROR)
 
     def get_inline_instances(self, request, obj=None):
-        return [
-            AttachmentInline(self.model, self.admin_site),
-            ActivitySubCategoryInline(self.model, self.admin_site),
-            get_activity_assessment_inline(request)(self.model, self.admin_site),
-        ]
+        if obj and obj._status in [models.ActivityStatus.DR, models.ActivityStatus.EN]:
+            return [
+                AttachmentInline(self.model, self.admin_site),
+                ActivitySubCategoryInline(self.model, self.admin_site),
+            ]
+        else:
+            return [
+                AttachmentInline(self.model, self.admin_site),
+                ActivitySubCategoryInline(self.model, self.admin_site),
+                get_activity_assessment_inline(request)(self.model, self.admin_site),
+            ]
 
     def get_urls(self):
         urls = super(PersonalCardtableAdmin, self).get_urls()
@@ -167,12 +190,11 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     @atomic
     def send(self, request):
-        result = self.next(request)
         pk = int(request.GET['pk'])
         personalcardtable = get_object_or_404(models.CardtableBase, pk=pk)
         personalcardtable._status = models.ActivityStatus.NW
         personalcardtable.save()
-        return result
+        return HttpResponseRedirect(get_admin_url(self.model, pk))
 
 
 @admin.register(models.AssessmentCardtable)
@@ -180,28 +202,105 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = models.AssessmentCardtable
     fieldsets = (
         (_('Main info'), {
-            'fields': (('row', 'date', 'user,' 'status'), ('activity', 'max_score', 'score', 'limit', 'quantity'),
-                       'description',)}),
+            'fields': (('row', 'user', 'date', 'status'), ('activity', 'max_score', 'score', 'limit', 'quantity'),
+                       'description', 'secretary_description')}),
     )
     list_display = ['row', 'user', 'activity', 'date', 'status']
     list_display_links = ['row', 'user', 'activity', 'date', 'status']
-    search_fields = ['row', 'activity', 'description']
-    readonly_fields = ['row', 'max_score', 'score', 'limit', 'quantity', 'date', 'status', 'user']
+    search_fields = ['id', 'activity__name', 'description', 'user__first_name', 'user__last_name', 'user__username']
+    readonly_fields = ['row', 'user', 'max_score', 'score', 'limit', 'quantity', 'date', 'status', 'activity',
+                       'description']
     list_filter = ['user', get_jalali_filter('_date', _('Creation Date')), '_status', 'activity']
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
     def get_queryset(self, request):
         user = request.user
-        if user.is_superuser or user.is_km_committee_member:
-            return models.PersonalCardtable.objects.exclude(_status=models.ActivityStatus.DR)
+        if user.is_superuser or models.CommitteeMember.is_km_committee_secretary(user):
+            return models.AssessmentCardtable.objects.exclude(
+                _status__in=[models.ActivityStatus.DR, models.ActivityStatus.EN])
+        elif models.CommitteeMember.is_km_committee_member(user):
+            return models.AssessmentCardtable.objects.exclude(
+                _status__in=[models.ActivityStatus.DR, models.ActivityStatus.EN, models.ActivityStatus.NW])
         else:
-            return models.PersonalCardtable.objects.none()
+            return models.AssessmentCardtable.objects.none()
+
+    def get_readonly_fields(self, request, obj=None):
+        user = request.user
+        if user.is_superuser or models.CommitteeMember.is_km_committee_secretary(user):
+            return self.readonly_fields
+
+        return self.readonly_fields + ['secretary_description']
 
     def save_model(self, request, obj, form, change):
         return super(AssessmentCardtableAdmin, self).save_model(request, obj, form, change)
 
     def get_inline_instances(self, request, obj=None):
-        return [
-            AttachmentInline(self.model, self.admin_site),
-            ActivitySubCategoryInline(self.model, self.admin_site),
-            get_activity_assessment_inline(request)(self.model, self.admin_site),
-        ]
+        if obj and obj._status in [models.ActivityStatus.DR, models.ActivityStatus.EN, models.ActivityStatus.NW]:
+            return [
+                AttachmentInline(self.model, self.admin_site),
+                ActivitySubCategoryInline(self.model, self.admin_site),
+            ]
+        else:
+            return [
+                AttachmentInline(self.model, self.admin_site),
+                ActivitySubCategoryInline(self.model, self.admin_site),
+                get_activity_assessment_inline(request)(self.model, self.admin_site),
+            ]
+
+    def get_urls(self):
+        urls = super(AssessmentCardtableAdmin, self).get_urls()
+        return [path('accept/', self.accept, name="accept"),
+                path('todo/', self.todo, name="todo"),
+                path('approve/', self.approve, name="approve"),
+                path('capprove/', self.conditional_approve, name="conditional-approve"),
+                path('reject/', self.reject, name="reject"),
+                ] + urls
+
+    @atomic
+    def accept(self, request):
+        pk = int(request.GET['pk'])
+        assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
+        assessmentcardtable._status = models.ActivityStatus.AC
+        assessmentcardtable.save()
+        return self.next(request)
+
+    @atomic
+    def todo(self, request):
+        pk = int(request.GET['pk'])
+        assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
+        if assessmentcardtable.secretary_description:
+            assessmentcardtable._status = models.ActivityStatus.EN
+            assessmentcardtable.save()
+        else:
+            self.message_user(request, _('Type some note for knowledge user and save before clicking Accept button...'),
+                              messages.WARNING)
+        return self.next(request)
+
+    @atomic
+    def approve(self, request):
+        pk = int(request.GET['pk'])
+        assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
+        assessmentcardtable._status = models.ActivityStatus.AP
+        assessmentcardtable.save()
+        return self.next(request)
+
+    @atomic
+    def conditional_approve(self, request):
+        pk = int(request.GET['pk'])
+        assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
+        assessmentcardtable._status = models.ActivityStatus.CN
+        assessmentcardtable.save()
+        return self.next(request)
+
+    @atomic
+    def reject(self, request):
+        pk = int(request.GET['pk'])
+        assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
+        assessmentcardtable._status = models.ActivityStatus.RJ
+        assessmentcardtable.save()
+        return self.next(request)
