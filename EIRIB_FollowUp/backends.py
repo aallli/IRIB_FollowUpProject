@@ -1,8 +1,8 @@
 from threading import Timer
+from django.conf import settings
 from .utils import execute_query
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
 from EIRIB_FollowUp.models import User as _User
 from django.contrib.auth.backends import ModelBackend
 from IRIB_Auth.models import User, Title, AccessLevel, Supervisor
@@ -56,9 +56,9 @@ class EIRIBBackend(ModelBackend):
                 user.access_level = access_level
                 user._title = title
             else:
-                user = User.objects.create(user_id=result.UserID, username=user_name, first_name=result.FName,
-                                           last_name=result.LName, supervisor=supervisor, access_level=access_level,
-                                           _title=title, is_staff=True)
+                user = User.objects.create(username=user_name, first_name=result.FName, last_name=result.LName,
+                                           supervisor=supervisor, access_level=access_level, _title=title,
+                                           is_staff=True)
 
             self.set_groups(user)
             user.set_password(result.Password)
@@ -80,8 +80,20 @@ class EIRIBBackend(ModelBackend):
 
     def set_groups(self, user):
         if user.is_secretary:
-            user.groups.add(get_object_or_404(Group, name='Operators'))
-            user.groups.remove(get_object_or_404(Group, name='Users'))
+            try:
+                user.groups.add(Group.objects.get(name=settings.EIRIB_FU_OPERATOR_GROUP_NAME))
+            except:
+                pass
+            try:
+                user.groups.remove(Group.objects.get(name=settings.EIRIB_FU_USER_GROUP_NAME))
+            except:
+                pass
         else:
-            user.groups.remove(get_object_or_404(Group, name='Operators'))
-            user.groups.add(get_object_or_404(Group, name='Users'))
+            try:
+                user.groups.remove(Group.objects.get(name=settings.EIRIB_FU_OPERATOR_GROUP_NAME))
+            except:
+                pass
+            try:
+                user.groups.add(Group.objects.get(name=settings.EIRIB_FU_USER_GROUP_NAME))
+            except:
+                pass

@@ -194,11 +194,12 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     def get_queryset(self, request):
         queryset = super(EnactmentAdmin, self).get_queryset(request).filter(follow_grade=1)
-
-        if request.user.is_superuser or request.user.is_secretary:
+        user = request.user
+        if user.is_superuser or user.is_secretary:
             return queryset
 
-        return queryset.filter(row__in=request.user.query)
+        _user = _User.objects.get(user=user)
+        return queryset.filter(row__in=_user.query)
 
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
