@@ -34,11 +34,21 @@ def navigation_counter(request, app, model, pk):
             except:
                 index = '?'
 
+            try:
+                items = len(request.session[queryset_name])
+            except:
+                items = '?'
+
+            try:
+                filtered = request.session[filtered_queryset_name]
+            except:
+                filtered = '?'
+
             return {
                 'status': status,
                 'item': index,
-                'items': len(request.session[queryset_name]),
-                'filtered': request.session[filtered_queryset_name]
+                'items': items,
+                'filtered': filtered
             }
         else:
             model = apps.get_model(app, model)

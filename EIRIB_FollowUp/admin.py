@@ -11,7 +11,7 @@ from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.utils.translation import ugettext_lazy as _
 from EIRIB_FollowUp.utils import save_user, delete_user
-from IRIB_Shared_Lib.utils import execute_query, to_jalali, get_jalali_filter
+from IRIB_Shared_Lib.utils import execute_query, to_jalali, get_jalali_filter, get_model_fullname
 from EIRIB_FollowUp.models import Enactment, Session, Assigner, Subject, Actor, Supervisor, \
     Attachment
 
@@ -272,10 +272,14 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
         super(EnactmentAdmin, self).save_model(request, obj, form, change)
         if new_obj:
-            queryset_name = '%s_query_set' % self.model._meta.model_name
-            enactment_query_set = request.session[queryset_name]
-            enactment_query_set.append({'pk': obj.pk})
-            request.session[queryset_name] = list(enactment_query_set)
+            model_full_name = get_model_fullname(self)
+            queryset_name = '%s_query_set' % model_full_name
+            try:
+                enactment_query_set = request.session[queryset_name]
+                enactment_query_set.append({'pk': obj.pk})
+                request.session[queryset_name] = list(enactment_query_set)
+            except:
+                pass
 
     @atomic
     def delete_model(self, request, obj):
