@@ -222,7 +222,8 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         return False
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        # @todo: set to False
+        return True
 
     def get_queryset(self, request):
         user = request.user
