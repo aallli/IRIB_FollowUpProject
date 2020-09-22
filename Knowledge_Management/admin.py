@@ -296,7 +296,7 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
         assessmentcardtable._status = models.ActivityStatus.AP
         assessmentcardtable.save()
-        return self.next(request)
+        return HttpResponseRedirect(get_admin_url(models.AssessmentCardtable, pk))
 
     @atomic
     def conditional_approve(self, request):
@@ -304,7 +304,7 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
         assessmentcardtable._status = models.ActivityStatus.CN
         assessmentcardtable.save()
-        return self.next(request)
+        return HttpResponseRedirect(get_admin_url(models.AssessmentCardtable, pk))
 
     @atomic
     def reject(self, request):
@@ -312,7 +312,7 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
         assessmentcardtable._status = models.ActivityStatus.RJ
         assessmentcardtable.save()
-        return self.next(request)
+        return HttpResponseRedirect(get_admin_url(models.AssessmentCardtable, pk))
 
     @atomic
     def assess(self, request, pk):
