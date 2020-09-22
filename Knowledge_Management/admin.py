@@ -325,8 +325,7 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             scores=activityassessment._scores,
             indicatorscores=indicatorscores,
             indicators=activityassessment.cardtable.activity.activityindicator_set.all(),
-            assessmentdate=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(
-                timezone.now()))
+            assessmentdate=activityassessment.date())
 
         return render(request, 'admin/custom/activity_assessment_details.html', context)
 
