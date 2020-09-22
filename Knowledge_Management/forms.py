@@ -12,16 +12,10 @@ def get_activity_assessment_inline_form(request):
         def __init__(self, *args, **kwargs):
             super(ActivityAssessmentInlineForm, self).__init__(*args, **kwargs)
             self.request = request
-            if self.instance and self.instance.pk and self.instance.member and self.instance.member.user.pk == request.user.pk:
-                self.fields['scores'].widget.attrs['disabled'] = False
+            if self.instance and self.instance.pk and not self.instance.cardtable.closed and \
+                    self.instance.member and self.instance.member.user.pk == request.user.pk:
                 self.fields['description'].widget.attrs['disabled'] = False
             else:
-                self.fields['scores'].widget.attrs['disabled'] = 'disabled'
                 self.fields['description'].widget.attrs['disabled'] = 'disabled'
-
-        def save(self, commit=True):
-            if 'scores' in self.changed_data:
-                self.instance.date = timezone.now()
-            return super(ActivityAssessmentInlineForm, self).save(commit)
 
     return ActivityAssessmentInlineForm

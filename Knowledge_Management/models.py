@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 from IRIB_Auth.models import User
-from django.utils import translation
+from django.utils import timezone, translation
+from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
 from IRIB_Shared_Lib.utils import to_jalali, set_now, format_date
 
@@ -14,6 +15,14 @@ class ActivityStatus(models.TextChoices):
     RJ = 'REJECTED', _('Rejected')
     CN = 'CONDITIONAL', _('Conditional')
     AP = 'APPROVED', _('Approved')
+
+
+class IndicatorScore(models.TextChoices):
+    AW = '-2', _('Awful')
+    WK = '-1', _('Weak')
+    NT = '0', _('Neutral')
+    GD = '1', _('Good')
+    EX = '2', _('Excellent')
 
 
 class Category(models.Model):
@@ -167,7 +176,8 @@ class CardtableBase(models.Model):
 
     def quantity(self):
         return CardtableBase.objects.filter(user=self.user, activity=self.activity, _date__year=self._date.year,
-                                            _status=ActivityStatus.DR).count()
+                                            _status__in=[ActivityStatus.AP, ActivityStatus.RJ,
+                                                         ActivityStatus.CN]).count()
 
     quantity.short_description = _('Quantity')
 
@@ -182,6 +192,10 @@ class CardtableBase(models.Model):
 
     status.short_description = _('Status')
     status.admin_order_field = '_status'
+
+    @property
+    def closed(self):
+        return self._status in [ActivityStatus.AP, ActivityStatus.CN, ActivityStatus.RJ]
 
 
 class Attachment(models.Model):
@@ -221,10 +235,11 @@ class ActivitySubCategory(models.Model):
 
 class ActivityAssessment(models.Model):
     member = models.ForeignKey(CommitteeMember, verbose_name=_('Committee Member'), on_delete=models.CASCADE)
-    date = models.DateTimeField(verbose_name=_('Assessment Date'), blank=True, null=True)
-    scores = models.CharField(verbose_name=_('Scores'), blank=True, null=True, max_length=1000)
+    _date = models.DateTimeField(verbose_name=_('Assessment Date'), blank=True, null=True)
     description = models.TextField(verbose_name=_('Description'), max_length=2000, blank=True, null=True)
     cardtable = models.ForeignKey(CardtableBase, verbose_name=_('Personal Cardtable'), on_delete=models.CASCADE)
+    _scores = ArrayField(models.IntegerField(verbose_name=_('Score'), default=0, blank=False),
+                         size=1000, null=True, blank=True, verbose_name=_('Scores'))
 
     class Meta:
         verbose_name = _('Activity Assessment')
@@ -232,26 +247,40 @@ class ActivityAssessment(models.Model):
         unique_together = ['cardtable', 'member']
         ordering = ['cardtable', 'member']
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.pk:
+            self._date = timezone.now()
+        else:
+            self._scores = []
+            for n in range(self.cardtable.activity.activityindicator_set.count()):
+                self._scores.append(0)
+        super(ActivityAssessment, self).save(force_insert, force_update, using, update_fields)
+
     def __str__(self):
         return '%s: %s' % (self.cardtable, self.member)
 
-    def date_jalali(self):
-        return to_jalali(self.date)
+    def date(self):
+        return to_jalali(self._date) if translation.get_language() == 'fa' else format_date(self._date)
 
-    date_jalali.short_description = _('Assessment Date')
-    date_jalali.admin_order_field = 'date'
+    date.short_description = _('Assessment Date')
+    date.admin_order_field = '_date'
 
     def score(self):
         score = 0
         if self.scores:
-            scores = self.scores.split(',')
             indicators = self.cardtable.activity.activityindicator_set.all()
             for index in range(indicators.count()):
-                score += int(scores[index]) * indicators[index].weight
+                score += int(self._scores[index]) * indicators[index].weight
             score /= sum(indicator.weight for indicator in indicators)
-        return round(score, 0)
+        return int("{:.0f}".format(score))
 
     score.short_description = _('Score')
+
+    def scores(self):
+        return ','.join(str(score) for score in self._scores)
+
+    scores.short_description = _('Scores')
 
 
 class PersonalCardtable(CardtableBase):

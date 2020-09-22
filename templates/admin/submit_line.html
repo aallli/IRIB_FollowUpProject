@@ -39,7 +39,7 @@
                     <input type="button" value="{% trans 'Accept' %}" class="close-enactment"
                            onclick='javascript: location.href="{% url 'admin:accept' %}?pk={{ original.pk }}"'>
                     <input type="button" value="{% trans 'To Edit' %}" class="close-enactment"
-                           onclick='javascript: location.href="{% url 'admin:reject' %}?pk={{ original.pk }}"'>
+                           onclick='javascript: location.href="{% url 'admin:todo' %}?pk={{ original.pk }}"'>
                 </p>
             </div>
         {% endif %}

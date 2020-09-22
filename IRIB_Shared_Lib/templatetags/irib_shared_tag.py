@@ -6,6 +6,11 @@ from django.utils.translation import ugettext_lazy as _
 register = template.Library()
 
 
+@register.filter
+def index(indexable, i):
+    return indexable[i]
+
+
 @register.simple_tag()
 def version():
     return settings.VERSION

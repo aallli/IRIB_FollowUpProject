@@ -1,17 +1,18 @@
 from . import models
-
 from django.urls import path
 from django.contrib import admin
 from django.contrib import messages
+from django.shortcuts import render
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.utils import timezone, translation
 from IRIB_Shared_Lib.admin import BaseModelAdmin
 from django.contrib.auth.models import Permission
 from jalali_date.admin import ModelAdminJalaliMixin
 from .forms import get_activity_assessment_inline_form
 from django.utils.translation import ugettext_lazy as _
-from IRIB_Shared_Lib.utils import get_jalali_filter, get_admin_url
+from IRIB_Shared_Lib.utils import get_jalali_filter, get_admin_url, to_jalali, format_date, get_model_fullname
 
 
 class SubCategoryInline(admin.TabularInline):
@@ -33,8 +34,8 @@ class ActivitySubCategoryInline(admin.TabularInline):
 
 def get_activity_assessment_inline(request):
     class ActivityAssessmentInline(ModelAdminJalaliMixin, admin.TabularInline):
-        fields = ['member', 'score', 'scores', 'description', 'date_jalali', ]
-        readonly_fields = ['member', 'date_jalali', 'score']
+        fields = ['member', 'score', 'description', 'date', ]
+        readonly_fields = ['member', 'date', 'score']
         model = models.ActivityAssessment
         max_num = models.CommitteeMember.objects.count()
         extra = 0
@@ -158,10 +159,15 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 for member in models.CommitteeMember.objects.all():
                     models.ActivityAssessment.objects.get_or_create(cardtable=obj, member=member)
 
-                queryset_name = '%s_query_set' % self.model._meta.model_name
-                enactment_query_set = request.session[queryset_name]
-                enactment_query_set.append({'pk': obj.pk})
-                request.session[queryset_name] = list(enactment_query_set)
+                model_full_name = get_model_fullname(self)
+                queryset_name = '%s_query_set' % model_full_name
+
+                try:
+                    enactment_query_set = request.session[queryset_name]
+                    enactment_query_set.append({'pk': obj.pk})
+                    request.session[queryset_name] = list(enactment_query_set)
+                except:
+                    pass
         except Exception as e:
             self.message_user(request, e, messages.ERROR)
 
@@ -172,7 +178,7 @@ class PersonalCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             self.message_user(request, e, messages.ERROR)
 
     def get_inline_instances(self, request, obj=None):
-        if obj and obj._status in [models.ActivityStatus.DR, models.ActivityStatus.EN]:
+        if obj and obj._status in [models.ActivityStatus.DR, models.ActivityStatus.EN, models.ActivityStatus.NW]:
             return [
                 AttachmentInline(self.model, self.admin_site),
                 ActivitySubCategoryInline(self.model, self.admin_site),
@@ -216,7 +222,8 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         return False
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        # @todo: set to False
+        return True
 
     def get_queryset(self, request):
         user = request.user
@@ -259,6 +266,8 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 path('approve/', self.approve, name="approve"),
                 path('capprove/', self.conditional_approve, name="conditional-approve"),
                 path('reject/', self.reject, name="reject"),
+                path('<int:pk>/assess/', self.assess, name="assess"),
+                path('<int:pk>/assess-save/', self.assess_save, name="assess-save"),
                 ] + urls
 
     @atomic
@@ -304,3 +313,30 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         assessmentcardtable._status = models.ActivityStatus.RJ
         assessmentcardtable.save()
         return self.next(request)
+
+    @atomic
+    def assess(self, request, pk):
+        activityassessment = models.ActivityAssessment.objects.get(pk=pk)
+        indicatorscores = [[int(item.value), item.label] for item in models.IndicatorScore]
+        context = dict(
+            pk=pk,
+            closed=activityassessment.cardtable.closed,
+            assessor=activityassessment.member.user,
+            scores=activityassessment._scores,
+            indicatorscores=indicatorscores,
+            indicators=activityassessment.cardtable.activity.activityindicator_set.all(),
+            assessmentdate=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(
+                timezone.now()))
+
+        return render(request, 'admin/custom/activity_assessment_details.html', context)
+
+    @atomic
+    def assess_save(self, request, pk):
+        activityassessment = models.ActivityAssessment.objects.get(pk=pk)
+        activityassessment._scores = []
+        for indicator_pk in models.ActivityIndicator.objects.filter(
+                activity=activityassessment.cardtable.activity).values_list(
+            'indicator'):
+            activityassessment._scores.append(request.POST['indicator-%s' % indicator_pk])
+        activityassessment.save()
+        return HttpResponseRedirect(get_admin_url(models.AssessmentCardtable, activityassessment.cardtable.pk))
