@@ -61,31 +61,32 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
     def save_related(self, request, form, formsets, change):
         user = form.instance
         super(UserAdmin, self).save_related(request, form, formsets, change)
-        self.set_groups(user)
+        if 'access_level' in form.changed_data:
+            self.set_groups(user)
 
     def set_groups(self, user):
         if user.is_secretary:
-            if user.groups.filter(name__icontains='IRIB FU -').count():
+            if user.groups.filter(name__startswith='IRIB FU -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.IRIB_FU_OPERATOR_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.IRIB_FU_USER_GROUP_NAME))
 
-            if user.groups.filter(name__icontains='EIRIB FU -').count():
+            if user.groups.filter(name__startswith='EIRIB FU -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.EIRIB_FU_OPERATOR_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.EIRIB_FU_USER_GROUP_NAME))
 
-            if user.groups.filter(name__icontains='KM -').count():
+            if user.groups.filter(name__startswith='KM -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.KM_OPERATOR_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.KM_USER_GROUP_NAME))
         else:
-            if user.groups.filter(name__icontains='IRIB FU -').count():
+            if user.groups.filter(name__startswith='IRIB FU -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.IRIB_FU_USER_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.IRIB_FU_OPERATOR_GROUP_NAME))
 
-            if user.groups.filter(name__icontains='EIRIB FU -').count():
+            if user.groups.filter(name__startswith='EIRIB FU -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.EIRIB_FU_USER_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.EIRIB_FU_OPERATOR_GROUP_NAME))
 
-            if user.groups.filter(name__icontains='KM -').count():
+            if user.groups.filter(name__startswith='KM -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.KM_USER_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.KM_OPERATOR_GROUP_NAME))
 
