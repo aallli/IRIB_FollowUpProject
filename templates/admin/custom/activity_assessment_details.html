@@ -1,0 +1,85 @@
+{% extends "admin/base_site.html" %}
+{% load i18n i18n_switcher irib_shared_tag %}
+
+{% block usertools %}
+    {% if LANGUAGE_CODE == 'en' %}
+        <span>
+            <a href="{{ request|switch_i18n:'fa' }}">فارسی</a>
+        </span>
+    {% elif LANGUAGE_CODE == 'fa' %}
+        <span>
+            <a href="{{ request|switch_i18n:'en' }}">English</a>
+        </span>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form id="assessment-form" method="post" action="{% url 'admin:assess-save' pk %}">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="column assessor">
+                {% trans 'Assessor' %}: {{ assessor.full_titled_name }}
+            </div>
+            <div class="column">
+                {% trans 'Assessment Date' %}: {{ assessmentdate }}
+            </div>
+        </div>
+        <br/>
+        <table class="assessment">
+            <thead>
+            <tr>
+                <th class="original">{% trans '#' %}</th>
+                <th class="column-subcategory">{% trans 'Activity Indicator' %}</th>
+                <th class="column-subcategory">{% trans 'Weight' %}</th>
+                {% for value, label in indicatorscores %}
+                    <th class="column-subcategory center">{{ label }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% for indicator in indicators %}
+                {% with counter=forloop.counter0 %}
+                    <tr class="form-row {% cycle "row1" "row2" %} dynamic-activitysubcategory_set">
+                        <td class="original">
+                            {{ forloop.counter }}
+                        </td>
+
+
+                        <td class="field-subcategory">
+                            <div class="related-widget-wrapper">
+                                {{ indicator.indicator.name }}
+                            </div>
+                        </td>
+
+
+                        <td class="field-subcategory">
+                            <div class="related-widget-wrapper">
+                                {{ indicator.weight }}
+                            </div>
+                        </td>
+
+                        {% for value, label in indicatorscores %}
+                            <td class="field-subcategory">
+                                <div class="related-widget-wrapper center">
+                                    <input type="radio"
+                                           name="indicator-{{ indicator.indicator.pk }}" value="{{ value }}"
+                                           {% if value  == scores|index:counter %}checked{% endif %}>
+                                </div>
+                            </td>
+                        {% endfor %}
+
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="center">
+            {% if user == assessor and not closed %}<input type="submit" value="{% trans 'Save' %}">{% endif %}
+            <input type="button" onclick="javascript: window.history.back();" name="add-group-followup"
+                   value="{% trans 'Go back' %}">
+        </div>
+    </form>
+{% endblock %}
