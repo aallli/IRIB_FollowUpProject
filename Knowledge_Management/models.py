@@ -258,7 +258,7 @@ class ActivityAssessment(models.Model):
         else:
             self._scores = []
             for n in range(self.cardtable.activity.activityindicator_set.count()):
-                self._scores.append(0)
+                self._scores.append(IndicatorScore.NT)
         super(ActivityAssessment, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
