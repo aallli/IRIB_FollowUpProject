@@ -80,17 +80,27 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
-                            <td>
+                        {% if opts.app_label == 'Knowledge_Management' and opts.model_name == 'assessmentcardtable' %}
+                                <td>
                                 <div>
                                     <input type="button"
                                            onclick='javascript: location.href = "{% url 'admin:assess' inline_admin_form.original.pk %}"'
                                            name="assess" value="{% if inline_admin_form.original.member.user == user and not original.closed %}{% trans 'Evaluate' %}{% else %}{% trans 'View details' %}{% endif %}">
                                 </div>
                             </td>
+                        {% endif %}
                         {% endfor %}
                         {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
                             <td class="delete">{% if inline_admin_form.original %}
                                 {{ inline_admin_form.deletion_field.field }}{% endif %}</td>
+                        {% endif %}
+                        {% if opts.app_label == 'IRIB_FollowUp' and opts.model_name == 'enactment' %}
+                            <td>
+                                <div>
+                                    <input type="submit" value="{% trans 'Add group followup' %}" name="add-group-followup">
+                                </div>
+
+                            </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
