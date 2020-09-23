@@ -1,16 +1,16 @@
-import pyodbc
 import datetime
+from django.conf import settings
 from django.utils import timezone
 from jalali_date import datetime2jalali
-from IRIB_FollowUpProject import settings
 from django.contrib.admin import SimpleListFilter
+
 from django.utils.translation import ugettext_lazy as _
 
 
 def get_admin_url(model, pk=None):
     from django.urls import reverse
     info = (model._meta.app_label, model._meta.model_name)
-    return reverse('admin:%s_%s_change' % info, args=(pk,)) if pk else reverse('admin:%s_%s_changelist' % info,)
+    return reverse('admin:%s_%s_change' % info, args=(pk,)) if pk else reverse('admin:%s_%s_changelist' % info, )
 
 
 def get_model_fullname(self):
@@ -104,42 +104,3 @@ def get_jalali_filter(field, filter_title):
             return queryset.filter(**kwargs) if enddate else queryset
 
     return JalaliDateFilter
-
-
-def mdb_connect(db_file, user='admin', password='', old_driver=False):
-    driver_ver = '*.mdb'
-    if not old_driver:
-        driver_ver += ', *.accdb'
-
-    odbc_conn_str = ('DRIVER={Microsoft Access Driver (%s)}'
-                     ';DBQ=%s;UID=%s;PWD=%s' %
-                     (driver_ver, db_file, user, password))
-
-    return pyodbc.connect(odbc_conn_str)
-
-
-conn = mdb_connect(settings.DATABASES['access-followup']['NAME'])
-
-
-def execute_query(query, params=None, update=None, insert=None, delete=None):
-    cur = conn.cursor()
-    if params:
-        cur.execute(query, params)
-    else:
-        cur.execute(query)
-
-    if update:
-        conn.commit()
-        result = _("Update failed.") if cur.rowcount == -1 else _("Successful update.")
-    elif insert:
-        conn.commit()
-        cur.execute('SELECT @@IDENTITY;')
-        result = cur.fetchone()[0]
-    elif delete:
-        conn.commit()
-        result = _("Delete failed.") if cur.rowcount == -1 else _("Successful delete.")
-    else:
-        result = cur.fetchall()
-
-    cur.close()
-    return result

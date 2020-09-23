@@ -1,8 +1,8 @@
 from threading import Timer
 from django.conf import settings
-from .utils import execute_query
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
+from EIRIB_FollowUp.utils import execute_query
 from EIRIB_FollowUp.models import User as _User
 from django.contrib.auth.backends import ModelBackend
 from IRIB_Auth.models import User, Title, AccessLevel, Supervisor

@@ -10,8 +10,8 @@ from IRIB_Shared_Lib.admin import BaseModelAdmin
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.utils.translation import ugettext_lazy as _
-from EIRIB_FollowUp.utils import save_user, delete_user
-from IRIB_Shared_Lib.utils import execute_query, to_jalali, get_jalali_filter, get_model_fullname
+from EIRIB_FollowUp.utils import save_user, delete_user, execute_query
+from IRIB_Shared_Lib.utils import to_jalali, get_jalali_filter, get_model_fullname
 from EIRIB_FollowUp.models import Enactment, Session, Assigner, Subject, Actor, Supervisor, \
     Attachment
 

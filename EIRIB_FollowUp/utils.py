@@ -1,10 +1,10 @@
+import pyodbc
 from .models import User
 from threading import Timer
 from django.conf import settings
 from django.utils import timezone
 from IRIB_FollowUp.models import AccessLevel
 from django.shortcuts import get_object_or_404
-from IRIB_Shared_Lib.utils import execute_query
 from django.utils.translation import ugettext_lazy as _
 from .models import Enactment, Session, Assigner, Subject, Actor, Supervisor
 
@@ -232,3 +232,42 @@ def delete_user(user):
             '''
     params = (user.username)
     execute_query(query, params, delete=True)
+
+
+def mdb_connect(db_file, user='admin', password='', old_driver=False):
+    driver_ver = '*.mdb'
+    if not old_driver:
+        driver_ver += ', *.accdb'
+
+    odbc_conn_str = ('DRIVER={Microsoft Access Driver (%s)}'
+                     ';DBQ=%s;UID=%s;PWD=%s' %
+                     (driver_ver, db_file, user, password))
+
+    return pyodbc.connect(odbc_conn_str)
+
+
+conn = mdb_connect(settings.DATABASES['access-followup']['NAME'])
+
+
+def execute_query(query, params=None, update=None, insert=None, delete=None):
+    cur = conn.cursor()
+    if params:
+        cur.execute(query, params)
+    else:
+        cur.execute(query)
+
+    if update:
+        conn.commit()
+        result = _("Update failed.") if cur.rowcount == -1 else _("Successful update.")
+    elif insert:
+        conn.commit()
+        cur.execute('SELECT @@IDENTITY;')
+        result = cur.fetchone()[0]
+    elif delete:
+        conn.commit()
+        result = _("Delete failed.") if cur.rowcount == -1 else _("Successful delete.")
+    else:
+        result = cur.fetchall()
+
+    cur.close()
+    return result
