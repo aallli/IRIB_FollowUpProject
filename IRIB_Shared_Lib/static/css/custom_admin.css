@@ -274,6 +274,7 @@ p.datetime {
     float: right;
 }
 
+.fieldBox.field-box.field-status label,
 .form-row.dynamic-activityassessment_set td.original p {
     display: none;
 }
@@ -305,4 +306,40 @@ table.assessment {
 .dynamic-activityassessment_set td.field-score {
     direction: ltr;
     text-align: center;
+}
+
+.status {
+    width: 20px;
+    height: 20px;
+    border: solid 1px #b3b3b3;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.status.draft {
+    background-color: #e7b639;
+}
+
+.status.new {
+    background-color: #3390E7;
+}
+
+.status.accepted {
+    background-color: #E7E7E7;
+}
+
+.status.edit_needed {
+    background-color: #E4E736;
+}
+
+.status.rejected {
+    background-color: #E74C3C;
+}
+
+.status.conditional {
+    background-color: #ff9800;
+}
+
+.status.approved {
+    background-color: #39E749;
 }

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from IRIB_Auth.models import User
+from django.utils.html import mark_safe
 from django.utils import timezone, translation
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
@@ -18,11 +19,11 @@ class ActivityStatus(models.TextChoices):
 
 
 class IndicatorScore(models.TextChoices):
-    AW = '-2', _('Awful')
-    WK = '-1', _('Weak')
-    NT = '0', _('Neutral')
-    GD = '1', _('Good')
-    EX = '2', _('Excellent')
+    AW = 0, _('Awful')
+    WK = 1, _('Weak')
+    NT = 2, _('Neutral')
+    GD = 3, _('Good')
+    EX = 4, _('Excellent')
 
 
 class Category(models.Model):
@@ -188,7 +189,10 @@ class CardtableBase(models.Model):
     date.admin_order_field = 'date'
 
     def status(self):
-        return ActivityStatus(self._status).label
+        return mark_safe(
+            '<div class="row"><div class="column">%s</div><div id="cardtable_status" class="status status %s column" alt="%s" title="%s"></div></div>' %
+            (ActivityStatus(self._status).label, self._status.lower(), ActivityStatus(self._status).label,
+             ActivityStatus(self._status).label))
 
     status.short_description = _('Status')
     status.admin_order_field = '_status'
@@ -271,7 +275,7 @@ class ActivityAssessment(models.Model):
         if self.scores:
             indicators = self.cardtable.activity.activityindicator_set.all()
             for index in range(indicators.count()):
-                score += int(self._scores[index]) * indicators[index].weight
+                score += self._scores[index] * indicators[index].weight * self.cardtable.activity.max_score * 0.25
             score /= sum(indicator.weight for indicator in indicators)
         return int("{:.0f}".format(score))
 
