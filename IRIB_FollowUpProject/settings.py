@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.12.25'
+VERSION = '1.13.0'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
+    'IRIB_HR.apps.IribHrConfig',
     'IRIB_Auth.apps.IribAuthConfig',
     'IRIB_FollowUp.apps.IribFollowupConfig',
     'EIRIB_FollowUp.apps.EiribFollowupConfig',
@@ -108,6 +109,9 @@ DATABASES = {
         'NAME': os.environ.get('ACCESS_DATABASES_NAME', default=os.path.join(BASE_DIR, 'db\db.mdb')),
         'USER': os.environ.get('ACCESS_DATABASES_USER', default='Administrator, System'),
         'PASSWORD': os.environ.get('ACCESS_DATABASES_PASSWORD', default='123456'),
+    },
+    'excel-payment': {
+        'NAME': os.environ.get('EXCEL_DATABASES_NAME', default=os.path.join(BASE_DIR, 'db\حقوق.xlsx')),
     }
 }
 
@@ -203,10 +207,14 @@ NAVIGATED_MODELS = ['EIRIB_FollowUp_session', 'EIRIB_FollowUp_assigner', 'EIRIB_
 
                     'IRIB_FollowUp_sessionbase', 'IRIB_FollowUp_session', 'IRIB_FollowUp_enactment',
                     'IRIB_FollowUp_subject', 'IRIB_FollowUp_group',
+
                     'Knowledge_Management_committeemember', 'Knowledge_Management_category',
                     'Knowledge_Management_indicator', 'Knowledge_Management_activity',
                     'Knowledge_Management_subcategory', 'Knowledge_Management_assessmentcardtable',
-                    'Knowledge_Management_personalcardtable']
+                    'Knowledge_Management_personalcardtable',
+
+                    'IRIB_HR_payslip',
+                    ]
 
 # EIRIB Followup Configurations
 EIRIB_FU_OPERATOR_GROUP_NAME = 'EIRIB FU - Operators'

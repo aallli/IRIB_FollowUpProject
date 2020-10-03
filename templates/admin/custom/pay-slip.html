@@ -1,0 +1,198 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_interface_tags irib_shared_tag i18n_switcher %}
+
+{% block branding %}
+    {% get_admin_interface_theme as theme %}
+    <div id="branding">
+        <h1 id="site-name">
+            {% if theme.logo_visible %}
+                {% if theme.logo %}
+                    <img class="logo" style="display:none;" src="{{ theme.logo.url }}"
+                         {% if theme.logo.width %}width="{{ theme.logo.width }}"{% endif %}
+                         {% if theme.logo.height %}height="{{ theme.logo.height }}"{% endif %}>
+                {% else %}
+                    <img class="logo default" style="display:none;"
+                         src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         width="104"
+                         height="36">
+                {% endif %}
+            {% endif %}
+            <span class="blocking-logo">
+            {% version as version %}
+                {% if theme.title_visible %}
+                    <div>{% if theme.title %}{% trans theme.title %}{% else %}
+                        {{ site_header }}{% endif %}
+                    </div>
+                    <div class="blocking-version">{% trans 'Version' %}: {{ version }}</div>
+                {% endif %}
+        </span>
+        </h1>
+    </div>
+{% endblock %}
+
+{% block usertools %}
+    <div id="user-tools">
+        <div>
+            {% if LANGUAGE_CODE == 'en' %}
+                <span>
+            <a href="{{ request|switch_i18n:'fa' }}">
+                فارسی
+                {#            <img class="i18n_flag" src="{% static 'img/fa.png' %}"/>#}
+
+            </a>
+        </span>
+            {% elif LANGUAGE_CODE == 'fa' %}
+                <span>
+            <a href="{{ request|switch_i18n:'en' }}">
+                English
+                {#            <img class="i18n_flag" src="{% static 'img/en.png' %}"/>#}
+            </a>
+        </span>
+            {% endif %}
+            /
+            <strong>{% trans 'Reported by' %}: {{ user.title }} {% firstof user.get_full_name user.get_username %}</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>{% trans 'Report Date' %}: {{ date }}</strong></div>
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block content %}
+    <!-- Content -->
+    <div class="payslip">
+        <div class="row">
+            <div class="column bordered">
+                <div class="column">{% trans 'last name' %} {% trans 'first name' %}:</div>
+                <div class="column">{{ payslip.last_name }} {{ payslip.first_name }}</div>
+            </div>
+            <div class="column bordered">
+                <div class="column ">{% trans 'Department' %}:</div>
+                <div class="column">{{ payslip.department }}</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column bordered">
+                <div class="column">{% trans 'Personnel ID' %}:</div>
+                <div class="column">{{ payslip.personnel_id }}</div>
+            </div>
+            <div class="column bordered">
+                <div class="column">{% trans 'Working Place' %}:</div>
+                <div class="column">{{ payslip.working_place }}</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column bordered">
+                <div class="column">{% trans 'Contract Type' %}:</div>
+                <div class="column">{{ payslip.contract_type }}</div>
+            </div>
+            <div class="column bordered">
+                <div class="column">{% trans 'Date' %}:</div>
+                <div class="column">{{ payslip.month }} {{ payslip.year }}</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column bordered" style="width: 25%; padding: 0; display: block">
+                <div class="row header">{% trans 'Wage' %}</div>
+                {% for income in incomes %}
+                    <div class="row bordered">
+                        <div class="column">
+                            {{ income.0 }}
+                        </div>
+                        <div class="column">
+                            {{ income.1 }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="column bordered no-side-border" style="width: 25%; padding: 0; display: block">
+                <div class="row header">{% trans 'Deductions' %}</div>
+                <div class="row bordered no-right">
+                    <div class="column">
+                        {% trans 'Insurance' %}
+                    </div>
+                    <div class="column">
+                        {{ payslip.insurance }}
+                    </div>
+                </div>
+                <div class="row bordered">
+                    <div class="column">
+                        {% trans 'Tax' %}
+                    </div>
+                    <div class="column">
+                        {{ payslip.tax }}
+                    </div>
+                </div>
+                {% for income in incomes %}
+                    {% if forloop.counter != 1 and forloop.counter != 2 %}
+                        <div class="row bordered">
+                            <div class="column">&nbsp;</div>
+                            <div class="column"></div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="column bordered no-side-border no-top" style="width: 35%; display: block; padding: 0;">
+                <div class="row bordered header">
+                    <div class="column" style="width: 33%">{% trans 'Loan' %}</div>
+                    <div class="column" style="width: 33%">{% trans 'Installment' %}</div>
+                    <div class="column" style="width: 33%">{% trans 'Remaining' %}</div>
+                </div>
+                {% for income in incomes %}
+                        <div class="row bordered">
+                            <div class="column">&nbsp;</div>
+                        </div>
+                {% endfor %}
+            </div>
+            <div class="column bordered header" style="width: 15%">{% trans 'Operation Info' %}</div>
+        </div>
+
+        <div class="row">
+            <div class="column bordered header no-top" style="width: 85%; padding: 0;">
+                <div class="row" style="display:block;">
+                    <div class="row">
+                        <div class="column bordered" style="width: 29.3%; display: flex;">
+                            <div class="column">{% trans 'Gross Salary' %}</div>
+                            <div class="column">{{ incomes_sum.0 }}</div>
+                        </div>
+
+                        <div class="column bordered" style="width: 70.7%; display: flex;">
+                            <div class="column">{% trans 'Total deductions' %}</div>
+                            <div class="column">{{ deductions_sum.0 }}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column bordered" style="width: 100%;display: flex;">
+                            <div class="column">{% trans 'Net Salary' %}</div>
+                            <div class="column">{{ net_salary.0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column bordered header" style="width: 15%">
+                <div class="column">{% trans 'Leave Balance' %}</div>
+                <div class="column">{{ payslip.leave_balance }} {% trans 'Days' %}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column bordered">
+                <div class="column">{% trans 'Atieh Fund Balance' %}:</div>
+                <div class="column">{{ payslip.atieh_balance }}</div>
+            </div>
+            <div class="column bordered">
+                <div class="column">{% trans 'Refah Fund Balance' %}:</div>
+                <div class="column">{{ payslip.refah_balance }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="foot-note">
+        {% trans 'Total units are in Rls' %}
+    </div>{% endblock %}

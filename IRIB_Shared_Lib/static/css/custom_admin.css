@@ -122,6 +122,10 @@
 .fieldBox.field-box.field-limit,
 .fieldBox.field-box.field-quantity,
 .fieldBox.field-box.field-subject,
+.field-first_name.field-last_name.field-personnel_id.form-row,
+.form-row.field-department.field-working_place.field-contract_type.field-job_title,
+.form-row.field-basic_salary.field-overtime_working.field-insurance.field-tax,
+.form-row.field-gross_salary.field-deductions_sum.field-salary_net,
 .fieldBox.field-box.field-row {
     white-space: nowrap;
 }
@@ -342,4 +346,62 @@ table.assessment {
 
 .status.approved {
     background-color: #39E749;
+}
+
+div.payslip {
+    border: solid 3px #000;
+    line-height: 40px;
+}
+
+div.payslip .row {
+    width: 100%;
+    display: flex;
+}
+
+div.payslip .row .column {
+    display: flex;
+    padding: 0px 5px;
+}
+
+div.payslip .header {
+    background-color: grey;
+    color: #fff;
+}
+
+div.payslip .header,
+div.payslip .header .column
+{
+    display: block;
+    text-align: center;
+}
+
+.bordered {
+    border-top: solid 1px #000;
+    border-left: solid 1px #000;
+}
+
+:lang(fa) .bordered {
+    border-left: 0;
+    border-right: solid 1px #000;
+}
+
+:lang(fa) .bordered:last-child {
+    border-left: 0;
+}
+
+.foot-note {
+    padding: 20px;
+    font-weight: bold;
+}
+
+.no-side-border {
+    border-left: 0 !important;
+}
+
+:lang(fa) .no-side-border {
+    border-right: 0 !important;
+}
+
+.no-top {
+    border-top: 0;
 }
