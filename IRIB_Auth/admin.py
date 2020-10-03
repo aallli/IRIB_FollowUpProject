@@ -77,6 +77,10 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             if user.groups.filter(name__startswith='KM -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.KM_OPERATOR_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.KM_USER_GROUP_NAME))
+
+            if user.groups.filter(name__startswith='HR -').count():
+                user.groups.add(get_object_or_404(Group, name=settings.HR_OPERATOR_GROUP_NAME))
+                user.groups.remove(get_object_or_404(Group, name=settings.HR_USER_GROUP_NAME))
         else:
             if user.groups.filter(name__startswith='IRIB FU -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.IRIB_FU_USER_GROUP_NAME))
@@ -89,6 +93,10 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             if user.groups.filter(name__startswith='KM -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.KM_USER_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.KM_OPERATOR_GROUP_NAME))
+
+            if user.groups.filter(name__startswith='HR -').count():
+                user.groups.add(get_object_or_404(Group, name=settings.HR_USER_GROUP_NAME))
+                user.groups.remove(get_object_or_404(Group, name=settings.HR_OPERATOR_GROUP_NAME))
 
     def delete_model(self, request, obj):
         try:

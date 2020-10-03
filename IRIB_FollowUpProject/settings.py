@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.13.0'
+VERSION = '1.13.1'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -227,3 +227,7 @@ IRIB_FU_USER_GROUP_NAME = 'IRIB FU - Users'
 # Knowledge Management Configurations
 KM_OPERATOR_GROUP_NAME = 'KM - Operators'
 KM_USER_GROUP_NAME = 'KM - Users'
+
+# EIRIB HR Configurations
+HR_OPERATOR_GROUP_NAME = 'HR - Operators'
+HR_USER_GROUP_NAME = 'HR - Users'
