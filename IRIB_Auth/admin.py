@@ -1,4 +1,6 @@
 from django.conf import settings
+
+from .forms import GroupAdminForm
 from .models import Supervisor, User
 from django.db.transaction import atomic
 from django.contrib import admin, messages
@@ -8,7 +10,7 @@ from IRIB_Shared_Lib.admin import BaseModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.utils.translation import ugettext_lazy as _
 from EIRIB_FollowUp.utils import save_user, delete_user
-from django.contrib.auth.admin import UserAdmin as _UserAdmin
+from django.contrib.auth.admin import UserAdmin as _UserAdmin, GroupAdmin as _GroupAdmin
 
 
 @admin.register(Supervisor)
@@ -121,3 +123,11 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             except Exception as e:
                 messages.set_level(request, messages.ERROR)
                 messages.error(request, e)
+
+
+admin.site.unregister(Group)
+
+
+@admin.register(Group)
+class GroupAdmin(_GroupAdmin):
+    form = GroupAdminForm
