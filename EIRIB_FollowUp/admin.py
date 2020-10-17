@@ -16,42 +16,6 @@ from EIRIB_FollowUp.models import Enactment, Session, Assigner, Subject, Actor, 
     Attachment
 
 
-class ReviewJalaliDateFilter(SimpleListFilter):
-    title = _('Review Date')
-    parameter_name = '_review_date'
-
-    def lookups(self, request, model_admin):
-        return [('today', _('Today')), ('this_week', _('This week')), ('10days', _('Last 10 days')),
-                ('this_month', _('This month')), ('30days', _('Last 30 days')), ('90days', _('Last 3 months')),
-                ('180days', _('Last 6 months'))]
-
-    def queryset(self, request, queryset):
-        startdate = timezone.now()
-        enddate = None
-        if self.value() == 'today':
-            enddate = startdate
-
-        if self.value() == 'this_week':
-            enddate = startdate - datetime.timedelta(days=(startdate.weekday() + 2) % 7)
-
-        if self.value() == '10days':
-            enddate = startdate - datetime.timedelta(days=9)
-
-        if self.value() == 'this_month':
-            enddate = startdate - datetime.timedelta(days=datetime2jalali(startdate).day - 1)
-
-        if self.value() == '30days':
-            enddate = startdate - datetime.timedelta(days=29)
-
-        if self.value() == '90days':
-            enddate = startdate - datetime.timedelta(days=89)
-
-        if self.value() == '180days':
-            enddate = startdate - datetime.timedelta(days=179)
-
-        return queryset.filter(_review_date__range=[enddate, startdate]) if enddate else queryset
-
-
 class ActorFilter(SimpleListFilter):
     title = _('Supervisor')
     parameter_name = 'actor'
@@ -177,15 +141,12 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
               ('first_actor', 'first_supervisor'),
               ('second_actor', 'second_supervisor'),
               )
-    list_display = ['row', 'session', 'date', 'review_date', 'subject', 'description_short',
-                    'result_short']
-    list_display_links = ['row', 'session', 'date', 'review_date', 'subject', 'description_short',
-                          'result_short']
-    list_filter = [ReviewJalaliDateFilter, get_jalali_filter('date', _('Assignment Date')), 'session', 'subject',
-                   'assigner', ActorFilter,
-                   SupervisorFilter]
-    search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result',
-                     'first_actor__fname', 'first_actor__lname', 'second_actor__fname', 'second_actor__lname', 'row']
+    list_display = ['row', 'session', 'date', 'review_date', 'subject', 'description_short', 'result_short']
+    list_display_links = ['row', 'session', 'date', 'review_date', 'subject', 'description_short', 'result_short']
+    list_filter = [get_jalali_filter('_review_date', _('Review Date')),
+                   get_jalali_filter('_date', _('Assignment Date')), 'session', 'subject',
+                   'assigner', ActorFilter, SupervisorFilter]
+    search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result', 'first_actor__fname', 'first_actor__lname', 'second_actor__fname', 'second_actor__lname', 'row']
     inlines = [AttachmentInline, ]
     readonly_fields = ['row', 'description_short', 'result_short', 'date', 'review_date',
                        'first_supervisor',
