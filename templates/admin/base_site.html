@@ -34,22 +34,18 @@
 
 {% block userlinks %}
     {% if LANGUAGE_CODE == 'en' %}
-        <span>
-            <a href="{{ request|switch_i18n:'fa' }}">
-                فارسی
-                {#            <img class="i18n_flag" src="{% static 'img/fa.png' %}"/>#}
+        <a href="{{ request|switch_i18n:'fa' }}">
+            فارسی
+            {#            <img class="i18n_flag" src="{% static 'img/fa.png' %}"/>#}
 
-            </a>
-        </span>
+        </a>
     {% elif LANGUAGE_CODE == 'fa' %}
-        <span>
-            <a href="{{ request|switch_i18n:'en' }}">
-                English
-                {#            <img class="i18n_flag" src="{% static 'img/en.png' %}"/>#}
-            </a>
-        </span>
+        <a href="{{ request|switch_i18n:'en' }}">
+            English
+            {#            <img class="i18n_flag" src="{% static 'img/en.png' %}"/>#}
+        </a>
     {% endif %}
-/
+    /
     {% if user.is_active and user.is_staff %}
         {% url 'django-admindocs-docroot' as docsroot %}
         {% if docsroot %}
