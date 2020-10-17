@@ -32,15 +32,16 @@ def navigation_counter(request, app, model, pk):
     if status:
         queryset_name = '%s_%s_query_set' % (app, model)
         filtered_queryset_name = 'filtered_%s_%s_query_set' % (app, model)
+        queryset = request.session[queryset_name]
 
         if pk:
             try:
-                index = request.session[queryset_name].index({'pk': pk}) + 1
+                index = queryset.index([pk]) + 1
             except:
                 index = '?'
 
             try:
-                items = len(request.session[queryset_name])
+                items = len(queryset)
             except:
                 items = '?'
 
@@ -53,13 +54,13 @@ def navigation_counter(request, app, model, pk):
                 'status': status,
                 'item': index,
                 'items': items,
-                'filtered': filtered
+                'filtered': filtered,
             }
         else:
             model = apps.get_model(app, model)
             return {
                 'status': status,
-                'item': '%s %s' % (_(model._meta.verbose_name), _('New'))
+                'item': '%s %s' % (_(model._meta.verbose_name), _('New')),
             }
 
     return {'status': False}

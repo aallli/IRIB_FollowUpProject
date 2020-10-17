@@ -308,18 +308,6 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return HttpResponseRedirect('.')
         return super(EnactmentAdmin, self).response_change(request, obj)
 
-    def save_model(self, request, obj, form, change):
-        new_obj = not obj.pk
-        super(EnactmentAdmin, self).save_model(request, obj, form, change)
-        if new_obj:
-            model_full_name = get_model_fullname(self)
-            queryset_name = '%s_query_set' % model_full_name
-            try:
-                enactment_query_set = request.session[queryset_name]
-                enactment_query_set.append({'pk': obj.pk})
-                request.session[queryset_name] = list(enactment_query_set)
-            except:
-                pass
 
 
 @admin.register(Group)

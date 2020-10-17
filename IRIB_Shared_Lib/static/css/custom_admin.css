@@ -138,6 +138,14 @@ div.form-row.field-_type.field-description {
     width: 100%;
 }
 
+.fieldBox.field-box.field-row {
+    width: auto;
+}
+
+.fieldBox.field-box.field-row div {
+    margin: 0 75px;
+}
+
 .fieldBox.field-box.field-subject {
     width: auto;
 }
@@ -172,7 +180,7 @@ div.form-row.field-_type.field-description {
 
 .container {
     position: relative;
-    height: 0;
+    width: 100%;
 }
 
 .center {
@@ -249,7 +257,7 @@ p.datetime {
 }
 
 .object-tools-print a {
-    width: 70px;
+    width: fit-content;
     text-align: center;
 }
 
@@ -369,8 +377,7 @@ div.payslip .header {
 }
 
 div.payslip .header,
-div.payslip .header .column
-{
+div.payslip .header .column {
     display: block;
     text-align: center;
 }

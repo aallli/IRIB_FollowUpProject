@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 12:05+0330\n"
+"POT-Creation-Date: 2020-10-17 13:12+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,62 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\EIRIB_FollowUp\admin.py:20 .\EIRIB_FollowUp\models.py:156
-#: .\EIRIB_FollowUp\models.py:188 .\IRIB_FollowUp\admin.py:228
-#: .\IRIB_FollowUp\models.py:154 .\IRIB_FollowUp\models.py:190
-msgid "Review Date"
-msgstr "تاریخ بازنگری"
-
-#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:73
-msgid "Today"
-msgstr "امروز"
-
-#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:73
-msgid "This week"
-msgstr "هفته جاری"
-
-#: .\EIRIB_FollowUp\admin.py:24 .\IRIB_Shared_Lib\utils.py:73
-msgid "Last 10 days"
-msgstr "ده روز گذشته"
-
-#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:74
-msgid "This month"
-msgstr "ماه جاری"
-
-#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:74
-msgid "Last 30 days"
-msgstr "30 روز گذشته"
-
-#: .\EIRIB_FollowUp\admin.py:25 .\IRIB_Shared_Lib\utils.py:74
-msgid "Last 3 months"
-msgstr "سه ماه گذشته"
-
-#: .\EIRIB_FollowUp\admin.py:26 .\IRIB_Shared_Lib\utils.py:75
-msgid "Last 6 months"
-msgstr "شش ماه گذشته"
-
-#: .\EIRIB_FollowUp\admin.py:56 .\EIRIB_FollowUp\models.py:67
+#: .\EIRIB_FollowUp\admin.py:20 .\EIRIB_FollowUp\models.py:67
 #: .\IRIB_FollowUp\admin.py:33
 msgid "Supervisor"
 msgstr "مسوول پیگیری"
 
-#: .\EIRIB_FollowUp\admin.py:68 .\EIRIB_FollowUp\models.py:63
+#: .\EIRIB_FollowUp\admin.py:32 .\EIRIB_FollowUp\models.py:63
 #: .\EIRIB_FollowUp\models.py:83 .\EIRIB_FollowUp\models.py:133
 #: .\IRIB_Auth\models.py:23 .\IRIB_Auth\models.py:39
 #: .\IRIB_FollowUp\admin.py:21 .\IRIB_FollowUp\models.py:247
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\EIRIB_FollowUp\admin.py:148 .\IRIB_Auth\admin.py:59
+#: .\EIRIB_FollowUp\admin.py:112 .\IRIB_Auth\admin.py:61
 msgid "Error in creating/updating user in MS Acceess Database"
 msgstr "خطای ایجاد / به روز رسانی کاربر در دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:155 .\EIRIB_FollowUp\admin.py:164
-#: .\IRIB_Auth\admin.py:98 .\IRIB_Auth\admin.py:111
+#: .\EIRIB_FollowUp\admin.py:119 .\EIRIB_FollowUp\admin.py:128
+#: .\IRIB_Auth\admin.py:108 .\IRIB_Auth\admin.py:121
 msgid "Error in deleting user from MS Acceess Database"
 msgstr "خطای حذف کاربر از دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:184 .\EIRIB_FollowUp\models.py:151
+#: .\EIRIB_FollowUp\admin.py:146 .\EIRIB_FollowUp\models.py:156
+#: .\EIRIB_FollowUp\models.py:188 .\IRIB_FollowUp\admin.py:228
+#: .\IRIB_FollowUp\models.py:154 .\IRIB_FollowUp\models.py:190
+msgid "Review Date"
+msgstr "تاریخ بازنگری"
+
+#: .\EIRIB_FollowUp\admin.py:147 .\EIRIB_FollowUp\models.py:151
 #: .\EIRIB_FollowUp\models.py:182 .\IRIB_FollowUp\admin.py:229
 msgid "Assignment Date"
 msgstr "تاریخ مصوبه"
@@ -326,24 +298,24 @@ msgstr "خطای حذف"
 msgid "Successful delete."
 msgstr "حذف با موفقیت انجام شد."
 
-#: .\IRIB_Auth\admin.py:23
+#: .\IRIB_Auth\admin.py:25
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: .\IRIB_Auth\admin.py:26
+#: .\IRIB_Auth\admin.py:28
 msgid "Address Info"
 msgstr "نشانیهای دسترسی"
 
-#: .\IRIB_Auth\admin.py:28 .\IRIB_FollowUp\admin.py:46
+#: .\IRIB_Auth\admin.py:30 .\IRIB_FollowUp\admin.py:46
 #: .\IRIB_FollowUp\admin.py:51 .\IRIB_FollowUp\admin.py:66
 msgid "Important dates"
 msgstr "تاریخهای مهم"
 
-#: .\IRIB_Auth\admin.py:30
+#: .\IRIB_Auth\admin.py:32
 msgid "Permissions"
 msgstr "سطوح دسترسی"
 
-#: .\IRIB_Auth\admin.py:32
+#: .\IRIB_Auth\admin.py:34
 msgid "Sensitive Info"
 msgstr "اطلاعات حساس"
 
@@ -381,11 +353,11 @@ msgstr "خطا! کاربر '%s' غیر قابل حذف است."
 msgid "EIRIB Administration System"
 msgstr "سامانه مدیریت فضای مجازی سازمان صدا و سیما"
 
-#: .\IRIB_FollowUpProject\settings.py:150 .\static\admin\base_site.html:37
+#: .\IRIB_FollowUpProject\settings.py:149 .\static\admin\base_site.html:37
 msgid "En"
 msgstr "انگلیسی"
 
-#: .\IRIB_FollowUpProject\settings.py:151 .\static\admin\base_site.html:43
+#: .\IRIB_FollowUpProject\settings.py:150 .\static\admin\base_site.html:43
 msgid "Fa"
 msgstr "فارسی"
 
@@ -742,25 +714,53 @@ msgstr "بهمن"
 msgid "Esfand"
 msgstr "اسفند"
 
-#: .\IRIB_Shared_Lib\templatetags\irib_shared_tag.py:62
+#: .\IRIB_Shared_Lib\templatetags\irib_shared_tag.py:63
 #: .\Knowledge_Management\models.py:13
 msgid "New"
 msgstr "جدید"
 
-#: .\Knowledge_Management\admin.py:123 .\Knowledge_Management\admin.py:210
+#: .\IRIB_Shared_Lib\utils.py:73
+msgid "Today"
+msgstr "امروز"
+
+#: .\IRIB_Shared_Lib\utils.py:73
+msgid "This week"
+msgstr "هفته جاری"
+
+#: .\IRIB_Shared_Lib\utils.py:73
+msgid "Last 10 days"
+msgstr "ده روز گذشته"
+
+#: .\IRIB_Shared_Lib\utils.py:74
+msgid "This month"
+msgstr "ماه جاری"
+
+#: .\IRIB_Shared_Lib\utils.py:74
+msgid "Last 30 days"
+msgstr "30 روز گذشته"
+
+#: .\IRIB_Shared_Lib\utils.py:74
+msgid "Last 3 months"
+msgstr "سه ماه گذشته"
+
+#: .\IRIB_Shared_Lib\utils.py:75
+msgid "Last 6 months"
+msgstr "شش ماه گذشته"
+
+#: .\Knowledge_Management\admin.py:122 .\Knowledge_Management\admin.py:209
 msgid "Main info"
 msgstr "اطلاعات اصلی"
 
-#: .\Knowledge_Management\admin.py:131 .\Knowledge_Management\admin.py:219
+#: .\Knowledge_Management\admin.py:130 .\Knowledge_Management\admin.py:218
 #: .\Knowledge_Management\models.py:137 .\Knowledge_Management\models.py:188
 msgid "Creation Date"
 msgstr "تاریخ ثبت"
 
-#: .\Knowledge_Management\admin.py:156
+#: .\Knowledge_Management\admin.py:155
 msgid "Maximum exceeded, Invalid operations."
 msgstr "به دلیل احراز سقف تکرار، عملیات غیر مجاز است."
 
-#: .\Knowledge_Management\admin.py:288
+#: .\Knowledge_Management\admin.py:287
 msgid ""
 "Type some note for knowledge user and save before clicking Accept button..."
 msgstr "قبل از ارجاع، توضیحاتی برای کاربر دانشی ثبت کرده و آن را ذخیره کنید..."
@@ -990,26 +990,27 @@ msgstr "بازگشت"
 msgid "Version"
 msgstr "ویرایش"
 
-#: .\static\admin\base_site.html:51 .\templates\admin\base_site.html:56
+#: .\static\admin\base_site.html:51 .\templates\admin\base_site.html:52
 msgid "Documentation"
 msgstr "مستندات"
 
-#: .\static\admin\base_site.html:55 .\templates\admin\base_site.html:60
+#: .\static\admin\base_site.html:55 .\templates\admin\base_site.html:56
 msgid "Change password"
 msgstr "تغییر کلمه عبور"
 
-#: .\static\admin\base_site.html:57 .\templates\admin\base_site.html:62
+#: .\static\admin\base_site.html:57 .\templates\admin\base_site.html:58
 msgid "Log out"
 msgstr "خروج"
 
 #: .\static\admin\base_site.html:62 .\static\admin\base_site.html:68
-#: .\templates\admin\base_site.html:67 .\templates\admin\base_site.html:73
+#: .\templates\admin\base_site.html:63 .\templates\admin\base_site.html:69
 msgid "Welcome,"
 msgstr "خوش آمدید"
 
 #: .\static\admin\change_list.html:6 .\templates\admin\change_form.html:18
 #: .\templates\admin\change_form.html:19 .\templates\admin\change_form.html:28
-#: .\templates\admin\change_form.html:29 .\templates\admin\change_list.html:7
+#: .\templates\admin\change_form.html:29 .\templates\admin\change_list.html:9
+#: .\templates\admin\change_list.html:10
 msgid "Print"
 msgstr "چاپ"
 
@@ -1070,11 +1071,11 @@ msgstr "قبلی"
 msgid "First"
 msgstr "اولین"
 
-#: .\templates\admin\change_form.html:41 .\templates\admin\change_list.html:18
+#: .\templates\admin\change_form.html:41 .\templates\admin\change_list.html:22
 msgid "Data not loaded yet, please wait..."
 msgstr "اطلاعات در حال به روز رسانی هستند. لطفا شکیبا باشید..."
 
-#: .\templates\admin\change_form.html:43 .\templates\admin\change_list.html:20
+#: .\templates\admin\change_form.html:43 .\templates\admin\change_list.html:24
 #: .\templates\admin\index.html:24
 msgid ""
 "Data syncronization failed. Try later and contact administrator if failing "
