@@ -21,7 +21,8 @@ class EIRIBBackend(ModelBackend):
                 user_query.start()
             return user
         else:
-            user.delete()
+            if not user.is_superuser:
+                user.delete()
 
     def get_user_by_username(self, user_name):
         try:
