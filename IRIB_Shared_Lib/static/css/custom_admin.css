@@ -412,3 +412,7 @@ div.payslip .header .column {
 .no-top {
     border-top: 0;
 }
+
+:lang(fa) #payslip_form .aligned .readonly {
+    margin-right: 60px;
+}
