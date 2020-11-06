@@ -1,19 +1,17 @@
-import datetime
 from .models import User as _User
-from django.utils import timezone
 from .forms import EnactmentAdminForm
-from jalali_date import datetime2jalali
 from django.db.transaction import atomic
 from django.contrib import admin, messages
 from django.shortcuts import get_object_or_404
+from django.utils import timezone, translation
 from IRIB_Shared_Lib.admin import BaseModelAdmin
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
+from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from EIRIB_FollowUp.utils import save_user, delete_user, execute_query
-from IRIB_Shared_Lib.utils import to_jalali, get_jalali_filter, get_model_fullname
-from EIRIB_FollowUp.models import Enactment, Session, Assigner, Subject, Actor, Supervisor, \
-    Attachment
+from IRIB_Shared_Lib.utils import to_jalali, get_jalali_filter, get_model_fullname, format_date
+from EIRIB_FollowUp.models import Enactment, Session, Assigner, Subject, Actor, Supervisor, Attachment
 
 
 class ActorFilter(SimpleListFilter):
@@ -146,7 +144,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_filter = [get_jalali_filter('_review_date', _('Review Date')),
                    get_jalali_filter('_date', _('Assignment Date')), 'session', 'subject',
                    'assigner', ActorFilter, SupervisorFilter]
-    search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result', 'first_actor__fname', 'first_actor__lname', 'second_actor__fname', 'second_actor__lname', 'row']
+    search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result', 'first_actor__fname',
+                     'first_actor__lname', 'second_actor__fname', 'second_actor__lname', 'row']
     inlines = [AttachmentInline, ]
     readonly_fields = ['row', 'description_short', 'result_short', 'date', 'review_date',
                        'first_supervisor',
@@ -274,7 +273,56 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
         from django.urls import path
-        return [path('close/', self.close, name="eirib-enactment-close"), ] + urls
+        return [path('close/', self.close, name="eirib-enactment-close"),
+                path('report/', self.report, name="eirib-enactment-report"),
+                path('report-excel/', self.report_excel, name="eirib-enactment-report-excel"),
+                ] + urls
+
+    def report(self, request):
+        super(BaseModelAdmin, self).changelist_view(request)
+        model_full_name = get_model_fullname(self)
+        queryset = Enactment.objects.filter(
+            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+        minutes = []
+        for minute in Session.objects.filter(pk__in=queryset.values('session')):
+            minutes.append({'minute': dict(session=dict(name=minute)),
+                            'enactments': queryset.filter(session=minute)})
+
+        context = dict(
+            minutes=minutes,
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now()),
+            full_model_name=model_full_name
+        )
+        return TemplateResponse(request, 'admin/custom/enactments-list-report.html', context)
+
+    def report_excel(self, request):
+        super(BaseModelAdmin, self).changelist_view(request)
+        model_full_name = get_model_fullname(self)
+        queryset = Enactment.objects.filter(
+            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+        followups = []
+        for item in queryset:
+            enactment = dict(
+                row=item.row,
+                review_date=item.review_date()
+            )
+            followup = dict(
+                enactment=enactment
+            )
+
+            if item.first_actor:
+                followup['actor'] = dict(last_name=item.first_actor.lname)
+                followups.append(followup)
+
+            if item.second_actor:
+                followup['actor'] = dict(last_name=item.second_actor.lname)
+                followups.append(followup)
+
+        context = dict(
+            followups=followups,
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+        )
+        return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
 
     @atomic
     def close(self, request):

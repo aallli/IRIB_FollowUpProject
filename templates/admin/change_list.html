@@ -4,7 +4,22 @@
     {% if opts.model_name == 'enactment' %}
         <ul class="object-tools object-tools-print">
             <li>
-                <a href="{% url 'admin:enactment-report' %}" title="{% trans 'Print' %}" target="_blank">{% trans 'Print' %}</a>
+                {% if opts.app_label == 'EIRIB_FollowUp' %}
+                    <a href="{% url 'admin:eirib-enactment-report-excel' %}" title="{% trans 'Excel Report' %}"
+                       target="_blank">{% trans 'Excel Report' %}</a>
+                    {% elif opts.app_label == 'IRIB_FollowUp' %}
+                    <a href="{% url 'admin:irib-enactment-report-excel' %}" title="{% trans 'Excel Report' %}"
+                       target="_blank">{% trans 'Excel Report' %}</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if opts.app_label == 'EIRIB_FollowUp' %}
+                    <a href="{% url 'admin:eirib-enactment-report' %}" title="{% trans 'Print' %}"
+                       target="_blank">{% trans 'Print' %}</a>
+                    {% elif opts.app_label == 'IRIB_FollowUp' %}
+                    <a href="{% url 'admin:irib-enactment-report' %}" title="{% trans 'Print' %}"
+                       target="_blank">{% trans 'Print' %}</a>
+                {% endif %}
             </li>
         </ul>
     {% endif %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-17 13:12+0330\n"
+"POT-Creation-Date: 2020-11-04 14:29+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,14 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: .\EIRIB_FollowUp\admin.py:20 .\EIRIB_FollowUp\models.py:67
-#: .\IRIB_FollowUp\admin.py:33
+#: .\IRIB_FollowUp\admin.py:32
 msgid "Supervisor"
 msgstr "مسوول پیگیری"
 
 #: .\EIRIB_FollowUp\admin.py:32 .\EIRIB_FollowUp\models.py:63
 #: .\EIRIB_FollowUp\models.py:83 .\EIRIB_FollowUp\models.py:133
 #: .\IRIB_Auth\models.py:23 .\IRIB_Auth\models.py:39
-#: .\IRIB_FollowUp\admin.py:21 .\IRIB_FollowUp\models.py:247
+#: .\IRIB_FollowUp\admin.py:20 .\IRIB_FollowUp\models.py:247
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
@@ -40,13 +40,14 @@ msgid "Error in deleting user from MS Acceess Database"
 msgstr "خطای حذف کاربر از دیتابیس اکسس"
 
 #: .\EIRIB_FollowUp\admin.py:146 .\EIRIB_FollowUp\models.py:156
-#: .\EIRIB_FollowUp\models.py:188 .\IRIB_FollowUp\admin.py:228
+#: .\EIRIB_FollowUp\models.py:188 .\IRIB_FollowUp\admin.py:227
 #: .\IRIB_FollowUp\models.py:154 .\IRIB_FollowUp\models.py:190
+#: .\templates\admin\custom\enactments-list-report-excel.html:69
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
 #: .\EIRIB_FollowUp\admin.py:147 .\EIRIB_FollowUp\models.py:151
-#: .\EIRIB_FollowUp\models.py:182 .\IRIB_FollowUp\admin.py:229
+#: .\EIRIB_FollowUp\models.py:182 .\IRIB_FollowUp\admin.py:228
 msgid "Assignment Date"
 msgstr "تاریخ مصوبه"
 
@@ -146,6 +147,7 @@ msgstr "آخرین ورود"
 
 #: .\EIRIB_FollowUp\models.py:143 .\IRIB_FollowUp\models.py:184
 #: .\static\admin\custom\enactments-list-report.html:66
+#: .\templates\admin\custom\enactments-list-report-excel.html:61
 #: .\templates\admin\custom\enactments-list-report.html:77
 msgid "Row"
 msgstr "کد مصوبه"
@@ -306,8 +308,8 @@ msgstr "اطلاعات شخصی"
 msgid "Address Info"
 msgstr "نشانیهای دسترسی"
 
-#: .\IRIB_Auth\admin.py:30 .\IRIB_FollowUp\admin.py:46
-#: .\IRIB_FollowUp\admin.py:51 .\IRIB_FollowUp\admin.py:66
+#: .\IRIB_Auth\admin.py:30 .\IRIB_FollowUp\admin.py:45
+#: .\IRIB_FollowUp\admin.py:50 .\IRIB_FollowUp\admin.py:65
 msgid "Important dates"
 msgstr "تاریخهای مهم"
 
@@ -353,11 +355,11 @@ msgstr "خطا! کاربر '%s' غیر قابل حذف است."
 msgid "EIRIB Administration System"
 msgstr "سامانه مدیریت فضای مجازی سازمان صدا و سیما"
 
-#: .\IRIB_FollowUpProject\settings.py:149 .\static\admin\base_site.html:37
+#: .\IRIB_FollowUpProject\settings.py:150 .\static\admin\base_site.html:37
 msgid "En"
 msgstr "انگلیسی"
 
-#: .\IRIB_FollowUpProject\settings.py:150 .\static\admin\base_site.html:43
+#: .\IRIB_FollowUpProject\settings.py:151 .\static\admin\base_site.html:43
 msgid "Fa"
 msgstr "فارسی"
 
@@ -365,21 +367,21 @@ msgstr "فارسی"
 msgid "Welcome to EIRIB administration system"
 msgstr "خوش آمدید..."
 
-#: .\IRIB_FollowUp\admin.py:95 .\IRIB_FollowUp\models.py:53
+#: .\IRIB_FollowUp\admin.py:94 .\IRIB_FollowUp\models.py:53
 #: .\IRIB_FollowUp\models.py:69 .\IRIB_FollowUp\models.py:201
 #: .\templates\admin\custom\enactments-list-report.html:53
 msgid "Attended Date"
 msgstr "تاریخ برگزاری جلسه"
 
-#: .\IRIB_FollowUp\admin.py:219
+#: .\IRIB_FollowUp\admin.py:218
 msgid "Session info"
 msgstr "اطلاعات جلسه"
 
-#: .\IRIB_FollowUp\admin.py:221
+#: .\IRIB_FollowUp\admin.py:220
 msgid "Enactment Info"
 msgstr "اطلاعات مصوبه"
 
-#: .\IRIB_FollowUp\admin.py:307
+#: .\IRIB_FollowUp\admin.py:315
 #, python-format
 msgid "Followup added for all %(group)s users."
 msgstr "پیگیری برای اعضای گروه %(group)s ایجاد شد."
@@ -465,6 +467,7 @@ msgid "Follow Ups"
 msgstr "پیگیریها"
 
 #: .\IRIB_FollowUp\models.py:221
+#: .\templates\admin\custom\enactments-list-report-excel.html:65
 msgid "Actor"
 msgstr "پیگیری کننده"
 
@@ -985,6 +988,7 @@ msgid "Go back"
 msgstr "بازگشت"
 
 #: .\static\admin\base_site.html:29 .\templates\admin\base_site.html:29
+#: .\templates\admin\custom\enactments-list-report-excel.html:26
 #: .\templates\admin\custom\enactments-list-report.html:26
 #: .\templates\admin\custom\pay-slip.html:26
 msgid "Version"
@@ -1009,8 +1013,7 @@ msgstr "خوش آمدید"
 
 #: .\static\admin\change_list.html:6 .\templates\admin\change_form.html:18
 #: .\templates\admin\change_form.html:19 .\templates\admin\change_form.html:28
-#: .\templates\admin\change_form.html:29 .\templates\admin\change_list.html:9
-#: .\templates\admin\change_list.html:10
+#: .\templates\admin\change_form.html:29 .\templates\admin\change_list.html:10
 msgid "Print"
 msgstr "چاپ"
 
@@ -1042,6 +1045,7 @@ msgid "Add group followup"
 msgstr "اضافه کردن پیگیری گروهی"
 
 #: .\static\admin\custom\enactments-list-report.html:30
+#: .\templates\admin\custom\enactments-list-report-excel.html:36
 #: .\templates\admin\custom\enactments-list-report.html:36
 #: .\templates\admin\custom\pay-slip.html:53
 msgid "Reported by"
@@ -1071,11 +1075,11 @@ msgstr "قبلی"
 msgid "First"
 msgstr "اولین"
 
-#: .\templates\admin\change_form.html:41 .\templates\admin\change_list.html:22
+#: .\templates\admin\change_form.html:41 .\templates\admin\change_list.html:21
 msgid "Data not loaded yet, please wait..."
 msgstr "اطلاعات در حال به روز رسانی هستند. لطفا شکیبا باشید..."
 
-#: .\templates\admin\change_form.html:43 .\templates\admin\change_list.html:24
+#: .\templates\admin\change_form.html:43 .\templates\admin\change_list.html:23
 #: .\templates\admin\index.html:24
 msgid ""
 "Data syncronization failed. Try later and contact administrator if failing "
@@ -1083,6 +1087,10 @@ msgid ""
 msgstr ""
 "خطا در همسان سازی! لطفا مجدد تلاش کرده و در صورت تکرار با راهبر سامانه تماس "
 "بگیرید."
+
+#: .\templates\admin\change_list.html:7
+msgid "Excel Report"
+msgstr "خروجی اکسل"
 
 #: .\templates\admin\custom\activity_assessment_details.html:22
 msgid "Assessor"
@@ -1105,6 +1113,7 @@ msgstr "ارزیابی"
 msgid "View details"
 msgstr "مشاهده جزییات"
 
+#: .\templates\admin\custom\enactments-list-report-excel.html:39
 #: .\templates\admin\custom\enactments-list-report.html:39
 #: .\templates\admin\custom\pay-slip.html:56
 msgid "Report Date"

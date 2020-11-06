@@ -8,7 +8,6 @@ from django.shortcuts import get_object_or_404
 from IRIB_Shared_Lib.admin import BaseModelAdmin
 from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
-
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from .forms import EnactmentAdminForm, get_followup_inline_form
@@ -271,22 +270,36 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         return self.readonly_fields
 
     def report(self, request):
-        queryset = self.get_queryset(request)
+        super(BaseModelAdmin, self).changelist_view(request)
+        model_full_name = get_model_fullname(self)
+        queryset = Enactment.objects.filter(pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
         minutes = []
         for minute in Session.objects.filter(pk__in=queryset.values('session')):
             minutes.append({'minute': minute, 'enactments': queryset.filter(session=minute)})
 
         context = dict(
             minutes=minutes,
-            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now()),
+            full_model_name = model_full_name
         )
         return TemplateResponse(request, 'admin/custom/enactments-list-report.html', context)
+
+    def report_excel(self, request):
+        super(BaseModelAdmin, self).changelist_view(request)
+        model_full_name = get_model_fullname(self)
+        queryset = Enactment.objects.filter(pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+        context = dict(
+            followups=FollowUp.objects.filter(enactment__in=queryset),
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+        )
+        return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
 
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
         return [
                    path('close/', self.close, name="irib-enactment-close"),
-                   path('report/', self.report, name="enactment-report"),
+                   path('report/', self.report, name="irib-enactment-report"),
+                   path('report-excel/', self.report_excel, name="irib-enactment-report-excel"),
                ] + urls
 
     @atomic
@@ -307,7 +320,6 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 self.message_user(request, _("Followup added for all %(group)s users." % {'group': group.name}))
             return HttpResponseRedirect('.')
         return super(EnactmentAdmin, self).response_change(request, obj)
-
 
 
 @admin.register(Group)

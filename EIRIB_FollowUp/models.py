@@ -198,6 +198,11 @@ class Enactment(models.Model):
 
     second_supervisor.short_description = _('Second Supervisor')
 
+    def followups(self):
+        if self.second_actor:
+            return '%s, %s' % (self.first_actor, self.second_actor)
+        else:
+            return self.first_actor
 
 class Attachment(models.Model):
     def directory_path(instance, filename):
