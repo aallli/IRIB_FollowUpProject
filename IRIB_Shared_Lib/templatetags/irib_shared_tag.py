@@ -28,9 +28,9 @@ def admin_email():
 
 @register.simple_tag()
 def navigation_counter(request, app, model, pk):
-    status = '%s_%s' % (app, model) in settings.NAVIGATED_MODELS
+    queryset_name = '%s_%s_query_set' % (app, model)
+    status = '%s_%s' % (app, model) in settings.NAVIGATED_MODELS and queryset_name in request.session
     if status:
-        queryset_name = '%s_%s_query_set' % (app, model)
         filtered_queryset_name = 'filtered_%s_%s_query_set' % (app, model)
         queryset = request.session[queryset_name]
 
