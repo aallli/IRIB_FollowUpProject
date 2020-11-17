@@ -326,8 +326,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     @atomic
     def close(self, request):
-        result = self.next(request)
         pk = int(request.GET['pk'])
+        result = self.next(request, pk)
         enactment = get_object_or_404(Enactment, pk=pk)
         enactment.follow_grade = 0
         enactment.save()
