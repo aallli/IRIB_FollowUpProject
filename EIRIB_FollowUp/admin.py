@@ -251,6 +251,10 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         execute_query(query, params, delete=True)
         super(EnactmentAdmin, self).delete_model(request, obj)
 
+    def response_delete(self, request, obj_display, obj_id):
+        super(EnactmentAdmin, self).response_delete(request, obj_display, obj_id)
+        return self.next(request, obj_id)
+
     @atomic
     def save_formset(self, request, form, formset, change):
         super(EnactmentAdmin, self).save_formset(request, form, formset, change)

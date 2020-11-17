@@ -321,6 +321,10 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return HttpResponseRedirect('.')
         return super(EnactmentAdmin, self).response_change(request, obj)
 
+    def response_delete(self, request, obj_display, obj_id):
+        super(EnactmentAdmin, self).response_delete(request, obj_display, obj_id)
+        return self.next(request, obj_id)
+
 
 @admin.register(Group)
 class GroupAdmin(BaseModelAdmin):
