@@ -14,6 +14,15 @@
             </li>
             <li>
                 {% if opts.app_label == 'EIRIB_FollowUp' %}
+                    <a href="{% url 'admin:eirib-enactment-todo-report' %}" title="{% trans 'Todo tasks' %}"
+                       target="_blank">{% trans 'Todo tasks' %}</a>
+                    {% elif opts.app_label == 'IRIB_FollowUp' %}
+                    <a href="{% url 'admin:irib-enactment-todo-report' %}" title="{% trans 'Todo tasks' %}"
+                       target="_blank">{% trans 'Todo tasks' %}</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if opts.app_label == 'EIRIB_FollowUp' %}
                     <a href="{% url 'admin:eirib-enactment-report' %}" title="{% trans 'Print' %}"
                        target="_blank">{% trans 'Print' %}</a>
                     {% elif opts.app_label == 'IRIB_FollowUp' %}

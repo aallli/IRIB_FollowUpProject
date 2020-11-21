@@ -272,7 +272,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def report(self, request):
         super(BaseModelAdmin, self).changelist_view(request)
         model_full_name = get_model_fullname(self)
-        queryset = Enactment.objects.filter(pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+        queryset = Enactment.objects.filter(
+            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
         minutes = []
         for minute in Session.objects.filter(pk__in=queryset.values('session')):
             minutes.append({'minute': minute, 'enactments': queryset.filter(session=minute)})
@@ -280,16 +281,30 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         context = dict(
             minutes=minutes,
             date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now()),
-            full_model_name = model_full_name
+            full_model_name=model_full_name
         )
         return TemplateResponse(request, 'admin/custom/enactments-list-report.html', context)
 
     def report_excel(self, request):
         super(BaseModelAdmin, self).changelist_view(request)
         model_full_name = get_model_fullname(self)
-        queryset = Enactment.objects.filter(pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+        queryset = Enactment.objects.filter(
+            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
         context = dict(
             followups=FollowUp.objects.filter(enactment__in=queryset),
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+        )
+        return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
+
+    def report_todo(self, request):
+        super(BaseModelAdmin, self).changelist_view(request)
+        model_full_name = get_model_fullname(self)
+        queryset = Enactment.objects.filter(
+            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+        followups = FollowUp.objects.filter(enactment__in=queryset.distinct())
+        followups = followups.filter(result__isnull=True) | followups.filter(result='')
+        context = dict(
+            followups=followups.distinct(),
             date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
         )
         return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
@@ -300,6 +315,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                    path('close/', self.close, name="irib-enactment-close"),
                    path('report/', self.report, name="irib-enactment-report"),
                    path('report-excel/', self.report_excel, name="irib-enactment-report-excel"),
+                   path('report-todo/', self.report_todo, name="irib-enactment-todo-report"),
                ] + urls
 
     @atomic

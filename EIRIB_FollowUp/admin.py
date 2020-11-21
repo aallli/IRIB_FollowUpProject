@@ -280,6 +280,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         return [path('close/', self.close, name="eirib-enactment-close"),
                 path('report/', self.report, name="eirib-enactment-report"),
                 path('report-excel/', self.report_excel, name="eirib-enactment-report-excel"),
+                path('report-todo/', self.report_todo, name="eirib-enactment-todo-report"),
                 ] + urls
 
     def report(self, request):
@@ -321,6 +322,32 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             if item.second_actor:
                 followup['actor'] = dict(last_name=item.second_actor.lname)
                 followups.append(followup)
+
+        context = dict(
+            followups=followups,
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+        )
+        return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
+
+    def report_todo(self, request):
+        super(BaseModelAdmin, self).changelist_view(request)
+        model_full_name = get_model_fullname(self)
+        queryset = Enactment.objects.filter(
+            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+        queryset = queryset.filter(result__isnull=True) | queryset.filter(result='')
+        followups = []
+        for item in queryset.distinct():
+            enactment = dict(
+                row=item.row,
+                review_date=item.review_date()
+            )
+            followup = dict(
+                enactment=enactment
+            )
+
+            followup['actor'] = dict(last_name=item.followups)
+
+            followups.append(followup)
 
         context = dict(
             followups=followups,
