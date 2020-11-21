@@ -416,3 +416,7 @@ div.payslip .header .column {
 :lang(fa) #payslip_form .aligned .readonly {
     margin-right: 60px;
 }
+
+.fieldBox.field-box {
+    min-width: 300px !important;
+}
