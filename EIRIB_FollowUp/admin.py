@@ -308,6 +308,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         followups = []
         for item in queryset:
             enactment = dict(
+                id=item.id,
                 row=item.row,
                 review_date=item.review_date()
             )
@@ -325,7 +326,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
         context = dict(
             followups=followups,
-            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now()),
+            full_model_name=model_full_name
         )
         return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
 

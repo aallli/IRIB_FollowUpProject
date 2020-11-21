@@ -292,7 +292,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
         context = dict(
             followups=FollowUp.objects.filter(enactment__in=queryset),
-            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now())
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now()),
+            full_model_name=model_full_name
         )
         return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
 

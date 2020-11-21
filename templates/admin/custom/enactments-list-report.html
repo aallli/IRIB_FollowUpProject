@@ -109,25 +109,25 @@
                                         </td>
                                         <td class="field-type">
                                             <a target="_blank"
-                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                               href="{% url 'admin:'|add:full_model_name|add:'_change' enactment.id %}">
                                                 {{ enactment.type }}
                                             </a>
                                         </td>
                                         <td class="field-subject">
                                             <a target="_blank"
-                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                               href="{% url 'admin:'|add:full_model_name|add:'_change' enactment.id %}">
                                                 {{ enactment.subject }}
                                             </a>
                                         </td>
                                         <td class="field-description">
                                             <a target="_blank"
-                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                               href="{% url 'admin:'|add:full_model_name|add:'_change' enactment.id %}">
                                                 {{ enactment.description }}
                                             </a>
                                         </td>
                                         <td class="field-followups">
                                             <a target="_blank"
-                                               href="/fa/admin/IRIB_FollowUp/enactment/{{ enactment.id }}/change/">
+                                               href="{% url 'admin:'|add:full_model_name|add:'_change' enactment.id %}">
                                                 {{ enactment.followups }}
                                             </a>
                                         </td>
