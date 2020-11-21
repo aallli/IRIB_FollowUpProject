@@ -76,13 +76,22 @@
                                 <tr class="{% cycle "row1" "row2" %}">
 
                                     <td class="field-row nowrap">
-                                        {{ followup.enactment.row }}
+                                        <a target="_blank"
+                                           href="{% url 'admin:'|add:full_model_name|add:'_change' followup.enactment.id %}">
+                                            {{ followup.enactment.row }}
+                                        </a>
                                     </td>
                                     <td class="field-followups">
-                                        {{ followup.actor.last_name }}
+                                        <a target="_blank"
+                                           href="{% url 'admin:'|add:full_model_name|add:'_change' followup.enactment.id %}">
+                                            {{ followup.actor.last_name }}
+                                        </a>
                                     </td>
                                     <td class="field-followups">
-                                        {{ followup.enactment.review_date }}
+                                        <a target="_blank"
+                                           href="{% url 'admin:'|add:full_model_name|add:'_change' followup.enactment.id %}">
+                                            {{ followup.enactment.review_date }}
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
