@@ -1,5 +1,8 @@
 from django.urls import path
 from django.contrib import admin
+from django.db.models import Count
+from django.utils.html import format_html
+
 from IRIB_Auth.models import Supervisor
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
@@ -221,8 +224,10 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             'fields': (('row', 'review_date', 'assigner', 'subject'), ('_type', 'description'))}),
     )
 
-    list_display = ['row', 'type', 'session', 'session_date', 'review_date', 'subject', 'description_short']
-    list_display_links = ['row', 'type', 'session', 'session_date', 'review_date', 'subject', 'description_short']
+    list_display = ['row', 'type', 'session', 'session_date', 'review_date', 'status', 'subject',
+                    'description_short']
+    list_display_links = ['row', 'type', 'session', 'session_date', 'review_date', 'status', 'subject',
+                          'description_short']
     list_filter = ['_type',
                    get_jalali_filter('_review_date', _('Review Date')),
                    get_jalali_filter('session___date', _('Assignment Date')),
@@ -230,8 +235,14 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     search_fields = ['session__session__name', 'subject__name', 'description', 'assigner__first_name',
                      'assigner__last_name', 'id']
     readonly_fields = ['row', 'type', 'description_short', 'review_date', 'session_presents', 'session_absents',
-                       'session_date']
+                       'status', 'session_date']
     form = EnactmentAdminForm
+
+    def status(self, obj):
+        return obj.status_colored()
+
+    status.admin_order_field = 'status'
+    status.short_description = _('Status')
 
     def get_inline_instances(self, request, obj=None):
         if request.user.is_superuser or request.user.is_secretary:
@@ -251,7 +262,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             ]
 
     def get_queryset(self, request):
-        queryset = super(EnactmentAdmin, self).get_queryset(request).filter(follow_grade=1)
+        queryset = super(EnactmentAdmin, self).get_queryset(request).filter(follow_grade=1).annotate(
+            status=Count('followup'))
 
         if request.user.is_superuser or request.user.is_secretary:
             return queryset

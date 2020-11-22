@@ -6,6 +6,7 @@ from django.utils import timezone
 from IRIB_Auth.models import User
 from django.dispatch import receiver
 from django.utils import translation
+from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from IRIB_Shared_Lib.utils import to_jalali, format_date
 
@@ -216,11 +217,25 @@ class Enactment(models.Model):
 
     followups.short_description = _('Follow Ups')
 
+    def status_colored(self):
+        status = 'Done' if FollowUp.objects.filter(enactment=self).filter(result='').count() == 0 else 'TODO'
+        colors = {
+            'Done': 'green',
+            'TODO': 'red',
+        }
+        return format_html(
+            '<b style="color:{};">{}</b>',
+            colors[status],
+            _(status),
+        )
+
+    status_colored.short_description = _('Status')
+
 
 class FollowUp(models.Model):
     actor = models.ForeignKey(User, verbose_name=_('Actor'), on_delete=models.SET_NULL, blank=True, null=True)
     _date = models.DateTimeField(verbose_name=_('Response Date'), blank=True, null=True)
-    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=True, null=True)
+    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=False, null=False, default='')
     enactment = models.ForeignKey(Enactment, verbose_name=_('Enactment'), on_delete=models.CASCADE)
 
     class Meta:
