@@ -139,15 +139,15 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
               ('first_actor', 'first_supervisor'),
               ('second_actor', 'second_supervisor'),
               )
-    list_display = ['row', 'session', 'date', 'review_date', 'subject', 'description_short', 'result_short']
-    list_display_links = ['row', 'session', 'date', 'review_date', 'subject', 'description_short', 'result_short']
+    list_display = ['row', 'session', 'date', 'review_date', 'subject', 'status_colored', 'description_short', 'result_short']
+    list_display_links = ['row', 'session', 'date', 'review_date', 'subject', 'status_colored', 'description_short', 'result_short']
     list_filter = [get_jalali_filter('_review_date', _('Review Date')),
                    get_jalali_filter('_date', _('Assignment Date')), 'session', 'subject',
                    'assigner', ActorFilter, SupervisorFilter]
     search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result', 'first_actor__fname',
                      'first_actor__lname', 'second_actor__fname', 'second_actor__lname', 'row']
     inlines = [AttachmentInline, ]
-    readonly_fields = ['row', 'description_short', 'result_short', 'date', 'review_date',
+    readonly_fields = ['row', 'description_short', 'result_short', 'date', 'review_date', 'status_colored',
                        'first_supervisor',
                        'second_supervisor']
     form = EnactmentAdminForm

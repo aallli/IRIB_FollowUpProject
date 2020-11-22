@@ -6,6 +6,8 @@ from django.contrib.admin import SimpleListFilter
 
 from django.utils.translation import ugettext_lazy as _
 
+msgid = _('Done')
+msgid = _('TODO')
 
 def get_admin_url(model, pk=None):
     from django.urls import reverse
