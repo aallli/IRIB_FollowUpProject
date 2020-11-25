@@ -30,6 +30,17 @@
             </li>
         </ul>
     {% endif %}
+
+    {% if opts.model_name == 'enactment' and original.pk %}
+        <ul class="object-tools object-tools-print object-tools-print-detail">
+            <li>
+                {% if opts.app_label == 'EIRIB_FollowUp' %}
+                    <a href="{% url 'admin:eirib-enactment-print' pk=original.pk %}" title="{% trans 'Print' %}"
+                       target="_blank">{% trans 'Print' %}</a>
+                {% endif %}
+            </li>
+        </ul>
+    {% endif %}
     {{ block.super }}
 {% endblock %}
 

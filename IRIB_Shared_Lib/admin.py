@@ -11,7 +11,7 @@ class BaseModelAdmin(admin.ModelAdmin):
         super(BaseModelAdmin, self).changelist_view(request)
         model_full_name = get_model_fullname(self)
         queryset = request.session['%s_query_set' % model_full_name]
-        obj = queryset[0][0]
+        obj = queryset[0]['pk']
         return HttpResponseRedirect(
             '%s?%s' % (get_admin_url(self.model, obj if obj else None), request.GET.urlencode()))
 
@@ -20,13 +20,13 @@ class BaseModelAdmin(admin.ModelAdmin):
         model_full_name = get_model_fullname(self)
         queryset = request.session['%s_query_set' % model_full_name]
         try:
-            index = queryset.index([pk])
+            index = queryset.index({'pk':pk})
             if index == 0:
-                pk = queryset[index][0]
+                pk = queryset[index]['pk']
             else:
-                pk = queryset[index - 1][0]
+                pk = queryset[index - 1]['pk']
         except:
-            pk = queryset[0][0] if len(queryset) else None
+            pk = queryset[0]['pk'] if len(queryset) else None
 
         return HttpResponseRedirect('%s?%s' % (get_admin_url(self.model, pk), request.GET.urlencode()))
 
@@ -35,13 +35,13 @@ class BaseModelAdmin(admin.ModelAdmin):
         model_full_name = get_model_fullname(self)
         queryset = request.session['%s_query_set' % model_full_name]
         try:
-            index = queryset.index([pk])
+            index = queryset.index({'pk':pk})
             if index == len(queryset) - 1:
-                pk = queryset[index][0]
+                pk = queryset[index]['pk']
             else:
-                pk = queryset[index + 1][0]
+                pk = queryset[index + 1]['pk']
         except:
-            pk = queryset[len(queryset) - 1][0] if queryset else None
+            pk = queryset[len(queryset) - 1]['pk'] if queryset else None
 
         return HttpResponseRedirect('%s?%s' % (get_admin_url(self.model, pk), request.GET.urlencode()))
 
@@ -49,7 +49,7 @@ class BaseModelAdmin(admin.ModelAdmin):
         super(BaseModelAdmin, self).changelist_view(request)
         model_full_name = get_model_fullname(self)
         queryset = request.session['%s_query_set' % model_full_name]
-        obj = queryset[len(queryset) - 1][0]
+        obj = queryset[len(queryset) - 1]['pk']
         return HttpResponseRedirect(
             '%s?%s' % (get_admin_url(self.model, obj if obj else None), request.GET.urlencode()))
 
@@ -72,5 +72,5 @@ class BaseModelAdmin(admin.ModelAdmin):
             filtered_queryset_name = 'filtered_%s_query_set' % model_full_name
             request.session[filtered_queryset_name] = self.get_preserved_filters(request) != ''
             if hasattr(response, 'context_data') and 'cl' in response.context_data:
-                request.session[queryset_name] = list(response.context_data["cl"].queryset.values_list('pk'))
+                request.session[queryset_name] = list(response.context_data["cl"].queryset.values('pk'))
         return response

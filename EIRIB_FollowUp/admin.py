@@ -139,8 +139,10 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
               ('first_actor', 'first_supervisor'),
               ('second_actor', 'second_supervisor'),
               )
-    list_display = ['row', 'session', 'date', 'review_date', 'subject', 'status_colored', 'description_short', 'result_short']
-    list_display_links = ['row', 'session', 'date', 'review_date', 'subject', 'status_colored', 'description_short', 'result_short']
+    list_display = ['row', 'session', 'date', 'review_date', 'subject', 'status_colored', 'description_short',
+                    'result_short']
+    list_display_links = ['row', 'session', 'date', 'review_date', 'subject', 'status_colored', 'description_short',
+                          'result_short']
     list_filter = [get_jalali_filter('_review_date', _('Review Date')),
                    get_jalali_filter('_date', _('Assignment Date')), 'session', 'subject',
                    'assigner', ActorFilter, SupervisorFilter]
@@ -281,6 +283,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 path('report/', self.report, name="eirib-enactment-report"),
                 path('report-excel/', self.report_excel, name="eirib-enactment-report-excel"),
                 path('report-todo/', self.report_todo, name="eirib-enactment-todo-report"),
+                path('<int:pk>/print/', self.print, name="eirib-enactment-print"),
                 ] + urls
 
     def report(self, request):
@@ -358,6 +361,15 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             full_model_name=model_full_name
         )
         return TemplateResponse(request, 'admin/custom/enactments-list-report-excel.html', context)
+
+    def print(self, request, pk):
+        enactment = get_object_or_404(Enactment, pk=pk)
+        context = dict(
+            enactment=enactment,
+            date=to_jalali(timezone.now()) if translation.get_language() == 'fa' else format_date(timezone.now()),
+            app_name=self.opts.app_config.verbose_name
+        )
+        return TemplateResponse(request, 'admin/custom/eirib-enactment.html', context)
 
     @atomic
     def close(self, request):

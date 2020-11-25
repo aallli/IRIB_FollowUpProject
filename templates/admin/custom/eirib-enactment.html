@@ -1,0 +1,113 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_interface_tags irib_shared_tag %}
+
+{% block branding %}
+    {% get_admin_interface_theme as theme %}
+    <div id="branding">
+        <h1 id="site-name">
+            {% if theme.logo_visible %}
+                {% if theme.logo %}
+                    <img class="logo" style="display:none;" src="{{ theme.logo.url }}"
+                         {% if theme.logo.width %}width="{{ theme.logo.width }}"{% endif %}
+                         {% if theme.logo.height %}height="{{ theme.logo.height }}"{% endif %}>
+                {% else %}
+                    <img class="logo default" style="display:none;"
+                         src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         width="104"
+                         height="36">
+                {% endif %}
+            {% endif %}
+            <span class="blocking-logo">
+            {% version as version %}
+                {% if theme.title_visible %}
+                    <div>{% if theme.title %}{% trans theme.title %}{% else %}
+                        {{ site_header }}{% endif %}
+                    </div>
+                    <div class="blocking-version">{% trans 'Version' %}: {{ version }}</div>
+                {% endif %}
+        </span>
+        </h1>
+    </div>
+{% endblock %}
+
+{% block usertools %}
+    <div id="user-tools">
+        <div>
+            <strong>{% trans 'Reported by' %}: {{ user.title }} {% firstof user.get_full_name user.get_username %}</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>{% trans 'Report Date' %}: {{ date }}</strong></div>
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block content %}
+
+    <!-- Content -->
+    <div id="content" class="flex">
+        <h1 class="enactment-print">{{ app_name }}</h1>
+        <br/>
+
+        <div id="content-main">
+
+            <div class="module filtered">
+                <form>
+                    <div class="results list-reports">
+                        <table class="enactment-print">
+                            <tbody>
+                            <tr>
+                                <td class="field-row nowrap">{% trans 'Row' %}</td>
+                                <td class="field-row nowrap">{{ enactment.row }}</td>
+                                <td class="field-row nowrap">{% trans 'Date' %}</td>
+                                <td class="field-row nowrap">{{ enactment.date }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="field-row nowrap">{% trans 'Subject' %}</td>
+                                <td class="field-row nowrap" colspan="3">{{ enactment.subject }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="field-row nowrap">{% trans 'Task Assigner' %}</td>
+                                <td class="field-row nowrap">{{ enactment.assigner.name }}</td>
+                                <td class="field-row nowrap">{% trans 'Session' %}</td>
+                                <td class="field-row nowrap">{{ enactment.session.name }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="field-row nowrap">{% trans 'Description' %}</td>
+                                <td class="field-row nowrap" colspan="3">{{ enactment.description }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="field-row nowrap">{% trans 'First Actor' %}</td>
+                                <td class="field-row nowrap">{{ enactment.first_actor }}</td>
+                                <td class="field-row nowrap">{% trans 'Second Actor' %}</td>
+                                <td class="field-row nowrap">{{ enactment.second_actor }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="field-row nowrap">{% trans 'First Supervisor' %}</td>
+                                <td class="field-row nowrap">{{ enactment.first_actor.supervisor.name }}</td>
+                                <td class="field-row nowrap">{% trans 'Second Supervisor' %}</td>
+                                <td class="field-row nowrap">{{ enactment.second_actor.supervisor.name }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="field-row nowrap">{% trans 'Result' %}</td>
+                                <td class="field-row nowrap" colspan="3">{{ enactment.result }}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br class="clear">
+        <br class="clear">
+    </div>
+
+{% endblock %}

@@ -420,3 +420,11 @@ div.payslip .header .column {
 .fieldBox.field-box {
     min-width: 300px !important;
 }
+
+h1.enactment-print {
+    text-align: center;
+}
+
+.enactment-print td {
+    border: solid 1px black;
+}

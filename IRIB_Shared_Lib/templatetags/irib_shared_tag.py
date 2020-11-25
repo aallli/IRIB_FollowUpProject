@@ -36,7 +36,7 @@ def navigation_counter(request, app, model, pk):
 
         if pk:
             try:
-                index = queryset.index([pk]) + 1
+                index = queryset.index({'pk':pk}) + 1
             except:
                 index = '?'
 
