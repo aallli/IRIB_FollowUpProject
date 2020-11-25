@@ -290,7 +290,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         super(BaseModelAdmin, self).changelist_view(request)
         model_full_name = get_model_fullname(self)
         queryset = Enactment.objects.filter(
-            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+            pk__in=[item['pk'] for item in request.session['%s_query_set' % model_full_name]])
         minutes = []
         for minute in Session.objects.filter(pk__in=queryset.values('session')):
             minutes.append({'minute': dict(session=dict(name=minute)),
@@ -307,7 +307,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         super(BaseModelAdmin, self).changelist_view(request)
         model_full_name = get_model_fullname(self)
         queryset = Enactment.objects.filter(
-            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+            pk__in=[item['pk'] for item in request.session['%s_query_set' % model_full_name]])
         followups = []
         for item in queryset:
             enactment = dict(
@@ -338,7 +338,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         super(BaseModelAdmin, self).changelist_view(request)
         model_full_name = get_model_fullname(self)
         queryset = Enactment.objects.filter(
-            pk__in=[item[0] for item in request.session['%s_query_set' % model_full_name]])
+            pk__in=[item['pk'] for item in request.session['%s_query_set' % model_full_name]])
         queryset = queryset.filter(result__isnull=True) | queryset.filter(result='')
         followups = []
         for item in queryset.distinct():
