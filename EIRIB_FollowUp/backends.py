@@ -75,9 +75,12 @@ class EIRIBBackend(ModelBackend):
 
     def get_user_query(self, user):
         command = 'SELECT * from %s' % user.query_name
-        result = execute_query(command)
-        user.query = [r.ID for r in result]
-        user.save()
+        try:
+            result = execute_query(command)
+            user.query = [r.ID for r in result]
+            user.save()
+        except:
+            pass
 
     def set_groups(self, user):
         if user.is_secretary:
