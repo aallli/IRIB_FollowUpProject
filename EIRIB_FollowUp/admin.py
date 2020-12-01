@@ -149,9 +149,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     search_fields = ['session__name', 'subject__name', 'assigner__name', 'description', 'result', 'first_actor__fname',
                      'first_actor__lname', 'second_actor__fname', 'second_actor__lname', 'row']
     inlines = [AttachmentInline, ]
-    readonly_fields = ['row', 'description_short', 'result_short', 'date', 'review_date', 'status_colored',
-                       'first_supervisor',
-                       'second_supervisor']
+    readonly_fields = ['row', 'description_short', 'result_short', 'review_date', 'status_colored',
+                       'first_supervisor', 'second_supervisor']
     form = EnactmentAdminForm
 
     def get_queryset(self, request):
@@ -165,10 +164,10 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
-            return self.readonly_fields + ['code', 'session', '_date', '_review_date', 'assigner', 'subject',
+            return self.readonly_fields + ['code', 'session', '_review_date', 'assigner', 'subject',
                                            'description', 'first_actor', 'second_actor', 'follow_grade']
         elif obj:
-            return self.readonly_fields + ['_date', '_review_date']
+            return self.readonly_fields + ['_review_date']
 
         return self.readonly_fields
 
