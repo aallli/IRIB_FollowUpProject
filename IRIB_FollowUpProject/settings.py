@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.16.3'
+VERSION = '1.16.4'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -170,8 +170,8 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'IRIB_Auth.User'
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
     'EIRIB_FollowUp.backends.EIRIBBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 # django jalali datae defaults

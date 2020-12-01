@@ -160,7 +160,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return queryset
 
         _user = _User.objects.get(user=user)
-        return queryset.filter(row__in=_user.query)
+        return queryset.filter(row__in=_user.query) if _user.query else Enactment.objects.none()
 
     def get_readonly_fields(self, request, obj=None):
         if not (request.user.is_superuser or request.user.is_secretary):
