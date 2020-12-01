@@ -3,6 +3,12 @@
 
 {% block submit-row %}
     {{ block.super }}
+    <div class="custom-command">
+        <p class="deletelink-box">
+            <a href="{% url 'admin:'|add:opts.app_label|add:'_'|add:opts.model_name|add:'_changelist' %}"
+               class="deletelink cancel-save">{% trans 'Cancel save' %}</a>
+        </p>
+    </div>
 
     {% if opts.model_name == 'enactment' and original.pk %}
         {% if user.is_superuser or user.is_secretary %}
@@ -66,7 +72,7 @@
                 {% if original.pk %}
                     {% if LANGUAGE_CODE == 'fa' %}
                         <input type="button" value="◄◄" class="navigation" title="{% trans 'Last' %}"
-                               onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}?{{  request.GET.urlencode }}"'>
+                               onclick='javascript: location.href="{% url 'admin:last-'|add:opts.app_label|add:'-'|add:opts.model_name %}?{{ request.GET.urlencode }}"'>
                         <input type="button" value="◄" class="navigation" title="{% trans 'Next' %}"
                                onclick='javascript: location.href="{% url 'admin:next-'|add:opts.app_label|add:'-'|add:opts.model_name original.pk %}?{{ request.GET.urlencode }}"'>
                         <input type="button" value="►" class="navigation" title="{% trans 'Previous' %}"

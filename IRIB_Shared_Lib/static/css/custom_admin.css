@@ -428,3 +428,7 @@ h1.enactment-print {
 .enactment-print td {
     border: solid 1px black;
 }
+
+.cancel-save{
+    margin: 4px 8px 0 0;
+}
