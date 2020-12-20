@@ -11,7 +11,7 @@
     </div>
 
     {% if opts.model_name == 'enactment' and original.pk %}
-        {% if user.is_superuser or user.is_secretary %}
+        {% if user.is_superuser or user.is_secretary or user.is_scoped_secretary %}
             <div class="custom-command">
                 <p>
                     <input type="button" value="{% trans 'Close enactment' %}" class="close-enactment"

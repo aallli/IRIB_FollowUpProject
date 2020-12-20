@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 10:01+0330\n"
+"POT-Creation-Date: 2020-12-20 09:00+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr "مسوول پیگیری"
 
 #: .\EIRIB_FollowUp\admin.py:30 .\EIRIB_FollowUp\models.py:64
 #: .\EIRIB_FollowUp\models.py:84 .\EIRIB_FollowUp\models.py:134
-#: .\IRIB_Auth\models.py:23 .\IRIB_Auth\models.py:39
+#: .\IRIB_Auth\models.py:24 .\IRIB_Auth\models.py:40
 #: .\IRIB_FollowUp\admin.py:23 .\IRIB_FollowUp\models.py:262
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
@@ -57,7 +57,7 @@ msgstr "سامانه پیگیری معاونت فضای مجازی"
 
 #: .\EIRIB_FollowUp\models.py:17 .\EIRIB_FollowUp\models.py:32
 #: .\EIRIB_FollowUp\models.py:47 .\EIRIB_FollowUp\models.py:81
-#: .\IRIB_Auth\models.py:20 .\IRIB_FollowUp\models.py:38
+#: .\IRIB_Auth\models.py:21 .\IRIB_FollowUp\models.py:38
 #: .\IRIB_FollowUp\models.py:135 .\IRIB_FollowUp\models.py:332
 #: .\Knowledge_Management\models.py:30 .\Knowledge_Management\models.py:42
 #: .\Knowledge_Management\models.py:56 .\Knowledge_Management\models.py:109
@@ -108,7 +108,7 @@ msgstr "نام خانوادگی"
 msgid "Supervisors"
 msgstr "مسوولین پیگیری"
 
-#: .\EIRIB_FollowUp\models.py:85 .\IRIB_Auth\models.py:24
+#: .\EIRIB_FollowUp\models.py:85 .\IRIB_Auth\models.py:25
 msgid "Supervisor Units"
 msgstr "واحدهای پیگیری"
 
@@ -140,11 +140,11 @@ msgstr "کاربران"
 msgid "username"
 msgstr "کاربر"
 
-#: .\EIRIB_FollowUp\models.py:129 .\IRIB_Auth\models.py:35
+#: .\EIRIB_FollowUp\models.py:129 .\IRIB_Auth\models.py:36
 msgid "Access Level"
 msgstr "سطح دسترسی"
 
-#: .\EIRIB_FollowUp\models.py:139 .\IRIB_Auth\models.py:45
+#: .\EIRIB_FollowUp\models.py:139 .\IRIB_Auth\models.py:46
 msgid "last login"
 msgstr "آخرین ورود"
 
@@ -352,23 +352,27 @@ msgstr "مدیریت کاربران"
 msgid "Secretary"
 msgstr "دبیر"
 
-#: .\IRIB_Auth\models.py:15 .\IRIB_FollowUp\models.py:26
+#: .\IRIB_Auth\models.py:12
+msgid "Scoped Secretary"
+msgstr "دبیر محدود"
+
+#: .\IRIB_Auth\models.py:16 .\IRIB_FollowUp\models.py:26
 msgid "Mr"
 msgstr "جناب آقای"
 
-#: .\IRIB_Auth\models.py:16 .\IRIB_FollowUp\models.py:27
+#: .\IRIB_Auth\models.py:17 .\IRIB_FollowUp\models.py:27
 msgid "Mrs"
 msgstr "سرکار خانم"
 
-#: .\IRIB_Auth\models.py:37
+#: .\IRIB_Auth\models.py:38
 msgid "Title"
 msgstr "عنوان"
 
-#: .\IRIB_Auth\models.py:51
+#: .\IRIB_Auth\models.py:52
 msgid "date joined"
 msgstr "تاریخ عضویت"
 
-#: .\IRIB_Auth\models.py:77
+#: .\IRIB_Auth\models.py:82
 #, python-format
 msgid "Delete failed, Immutable user: (%s)"
 msgstr "خطا! کاربر '%s' غیر قابل حذف است."

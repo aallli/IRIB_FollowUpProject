@@ -170,22 +170,22 @@ def get_followup_inline(request):
 
         def has_add_permission(self, request, obj):
             user = request.user
-            return user.is_superuser or user.is_secretary
+            return user.is_superuser or user.is_secretary or user.is_scoped_secretary
 
         def has_delete_permission(self, request, obj):
             user = request.user
-            return user.is_superuser or user.is_secretary
+            return user.is_superuser or user.is_secretary or user.is_scoped_secretary
 
         def get_readonly_fields(self, request, obj=None):
             user = request.user
-            if user.is_superuser or user.is_secretary:
+            if user.is_superuser or user.is_secretary or user.is_scoped_secretary:
                 return self.readonly_fields
             else:
                 return self.readonly_fields + ['actor']
 
         def get_formset(self, request, obj=None, **kwargs):
             user = request.user
-            if user.is_superuser or user.is_secretary:
+            if user.is_superuser or user.is_secretary or user.is_scoped_secretary:
                 self.extra = 1
                 self.max_num = 20
             else:
@@ -245,7 +245,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     status.short_description = _('Status')
 
     def get_inline_instances(self, request, obj=None):
-        if request.user.is_superuser or request.user.is_secretary:
+        if request.user.is_superuser or request.user.is_secretary or request.user.is_scoped_secretary:
             return [
                 GroupFollowUpInline(self.model, self.admin_site),
                 get_followup_inline(request)(self.model, self.admin_site),
@@ -273,7 +273,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         extra_readonly = ['_review_date']
-        if not (request.user.is_superuser or request.user.is_secretary):
+        if not (request.user.is_superuser or request.user.is_secretary or request.user.is_scoped_secretary):
             return self.readonly_fields + extra_readonly + ['session', 'assigner', 'subject',
                                                             'description', 'follow_grade', '_type']
         elif obj:

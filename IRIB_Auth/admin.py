@@ -40,7 +40,7 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
     change_form_template = 'admin/custom/change_form.html'
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.is_secretary and not request.user.is_superuser:
+        if (request.user.is_secretary  or request.user.is_scoped_secretary) and not request.user.is_superuser:
             return self.readonly_fields + ['is_staff', 'is_superuser', 'groups', 'user_permissions']
         return self.readonly_fields
 
@@ -67,7 +67,7 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             self.set_groups(user)
 
     def set_groups(self, user):
-        if user.is_secretary:
+        if user.is_secretary or user.is_scoped_secretary:
             if user.groups.filter(name__startswith='IRIB FU -').count():
                 user.groups.add(get_object_or_404(Group, name=settings.IRIB_FU_OPERATOR_GROUP_NAME))
                 user.groups.remove(get_object_or_404(Group, name=settings.IRIB_FU_USER_GROUP_NAME))

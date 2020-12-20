@@ -54,7 +54,8 @@ class EIRIBBackend(ModelBackend):
                 user.first_name = result.FName
                 user.last_name = result.LName
                 user.supervisor = supervisor
-                user.access_level = access_level
+                # @todo: Better to consider scoped secretary access level in excel
+                # user.access_level = access_level
                 user._title = title
             else:
                 user = User.objects.create(username=user_name, first_name=result.FName, last_name=result.LName,
@@ -83,7 +84,7 @@ class EIRIBBackend(ModelBackend):
             pass
 
     def set_groups(self, user):
-        if user.is_secretary:
+        if user.is_secretary or user.is_scoped_secretary:
             try:
                 user.groups.add(Group.objects.get(name=settings.EIRIB_FU_OPERATOR_GROUP_NAME))
             except:

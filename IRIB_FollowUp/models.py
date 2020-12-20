@@ -235,7 +235,7 @@ class Enactment(models.Model):
 class FollowUp(models.Model):
     actor = models.ForeignKey(User, verbose_name=_('Actor'), on_delete=models.SET_NULL, blank=True, null=True)
     _date = models.DateTimeField(verbose_name=_('Response Date'), blank=True, null=True)
-    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=False, null=False, default='')
+    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=True, null=False, default=' ')
     enactment = models.ForeignKey(Enactment, verbose_name=_('Enactment'), on_delete=models.CASCADE)
 
     class Meta:

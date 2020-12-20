@@ -160,10 +160,12 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return queryset
 
         _user = _User.objects.get(user=user)
-        return queryset.filter(row__in=_user.query) if _user.query else Enactment.objects.none()
+        return queryset.filter(row__in=_user.query) | queryset.filter(first_actor__fname=user.first_name).filter(
+            first_actor__lname=user.last_name) | queryset.filter(second_actor__fname=user.first_name).filter(
+            second_actor__lname=user.last_name) if _user.query else Enactment.objects.none()
 
     def get_readonly_fields(self, request, obj=None):
-        if not (request.user.is_superuser or request.user.is_secretary):
+        if not (request.user.is_superuser or request.user.is_secretary or request.user.is_scoped_secretary):
             return self.readonly_fields + ['code', 'session', '_review_date', 'assigner', 'subject',
                                            'description', 'first_actor', 'second_actor', 'follow_grade']
         elif obj:
@@ -182,7 +184,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                    '''
             params = [obj.result]
 
-            if request.user.is_superuser or request.user.is_secretary:
+            if request.user.is_superuser or request.user.is_secretary or request.user.is_scoped_secretary:
                 query += ", tblmosavabat.sharh=?, tblmosavabat.peygiri1=?, tblmosavabat.peygiri2=?" \
                          ", tblmosavabat.tarikh=?, tblmosavabat.jalaseh=?, tblmosavabat.muzoo=?" \
                          ", tblmosavabat.gooyandeh=?, tblmosavabat.vahed=?, tblmosavabat.vahed2=?" \

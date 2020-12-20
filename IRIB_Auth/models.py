@@ -9,6 +9,7 @@ from IRIB_Shared_Lib.utils import to_jalali, format_date
 class AccessLevel(models.TextChoices):
     USER = 'user', _('User')
     SECRETARY = 'secretary', _('Secretary')
+    SCOPED_SECRETARY = 'scoped_secretary', _('Scoped Secretary')
 
 
 class Title(models.TextChoices):
@@ -67,6 +68,10 @@ class User(AbstractUser):
     @property
     def is_secretary(self):
         return self.access_level == AccessLevel.SECRETARY
+
+    @property
+    def is_scoped_secretary(self):
+        return self.access_level == AccessLevel.SCOPED_SECRETARY
 
     @property
     def is_km_operator(self):
