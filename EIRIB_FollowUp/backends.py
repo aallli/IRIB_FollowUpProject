@@ -83,6 +83,17 @@ class EIRIBBackend(ModelBackend):
         except:
             pass
 
+        if user.secretary_query_name:
+            command = 'SELECT * from %s' % user.secretary_query_name
+            try:
+                result = execute_query(command)
+                user.secretary_query = list(result[0])
+                user.save()
+            except Exception as e:
+                user.secretary_query = None
+        else:
+            user.secretary_query = None
+
     def set_groups(self, user):
         if user.is_secretary or user.is_scoped_secretary:
             try:

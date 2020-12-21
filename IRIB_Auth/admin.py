@@ -58,7 +58,8 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
         try:
             save_user(obj)
         except Exception as e:
-            self.message_user(request, _('Error in creating/updating user in MS Acceess Database'), messages.WARNING)
+            messages.set_level(request, messages.WARNING)
+            messages.error(request, _('Error in creating/updating user in MS Acceess Database'))
 
     def save_related(self, request, form, formsets, change):
         user = form.instance
@@ -105,7 +106,8 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             try:
                 delete_user(obj)
             except Exception as e:
-                self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
+                messages.set_level(request, messages.WARNING)
+                messages.error(request, _('Error in deleting user from MS Acceess Database'))
 
             return super(UserAdmin, self).delete_model(request, obj)
         except Exception as e:
@@ -118,7 +120,9 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
                 try:
                     delete_user(obj)
                 except Exception as e:
-                    self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
+                    messages.set_level(request, messages.WARNING)
+                    messages.error(request, _('Error in deleting user from MS Acceess Database'))
+
                 obj.delete()
             except Exception as e:
                 messages.set_level(request, messages.ERROR)

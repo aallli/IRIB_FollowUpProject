@@ -97,6 +97,10 @@ class User(models.Model):
     query_name = models.CharField(verbose_name=_('Query Name'), max_length=200, blank=False)
     query = ArrayField(models.IntegerField(verbose_name=_('Code'), default=0, blank=False), size=100000, null=True,
                        blank=True)
+    secretary_query_name = models.CharField(verbose_name=_('Secretary Query Name'), max_length=200, blank=True,
+                                            null=True)
+    secretary_query = ArrayField(models.CharField(verbose_name=_('Secretary Query'), max_length=200, blank=True,
+                                            null=True), size=100000, null=True, blank=True)
 
     class Meta:
         verbose_name = _('user')

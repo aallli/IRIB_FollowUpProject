@@ -94,8 +94,8 @@ class AttachmentAdmin(BaseModelAdmin):
 @admin.register(_User)
 class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = _User
-    fields = ['user', 'query_name']
-    search_fields = ['user__first_name', 'user__last_name', 'user__username', 'user__supervisor__name', 'query_name', ]
+    fields = ['user', ('query_name', 'secretary_query_name')]
+    search_fields = ['user__first_name', 'user__last_name', 'user__username', 'user__supervisor__name', 'query_name', 'secretary_query_name']
     list_display = ['first_name', 'last_name', 'username', 'access_level', 'supervisor', 'last_login_jalali']
     list_display_links = ['first_name', 'last_name', 'username', 'access_level', 'supervisor', 'last_login_jalali']
     list_filter = ('user__supervisor', 'user__access_level', 'user__is_active', 'user__is_superuser', 'user__groups')
@@ -107,14 +107,17 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         try:
             save_user(obj.user)
         except Exception as e:
-            self.message_user(request, _('Error in creating/updating user in MS Acceess Database'), messages.WARNING)
+            messages.set_level(request, messages.WARNING)
+            messages.error(request, _('Error in creating/updating user in MS Acceess Database'))
 
     @atomic
     def delete_model(self, request, obj):
         try:
             delete_user(obj.user)
         except Exception as e:
-            self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
+            messages.set_level(request, messages.WARNING)
+            messages.error(request, _('Error in deleting user from MS Acceess Database'))
+
         super(UserAdmin, self).delete_model(request, obj)
 
     def delete_queryset(self, request, queryset):
@@ -176,6 +179,13 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     @atomic
     def save_model(self, request, obj, form, change):
         new_obj = False
+        user = request.user
+        _user=_User.objects.get(user=user)
+        if obj.session and _user.secretary_query and not obj.session.name in _user.secretary_query:
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, _('Unauthorized session, Access denied'))
+            return
+
         if obj.pk:
             obj._review_date = timezone.now()
             query = '''
@@ -184,7 +194,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                    '''
             params = [obj.result]
 
-            if request.user.is_superuser or request.user.is_secretary or request.user.is_scoped_secretary:
+            if user.is_superuser or user.is_secretary or user.is_scoped_secretary:
                 query += ", tblmosavabat.sharh=?, tblmosavabat.peygiri1=?, tblmosavabat.peygiri2=?" \
                          ", tblmosavabat.tarikh=?, tblmosavabat.jalaseh=?, tblmosavabat.muzoo=?" \
                          ", tblmosavabat.gooyandeh=?, tblmosavabat.vahed=?, tblmosavabat.vahed2=?" \

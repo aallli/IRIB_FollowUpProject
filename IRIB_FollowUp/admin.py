@@ -1,10 +1,8 @@
 from django.urls import path
-from django.contrib import admin
 from django.db.models import Count
-from django.utils.html import format_html
-
 from IRIB_Auth.models import Supervisor
 from django.db.transaction import atomic
+from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
 from django.utils import timezone, translation
 from django.shortcuts import get_object_or_404
@@ -347,7 +345,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
                 group = Group.objects.get(pk=request.POST['groupfollowup_set-0-group'])
                 for group_user in GroupUser.objects.filter(group=group):
                     FollowUp.objects.get_or_create(enactment=obj, actor=group_user.user)
-                self.message_user(request, _("Followup added for all %(group)s users." % {'group': group.name}))
+                messages.set_level(request, messages.INFO)
+                messages.error(request, _("Followup added for all %(group)s users." % {'group': group.name}))
             return HttpResponseRedirect('.')
         return super(EnactmentAdmin, self).response_change(request, obj)
 
