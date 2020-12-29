@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.18.0'
+VERSION = '1.18.1'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -106,7 +106,8 @@ DATABASES = {
         'PASSWORD': os.environ.get('DATABASES_PASSWORD', default='123'),
     },
     'access-followup': {
-        'NAME': os.environ.get('ACCESS_DATABASES_NAME', default=os.path.join(BASE_DIR, 'db\db.mdb')),
+        #'NAME': os.environ.get('ACCESS_DATABASES_NAME', default=os.path.join(BASE_DIR, 'db\db.mdb')),
+        'NAME': os.environ.get('ACCESS_DATABASES_NAME', default='W:\peygiry.mdb'),
         'USER': os.environ.get('ACCESS_DATABASES_USER', default='Administrator, System'),
         'PASSWORD': os.environ.get('ACCESS_DATABASES_PASSWORD', default='123456'),
     },

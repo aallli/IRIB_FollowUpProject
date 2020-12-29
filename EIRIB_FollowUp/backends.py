@@ -17,7 +17,7 @@ class EIRIBBackend(ModelBackend):
 
         if user.check_password(password) and self.user_can_authenticate(user):
             if not user.is_secretary:
-                user_query = Timer(1, self.get_user_query(_User.objects.get_or_create(user=user)[0]))
+                user_query = Timer(1, self.get_user_query, [_User.objects.get_or_create(user=user)[0]])
                 user_query.start()
             return user
         else:
