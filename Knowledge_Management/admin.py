@@ -276,7 +276,7 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         assessmentcardtable = get_object_or_404(models.CardtableBase, pk=pk)
         assessmentcardtable._status = models.ActivityStatus.AC
         assessmentcardtable.save()
-        return self.next(request)
+        return self.next(request, pk)
 
     @atomic
     def todo(self, request):
@@ -285,10 +285,11 @@ class AssessmentCardtableAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         if assessmentcardtable.secretary_description:
             assessmentcardtable._status = models.ActivityStatus.EN
             assessmentcardtable.save()
+            return self.next(request, pk)
         else:
             self.message_user(request, _('Type some note for knowledge user and save before clicking Accept button...'),
                               messages.WARNING)
-        return self.next(request)
+        return HttpResponseRedirect(get_admin_url(models.AssessmentCardtable, pk))
 
     @atomic
     def approve(self, request):
