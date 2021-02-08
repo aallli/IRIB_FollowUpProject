@@ -95,6 +95,7 @@ class EIRIBBackend(ModelBackend):
             user.secretary_query = None
 
     def set_groups(self, user):
+        return
         if user.is_secretary or user.is_scoped_secretary:
             try:
                 user.groups.add(Group.objects.get(name=settings.EIRIB_FU_OPERATOR_GROUP_NAME))

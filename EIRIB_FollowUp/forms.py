@@ -15,6 +15,5 @@ class EnactmentAdminForm(forms.ModelForm):
                 'subject': last_obj.subject,
                 'assigner': last_obj.assigner,
                 '_date': last_obj._date,
-                '_review_date': last_obj._review_date
             })
         super(EnactmentAdminForm, self).__init__(*args, **kwargs)

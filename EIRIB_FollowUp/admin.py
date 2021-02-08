@@ -186,8 +186,8 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             messages.error(request, _('Unauthorized session, Access denied'))
             return
 
+        obj._review_date = timezone.now()
         if obj.pk:
-            obj._review_date = timezone.now()
             query = '''
                     UPDATE tblmosavabat
                     SET tblmosavabat.natije = ?
