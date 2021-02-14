@@ -21,6 +21,7 @@ class EIRIBBackend(ModelBackend):
                 user_query.start()
             return user
         else:
+            # @todo: inappropriate user deletion
             if not user.is_superuser:
                 user.delete()
 

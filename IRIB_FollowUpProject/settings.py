@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.18.4'
+VERSION = '1.18.5'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -170,7 +170,8 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'IRIB_Auth.User'
 
 AUTHENTICATION_BACKENDS = [
-    'EIRIB_FollowUp.backends.EIRIBBackend',
+    # @todo: disable Access authentication due to several problems
+    #'EIRIB_FollowUp.backends.EIRIBBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
