@@ -26,7 +26,7 @@ SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
 DEBUG = True
 
 # admin info
-VERSION = '1.18.5'
+VERSION = '1.19.0'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -110,9 +110,6 @@ DATABASES = {
         'USER': os.environ.get('ACCESS_DATABASES_USER', default='Administrator, System'),
         'PASSWORD': os.environ.get('ACCESS_DATABASES_PASSWORD', default='123456'),
     },
-    'excel-payment': {
-        'NAME': os.environ.get('EXCEL_DATABASES_NAME', default=os.path.join(BASE_DIR, 'db\حقوق.xlsx')),
-    }
 }
 
 # Password validation
@@ -160,6 +157,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, "media/temp")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'IRIB_Shared_Lib/static'),
