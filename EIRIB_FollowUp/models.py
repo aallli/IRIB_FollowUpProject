@@ -155,7 +155,7 @@ class Enactment(models.Model):
                                      null=True, related_name='second_actor')
     _date = models.DateTimeField(verbose_name=_('Assignment Date'), blank=False, default=set_now)
     follow_grade = models.CharField(verbose_name=_('Follow Grade'), max_length=100, blank=True, null=True)
-    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=True, null=True)
+    result = models.TextField(verbose_name=_('Result'), max_length=4000, blank=True, null=True, help_text=_("Please insert your name and entry date before your result."))
     session = models.ForeignKey(Session, verbose_name=_('Session'), on_delete=models.SET_NULL, null=True)
     assigner = models.ForeignKey(Assigner, verbose_name=_('Task Assigner'), on_delete=models.SET_NULL, null=True)
     _review_date = models.DateTimeField(verbose_name=_('Review Date'), blank=False, default=set_now)

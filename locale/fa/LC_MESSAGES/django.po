@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 19:15+0330\n"
+"POT-Creation-Date: 2021-03-04 13:52+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,37 +19,41 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: .\EIRIB_FollowUp\admin.py:18 .\EIRIB_FollowUp\models.py:68
-#: .\IRIB_FollowUp\admin.py:35
+#: .\IRIB_FollowUp\admin.py:33
 msgid "Supervisor"
 msgstr "مسوول پیگیری"
 
 #: .\EIRIB_FollowUp\admin.py:30 .\EIRIB_FollowUp\models.py:64
-#: .\EIRIB_FollowUp\models.py:84 .\EIRIB_FollowUp\models.py:139
+#: .\EIRIB_FollowUp\models.py:84 .\EIRIB_FollowUp\models.py:138
 #: .\IRIB_Auth\models.py:24 .\IRIB_Auth\models.py:40
-#: .\IRIB_FollowUp\admin.py:23 .\IRIB_FollowUp\models.py:262
+#: .\IRIB_FollowUp\admin.py:21 .\IRIB_FollowUp\models.py:262
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\EIRIB_FollowUp\admin.py:110 .\IRIB_Auth\admin.py:61
+#: .\EIRIB_FollowUp\admin.py:111 .\IRIB_Auth\admin.py:62
 msgid "Error in creating/updating user in MS Acceess Database"
 msgstr "خطای ایجاد / به روز رسانی کاربر در دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:117 .\EIRIB_FollowUp\admin.py:126
-#: .\IRIB_Auth\admin.py:108 .\IRIB_Auth\admin.py:121
+#: .\EIRIB_FollowUp\admin.py:119 .\EIRIB_FollowUp\admin.py:129
+#: .\IRIB_Auth\admin.py:110 .\IRIB_Auth\admin.py:124
 msgid "Error in deleting user from MS Acceess Database"
 msgstr "خطای حذف کاربر از دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:146 .\EIRIB_FollowUp\models.py:162
-#: .\EIRIB_FollowUp\models.py:194 .\IRIB_FollowUp\admin.py:232
+#: .\EIRIB_FollowUp\admin.py:149 .\EIRIB_FollowUp\models.py:161
+#: .\EIRIB_FollowUp\models.py:193 .\IRIB_FollowUp\admin.py:230
 #: .\IRIB_FollowUp\models.py:155 .\IRIB_FollowUp\models.py:191
 #: .\templates\admin\custom\enactments-list-report-excel.html:69
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
-#: .\EIRIB_FollowUp\admin.py:147 .\EIRIB_FollowUp\models.py:157
-#: .\EIRIB_FollowUp\models.py:188 .\IRIB_FollowUp\admin.py:233
+#: .\EIRIB_FollowUp\admin.py:150 .\EIRIB_FollowUp\models.py:156
+#: .\EIRIB_FollowUp\models.py:187 .\IRIB_FollowUp\admin.py:231
 msgid "Assignment Date"
 msgstr "تاریخ مصوبه"
+
+#: .\EIRIB_FollowUp\admin.py:186
+msgid "Unauthorized session, Access denied"
+msgstr ""
 
 #: .\EIRIB_FollowUp\apps.py:7
 msgid "EIRIB Follow-Up"
@@ -64,7 +68,7 @@ msgstr "سامانه پیگیری معاونت فضای مجازی"
 msgid "Name"
 msgstr "نام"
 
-#: .\EIRIB_FollowUp\models.py:20 .\EIRIB_FollowUp\models.py:160
+#: .\EIRIB_FollowUp\models.py:20 .\EIRIB_FollowUp\models.py:159
 #: .\IRIB_FollowUp\models.py:118
 #: .\templates\admin\custom\eirib-enactment.html:75
 msgid "Session"
@@ -74,7 +78,7 @@ msgstr " جلسه"
 msgid "Sessions"
 msgstr " جلسه"
 
-#: .\EIRIB_FollowUp\models.py:35 .\EIRIB_FollowUp\models.py:161
+#: .\EIRIB_FollowUp\models.py:35 .\EIRIB_FollowUp\models.py:160
 #: .\IRIB_FollowUp\models.py:154
 #: .\templates\admin\custom\eirib-enactment.html:73
 msgid "Task Assigner"
@@ -84,7 +88,7 @@ msgstr "گوینده"
 msgid "Task Assigners"
 msgstr "گویندگان"
 
-#: .\EIRIB_FollowUp\models.py:50 .\EIRIB_FollowUp\models.py:152
+#: .\EIRIB_FollowUp\models.py:50 .\EIRIB_FollowUp\models.py:151
 #: .\IRIB_FollowUp\models.py:138 .\IRIB_FollowUp\models.py:151
 #: .\static\admin\custom\enactments-list-report.html:75
 #: .\templates\admin\custom\eirib-enactment.html:68
@@ -96,11 +100,11 @@ msgstr "موضوع"
 msgid "Subjects"
 msgstr "موضوعات"
 
-#: .\EIRIB_FollowUp\models.py:62 .\EIRIB_FollowUp\models.py:124
+#: .\EIRIB_FollowUp\models.py:62 .\EIRIB_FollowUp\models.py:123
 msgid "First Name"
 msgstr "نام"
 
-#: .\EIRIB_FollowUp\models.py:63 .\EIRIB_FollowUp\models.py:129
+#: .\EIRIB_FollowUp\models.py:63 .\EIRIB_FollowUp\models.py:128
 msgid "Last Name"
 msgstr "نام خانوادگی"
 
@@ -123,8 +127,8 @@ msgstr "کاربر"
 msgid "Query Name"
 msgstr "نام کوئری"
 
-#: .\EIRIB_FollowUp\models.py:98 .\EIRIB_FollowUp\models.py:102
-#: .\EIRIB_FollowUp\models.py:150 .\Knowledge_Management\models.py:156
+#: .\EIRIB_FollowUp\models.py:98 .\EIRIB_FollowUp\models.py:149
+#: .\Knowledge_Management\models.py:156
 msgid "Code"
 msgstr "کد"
 
@@ -132,27 +136,33 @@ msgstr "کد"
 msgid "Secretary Query Name"
 msgstr "نام کوئری دبیر"
 
-#: .\EIRIB_FollowUp\models.py:107
+#: .\EIRIB_FollowUp\models.py:102
+#, fuzzy
+#| msgid "Secretary Query Name"
+msgid "Secretary Query"
+msgstr "نام کوئری دبیر"
+
+#: .\EIRIB_FollowUp\models.py:106
 msgid "user"
 msgstr "کاربر"
 
-#: .\EIRIB_FollowUp\models.py:108
+#: .\EIRIB_FollowUp\models.py:107
 msgid "users"
 msgstr "کاربران"
 
-#: .\EIRIB_FollowUp\models.py:119
+#: .\EIRIB_FollowUp\models.py:118
 msgid "username"
 msgstr "کاربر"
 
-#: .\EIRIB_FollowUp\models.py:134 .\IRIB_Auth\models.py:36
+#: .\EIRIB_FollowUp\models.py:133 .\IRIB_Auth\models.py:36
 msgid "Access Level"
 msgstr "سطح دسترسی"
 
-#: .\EIRIB_FollowUp\models.py:144 .\IRIB_Auth\models.py:46
+#: .\EIRIB_FollowUp\models.py:143 .\IRIB_Auth\models.py:46
 msgid "last login"
 msgstr "آخرین ورود"
 
-#: .\EIRIB_FollowUp\models.py:149 .\IRIB_FollowUp\models.py:185
+#: .\EIRIB_FollowUp\models.py:148 .\IRIB_FollowUp\models.py:185
 #: .\static\admin\custom\enactments-list-report.html:66
 #: .\templates\admin\custom\eirib-enactment.html:61
 #: .\templates\admin\custom\enactments-list-report-excel.html:61
@@ -160,8 +170,8 @@ msgstr "آخرین ورود"
 msgid "Row"
 msgstr "کد مصوبه"
 
-#: .\EIRIB_FollowUp\models.py:151 .\EIRIB_FollowUp\models.py:178
-#: .\EIRIB_FollowUp\models.py:235 .\IRIB_FollowUp\models.py:150
+#: .\EIRIB_FollowUp\models.py:150 .\EIRIB_FollowUp\models.py:177
+#: .\EIRIB_FollowUp\models.py:234 .\IRIB_FollowUp\models.py:150
 #: .\IRIB_FollowUp\models.py:173 .\IRIB_FollowUp\models.py:269
 #: .\Knowledge_Management\models.py:138 .\Knowledge_Management\models.py:209
 #: .\Knowledge_Management\models.py:243
@@ -171,70 +181,74 @@ msgstr "کد مصوبه"
 msgid "Description"
 msgstr "شرح"
 
-#: .\EIRIB_FollowUp\models.py:153
+#: .\EIRIB_FollowUp\models.py:152
 #: .\templates\admin\custom\eirib-enactment.html:85
 msgid "First Actor"
 msgstr "پیگیری کننده اول"
 
-#: .\EIRIB_FollowUp\models.py:155
+#: .\EIRIB_FollowUp\models.py:154
 #: .\templates\admin\custom\eirib-enactment.html:87
 msgid "Second Actor"
 msgstr "پیگیری کننده دوم"
 
-#: .\EIRIB_FollowUp\models.py:158 .\IRIB_FollowUp\models.py:152
+#: .\EIRIB_FollowUp\models.py:157 .\IRIB_FollowUp\models.py:152
 msgid "Follow Grade"
 msgstr "لزوم پیگیری"
 
-#: .\EIRIB_FollowUp\models.py:159 .\EIRIB_FollowUp\models.py:183
+#: .\EIRIB_FollowUp\models.py:158 .\EIRIB_FollowUp\models.py:182
 #: .\IRIB_FollowUp\models.py:238
 #: .\templates\admin\custom\eirib-enactment.html:99
 msgid "Result"
 msgstr "نتیجه"
 
-#: .\EIRIB_FollowUp\models.py:165 .\EIRIB_FollowUp\models.py:237
+#: .\EIRIB_FollowUp\models.py:158
+msgid "Please insert your name and entry date before your result."
+msgstr "لطفا نام و تاریخ ثبت را قبل از توضیحات درج فرمایید."
+
+#: .\EIRIB_FollowUp\models.py:164 .\EIRIB_FollowUp\models.py:236
 #: .\IRIB_FollowUp\models.py:32 .\IRIB_FollowUp\models.py:160
 #: .\IRIB_FollowUp\models.py:239 .\IRIB_FollowUp\models.py:271
 #: .\IRIB_FollowUp\models.py:365
 msgid "Enactment"
 msgstr "مصوبه"
 
-#: .\EIRIB_FollowUp\models.py:166 .\IRIB_FollowUp\models.py:161
+#: .\EIRIB_FollowUp\models.py:165 .\IRIB_FollowUp\models.py:161
 msgid "Enactments"
 msgstr "مصوبات"
 
-#: .\EIRIB_FollowUp\models.py:200
+#: .\EIRIB_FollowUp\models.py:199
 #: .\templates\admin\custom\eirib-enactment.html:92
 msgid "First Supervisor"
 msgstr "واحد پیگیری اول"
 
-#: .\EIRIB_FollowUp\models.py:205
+#: .\EIRIB_FollowUp\models.py:204
 #: .\templates\admin\custom\eirib-enactment.html:94
 msgid "Second Supervisor"
 msgstr "واحد پیگیری دوم"
 
-#: .\EIRIB_FollowUp\models.py:213
+#: .\EIRIB_FollowUp\models.py:212
 #, fuzzy
 #| msgid "Follow Ups"
 msgid "Followups"
 msgstr "پیگیریها"
 
-#: .\EIRIB_FollowUp\models.py:227 .\IRIB_FollowUp\admin.py:245
+#: .\EIRIB_FollowUp\models.py:226 .\IRIB_FollowUp\admin.py:243
 #: .\IRIB_FollowUp\models.py:232 .\Knowledge_Management\models.py:142
 #: .\Knowledge_Management\models.py:197
 msgid "Status"
 msgstr "وضعیت"
 
-#: .\EIRIB_FollowUp\models.py:236 .\IRIB_FollowUp\models.py:270
+#: .\EIRIB_FollowUp\models.py:235 .\IRIB_FollowUp\models.py:270
 #: .\Knowledge_Management\models.py:210
 msgid "File"
 msgstr "ضمیمه"
 
-#: .\EIRIB_FollowUp\models.py:240 .\IRIB_FollowUp\models.py:274
+#: .\EIRIB_FollowUp\models.py:239 .\IRIB_FollowUp\models.py:274
 #: .\Knowledge_Management\models.py:214
 msgid "Attachment"
 msgstr "ضمیمه"
 
-#: .\EIRIB_FollowUp\models.py:241 .\IRIB_FollowUp\models.py:275
+#: .\EIRIB_FollowUp\models.py:240 .\IRIB_FollowUp\models.py:275
 #: .\Knowledge_Management\models.py:215
 msgid "Attachments"
 msgstr "ضمایم"
@@ -334,8 +348,8 @@ msgstr "اطلاعات شخصی"
 msgid "Address Info"
 msgstr "نشانیهای دسترسی"
 
-#: .\IRIB_Auth\admin.py:30 .\IRIB_FollowUp\admin.py:48
-#: .\IRIB_FollowUp\admin.py:53 .\IRIB_FollowUp\admin.py:68
+#: .\IRIB_Auth\admin.py:30 .\IRIB_FollowUp\admin.py:46
+#: .\IRIB_FollowUp\admin.py:51 .\IRIB_FollowUp\admin.py:66
 msgid "Important dates"
 msgstr "تاریخهای مهم"
 
@@ -385,33 +399,33 @@ msgstr "خطا! کاربر '%s' غیر قابل حذف است."
 msgid "EIRIB Administration System"
 msgstr "سامانه مدیریت فضای مجازی سازمان صدا و سیما"
 
-#: .\IRIB_FollowUpProject\settings.py:149 .\static\admin\base_site.html:37
+#: .\IRIB_FollowUpProject\settings.py:146 .\static\admin\base_site.html:37
 msgid "En"
 msgstr "انگلیسی"
 
-#: .\IRIB_FollowUpProject\settings.py:150 .\static\admin\base_site.html:43
+#: .\IRIB_FollowUpProject\settings.py:147 .\static\admin\base_site.html:43
 msgid "Fa"
 msgstr "فارسی"
 
-#: .\IRIB_FollowUpProject\urls.py:28
+#: .\IRIB_FollowUpProject\urls.py:29
 msgid "Welcome to EIRIB administration system"
 msgstr "خوش آمدید..."
 
-#: .\IRIB_FollowUp\admin.py:97 .\IRIB_FollowUp\models.py:54
+#: .\IRIB_FollowUp\admin.py:95 .\IRIB_FollowUp\models.py:54
 #: .\IRIB_FollowUp\models.py:70 .\IRIB_FollowUp\models.py:202
 #: .\templates\admin\custom\enactments-list-report.html:53
 msgid "Attended Date"
 msgstr "تاریخ برگزاری جلسه"
 
-#: .\IRIB_FollowUp\admin.py:221
+#: .\IRIB_FollowUp\admin.py:219
 msgid "Session info"
 msgstr "اطلاعات جلسه"
 
-#: .\IRIB_FollowUp\admin.py:223
+#: .\IRIB_FollowUp\admin.py:221
 msgid "Enactment Info"
 msgstr "اطلاعات مصوبه"
 
-#: .\IRIB_FollowUp\admin.py:350
+#: .\IRIB_FollowUp\admin.py:349
 #, python-format
 msgid "Followup added for all %(group)s users."
 msgstr "پیگیری برای اعضای گروه %(group)s ایجاد شد."
@@ -789,20 +803,20 @@ msgstr "سه ماه گذشته"
 msgid "Last 6 months"
 msgstr "شش ماه گذشته"
 
-#: .\Knowledge_Management\admin.py:122 .\Knowledge_Management\admin.py:209
+#: .\Knowledge_Management\admin.py:123 .\Knowledge_Management\admin.py:210
 msgid "Main info"
 msgstr "اطلاعات اصلی"
 
-#: .\Knowledge_Management\admin.py:130 .\Knowledge_Management\admin.py:218
+#: .\Knowledge_Management\admin.py:131 .\Knowledge_Management\admin.py:219
 #: .\Knowledge_Management\models.py:137 .\Knowledge_Management\models.py:188
 msgid "Creation Date"
 msgstr "تاریخ ثبت"
 
-#: .\Knowledge_Management\admin.py:155
+#: .\Knowledge_Management\admin.py:156
 msgid "Maximum exceeded, Invalid operations."
 msgstr "به دلیل احراز سقف تکرار، عملیات غیر مجاز است."
 
-#: .\Knowledge_Management\admin.py:287
+#: .\Knowledge_Management\admin.py:290
 msgid ""
 "Type some note for knowledge user and save before clicking Accept button..."
 msgstr "قبل از ارجاع، توضیحاتی برای کاربر دانشی ثبت کرده و آن را ذخیره کنید..."
@@ -1063,13 +1077,13 @@ msgstr "حذف"
 
 #: .\static\admin\custom\edit_inline\tabular.html:49
 #: .\templates\admin\custom\edit_inline\tabular.html:48
-#: .\templates\admin\index.html:58
+#: .\templates\admin\index.html:91
 msgid "Change"
 msgstr "تغییر"
 
 #: .\static\admin\custom\edit_inline\tabular.html:49
 #: .\templates\admin\custom\edit_inline\tabular.html:48
-#: .\templates\admin\index.html:56
+#: .\templates\admin\index.html:89
 msgid "View"
 msgstr "مشاهده"
 
@@ -1120,7 +1134,7 @@ msgid "Data not loaded yet, please wait..."
 msgstr "اطلاعات در حال به روز رسانی هستند. لطفا شکیبا باشید..."
 
 #: .\templates\admin\change_form.html:54 .\templates\admin\change_list.html:44
-#: .\templates\admin\index.html:24
+#: .\templates\admin\index.html:31 .\templates\admin\index.html:52
 msgid ""
 "Data syncronization failed. Try later and contact administrator if failing "
 "repeats."
@@ -1202,28 +1216,28 @@ msgstr "روز"
 msgid "Total units are in Rls"
 msgstr "تمامی مبالغ به ریال هستند."
 
-#: .\templates\admin\index.html:18
+#: .\templates\admin\index.html:25
 #, python-format
 msgid "Models in the %(name)s application"
 msgstr "موجودیتهای اپلیکیشن %(name)s"
 
-#: .\templates\admin\index.html:27
+#: .\templates\admin\index.html:34 .\templates\admin\index.html:56
 msgid "Update data"
 msgstr "همسان سازی داده ها"
 
-#: .\templates\admin\index.html:30
+#: .\templates\admin\index.html:38 .\templates\admin\index.html:62
 msgid "Updating"
 msgstr "در حال به روز رسانی"
 
-#: .\templates\admin\index.html:34
+#: .\templates\admin\index.html:42 .\templates\admin\index.html:67
 msgid "Start"
 msgstr "آغاز"
 
-#: .\templates\admin\index.html:49
+#: .\templates\admin\index.html:82
 msgid "Add"
 msgstr "اضافه"
 
-#: .\templates\admin\index.html:70
+#: .\templates\admin\index.html:108
 msgid "You don’t have permission to view or edit anything."
 msgstr "شما اجازه رویت یا تغییر هیچ موجودیتی را ندارید."
 
