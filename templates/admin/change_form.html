@@ -2,6 +2,7 @@
 {% load static i18n eirib_followup_tag %}
 
 {% if opts.model_name == 'enactment' %}
+        <script type="text/javascript" src="{% static 'js/custom_enactment_admin.js' %}"></script>
     {% block extrahead %}
         {{ block.super }}
         <script>

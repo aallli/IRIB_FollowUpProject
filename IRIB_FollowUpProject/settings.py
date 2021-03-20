@@ -21,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'irt=69_xpf6#pzm&c4s%ogrt*t!i5oy-=i*70yw0@agjjbr8mx'
-
+SSO_SALT = os.environ.get('SSO_SALT', default='5152')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 # admin info
-VERSION = '1.19.1'
+VERSION = '1.20.0'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -109,6 +109,9 @@ DATABASES = {
         'NAME': os.environ.get('ACCESS_DATABASES_NAME', default=os.path.join(BASE_DIR, 'db\db.mdb')),
         'USER': os.environ.get('ACCESS_DATABASES_USER', default='Administrator, System'),
         'PASSWORD': os.environ.get('ACCESS_DATABASES_PASSWORD', default='123456'),
+    },
+    'access-personnel': {
+        'NAME': os.environ.get('ACCESS_PERSONNEL_DATABASES_NAME', default=r"\\172.16.226.174\Fileserver\Omomi-Hamkaran-Moavenat\personel\bin\AutoUpdater.exe"),
     },
 }
 

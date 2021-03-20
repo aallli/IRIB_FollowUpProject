@@ -21,9 +21,9 @@ from django.shortcuts import redirect
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from EIRIB_FollowUp.views import update_data_view
-from IRIB_HR.views import update_data_view as hr_update_data_view
+from IRIB_HR.views import update_data_view as hr_update_data_view, \
+    open_personnel_access_view as  hr_open_personnel_access_view
 from django.utils.translation import ugettext_lazy as _
-
 
 admin.site.site_header = settings.SITE_HEADER
 admin.site.site_title = _('Welcome to EIRIB administration system')
@@ -32,6 +32,7 @@ urlpatterns = [
     path('', lambda request: redirect('/fa/admin/', permanent=False)),
     path('ajax/actor_supervisor_unit/', views.actor_supervisor_unit, name='ajax_actor_supervisor_unit'),
     path('hr_start_sync/', hr_update_data_view),
+    path('hr_pers_access/', hr_open_personnel_access_view, name='hr-open-personnel-access'),
 ]
 
 urlpatterns += i18n_patterns(

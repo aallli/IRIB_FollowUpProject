@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-04 13:52+0330\n"
+"POT-Creation-Date: 2021-03-20 17:31+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,7 @@ msgstr "خطای حذف کاربر از دیتابیس اکسس"
 #: .\EIRIB_FollowUp\admin.py:149 .\EIRIB_FollowUp\models.py:161
 #: .\EIRIB_FollowUp\models.py:193 .\IRIB_FollowUp\admin.py:230
 #: .\IRIB_FollowUp\models.py:155 .\IRIB_FollowUp\models.py:191
+#: .\static\admin\custom\enactments-list-report-excel.html:69
 #: .\templates\admin\custom\enactments-list-report-excel.html:69
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
@@ -53,7 +54,7 @@ msgstr "تاریخ مصوبه"
 
 #: .\EIRIB_FollowUp\admin.py:186
 msgid "Unauthorized session, Access denied"
-msgstr ""
+msgstr "دسترسی غیر مجاز!"
 
 #: .\EIRIB_FollowUp\apps.py:7
 msgid "EIRIB Follow-Up"
@@ -69,7 +70,7 @@ msgid "Name"
 msgstr "نام"
 
 #: .\EIRIB_FollowUp\models.py:20 .\EIRIB_FollowUp\models.py:159
-#: .\IRIB_FollowUp\models.py:118
+#: .\IRIB_FollowUp\models.py:118 .\static\admin\custom\eirib-enactment.html:75
 #: .\templates\admin\custom\eirib-enactment.html:75
 msgid "Session"
 msgstr " جلسه"
@@ -79,7 +80,7 @@ msgid "Sessions"
 msgstr " جلسه"
 
 #: .\EIRIB_FollowUp\models.py:35 .\EIRIB_FollowUp\models.py:160
-#: .\IRIB_FollowUp\models.py:154
+#: .\IRIB_FollowUp\models.py:154 .\static\admin\custom\eirib-enactment.html:73
 #: .\templates\admin\custom\eirib-enactment.html:73
 msgid "Task Assigner"
 msgstr "گوینده"
@@ -90,7 +91,8 @@ msgstr "گویندگان"
 
 #: .\EIRIB_FollowUp\models.py:50 .\EIRIB_FollowUp\models.py:151
 #: .\IRIB_FollowUp\models.py:138 .\IRIB_FollowUp\models.py:151
-#: .\static\admin\custom\enactments-list-report.html:75
+#: .\static\admin\custom\eirib-enactment.html:68
+#: .\static\admin\custom\enactments-list-report.html:86
 #: .\templates\admin\custom\eirib-enactment.html:68
 #: .\templates\admin\custom\enactments-list-report.html:86
 msgid "Subject"
@@ -163,7 +165,9 @@ msgid "last login"
 msgstr "آخرین ورود"
 
 #: .\EIRIB_FollowUp\models.py:148 .\IRIB_FollowUp\models.py:185
-#: .\static\admin\custom\enactments-list-report.html:66
+#: .\static\admin\custom\eirib-enactment.html:61
+#: .\static\admin\custom\enactments-list-report-excel.html:61
+#: .\static\admin\custom\enactments-list-report.html:77
 #: .\templates\admin\custom\eirib-enactment.html:61
 #: .\templates\admin\custom\enactments-list-report-excel.html:61
 #: .\templates\admin\custom\enactments-list-report.html:77
@@ -175,18 +179,19 @@ msgstr "کد مصوبه"
 #: .\IRIB_FollowUp\models.py:173 .\IRIB_FollowUp\models.py:269
 #: .\Knowledge_Management\models.py:138 .\Knowledge_Management\models.py:209
 #: .\Knowledge_Management\models.py:243
-#: .\static\admin\custom\enactments-list-report.html:79
+#: .\static\admin\custom\eirib-enactment.html:80
+#: .\static\admin\custom\enactments-list-report.html:90
 #: .\templates\admin\custom\eirib-enactment.html:80
 #: .\templates\admin\custom\enactments-list-report.html:90
 msgid "Description"
 msgstr "شرح"
 
-#: .\EIRIB_FollowUp\models.py:152
+#: .\EIRIB_FollowUp\models.py:152 .\static\admin\custom\eirib-enactment.html:85
 #: .\templates\admin\custom\eirib-enactment.html:85
 msgid "First Actor"
 msgstr "پیگیری کننده اول"
 
-#: .\EIRIB_FollowUp\models.py:154
+#: .\EIRIB_FollowUp\models.py:154 .\static\admin\custom\eirib-enactment.html:87
 #: .\templates\admin\custom\eirib-enactment.html:87
 msgid "Second Actor"
 msgstr "پیگیری کننده دوم"
@@ -196,7 +201,7 @@ msgid "Follow Grade"
 msgstr "لزوم پیگیری"
 
 #: .\EIRIB_FollowUp\models.py:158 .\EIRIB_FollowUp\models.py:182
-#: .\IRIB_FollowUp\models.py:238
+#: .\IRIB_FollowUp\models.py:238 .\static\admin\custom\eirib-enactment.html:99
 #: .\templates\admin\custom\eirib-enactment.html:99
 msgid "Result"
 msgstr "نتیجه"
@@ -216,12 +221,12 @@ msgstr "مصوبه"
 msgid "Enactments"
 msgstr "مصوبات"
 
-#: .\EIRIB_FollowUp\models.py:199
+#: .\EIRIB_FollowUp\models.py:199 .\static\admin\custom\eirib-enactment.html:92
 #: .\templates\admin\custom\eirib-enactment.html:92
 msgid "First Supervisor"
 msgstr "واحد پیگیری اول"
 
-#: .\EIRIB_FollowUp\models.py:204
+#: .\EIRIB_FollowUp\models.py:204 .\static\admin\custom\eirib-enactment.html:94
 #: .\templates\admin\custom\eirib-enactment.html:94
 msgid "Second Supervisor"
 msgstr "واحد پیگیری دوم"
@@ -399,11 +404,11 @@ msgstr "خطا! کاربر '%s' غیر قابل حذف است."
 msgid "EIRIB Administration System"
 msgstr "سامانه مدیریت فضای مجازی سازمان صدا و سیما"
 
-#: .\IRIB_FollowUpProject\settings.py:146 .\static\admin\base_site.html:37
+#: .\IRIB_FollowUpProject\settings.py:146
 msgid "En"
 msgstr "انگلیسی"
 
-#: .\IRIB_FollowUpProject\settings.py:147 .\static\admin\base_site.html:43
+#: .\IRIB_FollowUpProject\settings.py:147
 msgid "Fa"
 msgstr "فارسی"
 
@@ -413,6 +418,7 @@ msgstr "خوش آمدید..."
 
 #: .\IRIB_FollowUp\admin.py:95 .\IRIB_FollowUp\models.py:54
 #: .\IRIB_FollowUp\models.py:70 .\IRIB_FollowUp\models.py:202
+#: .\static\admin\custom\enactments-list-report.html:53
 #: .\templates\admin\custom\enactments-list-report.html:53
 msgid "Attended Date"
 msgstr "تاریخ برگزاری جلسه"
@@ -456,7 +462,7 @@ msgstr "جلسات"
 
 #: .\IRIB_FollowUp\models.py:57 .\IRIB_FollowUp\models.py:101
 #: .\IRIB_FollowUp\models.py:153
-#: .\static\admin\custom\enactments-list-report.html:45
+#: .\static\admin\custom\enactments-list-report.html:51
 #: .\templates\admin\custom\enactments-list-report.html:51
 msgid "Minute"
 msgstr "صورتجلسه"
@@ -470,6 +476,7 @@ msgid "All absent"
 msgstr "همه غایب"
 
 #: .\IRIB_FollowUp\models.py:84 .\IRIB_FollowUp\models.py:213
+#: .\static\admin\custom\enactments-list-report.html:55
 #: .\templates\admin\custom\enactments-list-report.html:55
 msgid "Presents"
 msgstr "حاضرین"
@@ -479,6 +486,7 @@ msgid "All ready"
 msgstr "بدون غایب"
 
 #: .\IRIB_FollowUp\models.py:97 .\IRIB_FollowUp\models.py:208
+#: .\static\admin\custom\enactments-list-report.html:57
 #: .\templates\admin\custom\enactments-list-report.html:57
 msgid "Absents"
 msgstr "غایبین"
@@ -500,17 +508,17 @@ msgid "Members"
 msgstr "اعضا"
 
 #: .\IRIB_FollowUp\models.py:156 .\IRIB_FollowUp\models.py:179
-#: .\static\admin\custom\enactments-list-report.html:71
+#: .\static\admin\custom\enactments-list-report.html:82
 #: .\templates\admin\custom\enactments-list-report.html:82
 msgid "Type"
 msgstr "نوع"
 
 #: .\IRIB_FollowUp\models.py:218 .\IRIB_FollowUp\models.py:243
-#: .\static\admin\custom\enactments-list-report.html:83
 msgid "Follow Ups"
 msgstr "پیگیریها"
 
 #: .\IRIB_FollowUp\models.py:236
+#: .\static\admin\custom\enactments-list-report-excel.html:65
 #: .\templates\admin\custom\enactments-list-report-excel.html:65
 msgid "Actor"
 msgstr "پیگیری کننده"
@@ -560,11 +568,13 @@ msgstr "ماه"
 msgid "Year"
 msgstr "سال"
 
-#: .\IRIB_HR\models.py:9 .\templates\admin\custom\pay-slip.html:68
+#: .\IRIB_HR\models.py:9 .\static\admin\custom\pay-slip.html:68
+#: .\templates\admin\custom\pay-slip.html:68
 msgid "first name"
 msgstr "نام"
 
-#: .\IRIB_HR\models.py:10 .\templates\admin\custom\pay-slip.html:68
+#: .\IRIB_HR\models.py:10 .\static\admin\custom\pay-slip.html:68
+#: .\templates\admin\custom\pay-slip.html:68
 msgid "last name"
 msgstr "نام خانوادگی"
 
@@ -572,7 +582,8 @@ msgstr "نام خانوادگی"
 msgid "National ID"
 msgstr "کد ملی"
 
-#: .\IRIB_HR\models.py:12 .\templates\admin\custom\pay-slip.html:79
+#: .\IRIB_HR\models.py:12 .\static\admin\custom\pay-slip.html:79
+#: .\templates\admin\custom\pay-slip.html:79
 msgid "Personnel ID"
 msgstr "شماره کارمندی"
 
@@ -584,11 +595,13 @@ msgstr "شماره حساب"
 msgid "Insurance Number"
 msgstr "شماره بیمه تامین اجتماعی"
 
-#: .\IRIB_HR\models.py:15 .\templates\admin\custom\pay-slip.html:72
+#: .\IRIB_HR\models.py:15 .\static\admin\custom\pay-slip.html:72
+#: .\templates\admin\custom\pay-slip.html:72
 msgid "Department"
 msgstr "واحد سازمانی"
 
-#: .\IRIB_HR\models.py:16 .\templates\admin\custom\pay-slip.html:83
+#: .\IRIB_HR\models.py:16 .\static\admin\custom\pay-slip.html:83
+#: .\templates\admin\custom\pay-slip.html:83
 msgid "Working Place"
 msgstr "محل خدمت"
 
@@ -596,7 +609,8 @@ msgstr "محل خدمت"
 msgid "Job Title"
 msgstr "عنوان شغلی"
 
-#: .\IRIB_HR\models.py:18 .\templates\admin\custom\pay-slip.html:90
+#: .\IRIB_HR\models.py:18 .\static\admin\custom\pay-slip.html:90
+#: .\templates\admin\custom\pay-slip.html:90
 msgid "Contract Type"
 msgstr "نوع قرارداد"
 
@@ -656,11 +670,13 @@ msgstr "کمک هزینه موبایل"
 msgid "Food Cost"
 msgstr "هزینه غذا"
 
-#: .\IRIB_HR\models.py:33 .\templates\admin\custom\pay-slip.html:118
+#: .\IRIB_HR\models.py:33 .\static\admin\custom\pay-slip.html:118
+#: .\templates\admin\custom\pay-slip.html:118
 msgid "Insurance"
 msgstr "بیمه"
 
-#: .\IRIB_HR\models.py:34 .\templates\admin\custom\pay-slip.html:126
+#: .\IRIB_HR\models.py:34 .\static\admin\custom\pay-slip.html:126
+#: .\templates\admin\custom\pay-slip.html:126
 msgid "Tax"
 msgstr "مالیات"
 
@@ -672,15 +688,18 @@ msgstr "اقساط بیمه"
 msgid "Supplementary Insurance"
 msgstr "بیمه تکمیلی"
 
-#: .\IRIB_HR\models.py:37 .\templates\admin\custom\pay-slip.html:181
+#: .\IRIB_HR\models.py:37 .\static\admin\custom\pay-slip.html:181
+#: .\templates\admin\custom\pay-slip.html:181
 msgid "Leave Balance"
 msgstr "مانده مرخصی"
 
-#: .\IRIB_HR\models.py:38 .\templates\admin\custom\pay-slip.html:187
+#: .\IRIB_HR\models.py:38 .\static\admin\custom\pay-slip.html:187
+#: .\templates\admin\custom\pay-slip.html:187
 msgid "Atieh Fund Balance"
 msgstr "مانده صندوق آتیه"
 
-#: .\IRIB_HR\models.py:39 .\templates\admin\custom\pay-slip.html:191
+#: .\IRIB_HR\models.py:39 .\static\admin\custom\pay-slip.html:191
+#: .\templates\admin\custom\pay-slip.html:191
 msgid "Refah Fund Balance"
 msgstr "مانده صندوق رفاه"
 
@@ -692,21 +711,25 @@ msgstr "فیش حقوقی"
 msgid "Pay Slips"
 msgstr "فیش حقوقی"
 
-#: .\IRIB_HR\models.py:55 .\static\admin\custom\enactments-list-report.html:31
+#: .\IRIB_HR\models.py:55 .\static\admin\custom\eirib-enactment.html:63
+#: .\static\admin\custom\pay-slip.html:94
 #: .\templates\admin\custom\eirib-enactment.html:63
 #: .\templates\admin\custom\pay-slip.html:94
 msgid "Date"
 msgstr "تاریخ"
 
-#: .\IRIB_HR\models.py:63 .\templates\admin\custom\pay-slip.html:162
+#: .\IRIB_HR\models.py:63 .\static\admin\custom\pay-slip.html:162
+#: .\templates\admin\custom\pay-slip.html:162
 msgid "Gross Salary"
 msgstr "جمع درآمد ناخالص"
 
-#: .\IRIB_HR\models.py:68 .\templates\admin\custom\pay-slip.html:167
+#: .\IRIB_HR\models.py:68 .\static\admin\custom\pay-slip.html:167
+#: .\templates\admin\custom\pay-slip.html:167
 msgid "Total deductions"
 msgstr "جمع کسورات"
 
-#: .\IRIB_HR\models.py:73 .\templates\admin\custom\pay-slip.html:173
+#: .\IRIB_HR\models.py:73 .\static\admin\custom\pay-slip.html:173
+#: .\templates\admin\custom\pay-slip.html:173
 msgid "Net Salary"
 msgstr "مبلغ قابل پرداخت"
 
@@ -931,11 +954,13 @@ msgid "Activity"
 msgstr "فعالیت"
 
 #: .\Knowledge_Management\models.py:123
+#: .\static\admin\custom\activity_assessment_details.html:34
 #: .\templates\admin\custom\activity_assessment_details.html:34
 msgid "Weight"
 msgstr "وزن"
 
 #: .\Knowledge_Management\models.py:126
+#: .\static\admin\custom\activity_assessment_details.html:33
 #: .\templates\admin\custom\activity_assessment_details.html:33
 msgid "Activity Indicator"
 msgstr "شاخص ارزیابی فعالیت"
@@ -983,6 +1008,7 @@ msgid "Activity SubCategories"
 msgstr "موضوعات دانشی فعالیت"
 
 #: .\Knowledge_Management\models.py:242 .\Knowledge_Management\models.py:270
+#: .\static\admin\custom\activity_assessment_details.html:25
 #: .\templates\admin\custom\activity_assessment_details.html:25
 msgid "Assessment Date"
 msgstr "تاریخ ارزیابی"
@@ -1031,12 +1057,18 @@ msgstr "شماره تلفن"
 msgid "Email"
 msgstr "پست الکترونیک"
 
-#: .\static\404.html:35 .\templates\404.html:35
+#: .\static\404.html:35
+#: .\static\admin\custom\activity_assessment_details.html:82
+#: .\templates\404.html:35
 #: .\templates\admin\custom\activity_assessment_details.html:82
 msgid "Go back"
 msgstr "بازگشت"
 
-#: .\static\admin\base_site.html:29 .\templates\admin\base_site.html:29
+#: .\static\admin\base_site.html:29
+#: .\static\admin\custom\eirib-enactment.html:26
+#: .\static\admin\custom\enactments-list-report-excel.html:26
+#: .\static\admin\custom\enactments-list-report.html:26
+#: .\static\admin\custom\pay-slip.html:26 .\templates\admin\base_site.html:29
 #: .\templates\admin\custom\eirib-enactment.html:26
 #: .\templates\admin\custom\enactments-list-report-excel.html:26
 #: .\templates\admin\custom\enactments-list-report.html:26
@@ -1044,96 +1076,44 @@ msgstr "بازگشت"
 msgid "Version"
 msgstr "ویرایش"
 
-#: .\static\admin\base_site.html:51 .\templates\admin\base_site.html:52
+#: .\static\admin\base_site.html:52 .\templates\admin\base_site.html:52
 msgid "Documentation"
 msgstr "مستندات"
 
-#: .\static\admin\base_site.html:55 .\templates\admin\base_site.html:56
+#: .\static\admin\base_site.html:56 .\templates\admin\base_site.html:56
 msgid "Change password"
 msgstr "تغییر کلمه عبور"
 
-#: .\static\admin\base_site.html:57 .\templates\admin\base_site.html:58
+#: .\static\admin\base_site.html:58 .\templates\admin\base_site.html:58
 msgid "Log out"
 msgstr "خروج"
 
-#: .\static\admin\base_site.html:62 .\static\admin\base_site.html:68
+#: .\static\admin\base_site.html:63 .\static\admin\base_site.html:69
 #: .\templates\admin\base_site.html:63 .\templates\admin\base_site.html:69
 msgid "Welcome,"
 msgstr "خوش آمدید"
 
-#: .\static\admin\change_list.html:6 .\templates\admin\change_form.html:18
-#: .\templates\admin\change_form.html:19 .\templates\admin\change_form.html:28
-#: .\templates\admin\change_form.html:29 .\templates\admin\change_form.html:38
-#: .\templates\admin\change_form.html:39 .\templates\admin\change_list.html:26
-#: .\templates\admin\change_list.html:27 .\templates\admin\change_list.html:29
-#: .\templates\admin\change_list.html:30
+#: .\static\admin\change_form.html:18 .\static\admin\change_form.html:19
+#: .\static\admin\change_form.html:28 .\static\admin\change_form.html:29
+#: .\static\admin\change_form.html:38 .\static\admin\change_form.html:39
+#: .\static\admin\change_list.html:26 .\static\admin\change_list.html:27
+#: .\static\admin\change_list.html:29 .\static\admin\change_list.html:30
+#: .\templates\admin\change_form.html:19 .\templates\admin\change_form.html:20
+#: .\templates\admin\change_form.html:29 .\templates\admin\change_form.html:30
+#: .\templates\admin\change_form.html:39 .\templates\admin\change_form.html:40
+#: .\templates\admin\change_list.html:26 .\templates\admin\change_list.html:27
+#: .\templates\admin\change_list.html:29 .\templates\admin\change_list.html:30
 msgid "Print"
 msgstr "چاپ"
 
-#: .\static\admin\custom\edit_inline\tabular.html:26
-#: .\templates\admin\custom\edit_inline\tabular.html:25
-msgid "Delete?"
-msgstr "حذف"
-
-#: .\static\admin\custom\edit_inline\tabular.html:49
-#: .\templates\admin\custom\edit_inline\tabular.html:48
-#: .\templates\admin\index.html:91
-msgid "Change"
-msgstr "تغییر"
-
-#: .\static\admin\custom\edit_inline\tabular.html:49
-#: .\templates\admin\custom\edit_inline\tabular.html:48
-#: .\templates\admin\index.html:89
-msgid "View"
-msgstr "مشاهده"
-
-#: .\static\admin\custom\edit_inline\tabular.html:53
-#: .\templates\admin\custom\edit_inline\tabular.html:52
-msgid "View on site"
-msgstr "مشاهده در سایت"
-
-#: .\static\admin\custom\edit_inline\tabular.html:91
-#: .\templates\admin\custom\edit_inline\tabular.html:100
-msgid "Add group followup"
-msgstr "اضافه کردن پیگیری گروهی"
-
-#: .\static\admin\custom\enactments-list-report.html:30
-#: .\templates\admin\custom\eirib-enactment.html:36
-#: .\templates\admin\custom\enactments-list-report-excel.html:36
-#: .\templates\admin\custom\enactments-list-report.html:36
-#: .\templates\admin\custom\pay-slip.html:53
-msgid "Reported by"
-msgstr "گزارش گیرنده"
-
-#: .\static\admin\submit_line.html:10 .\templates\admin\submit_line.html:17
-msgid "Close enactment"
-msgstr "انتقال به سیستم عملکرد"
-
-#: .\static\admin\submit_line.html:19 .\static\admin\submit_line.html:34
-#: .\templates\admin\submit_line.html:74 .\templates\admin\submit_line.html:89
-msgid "Last"
-msgstr "آخرین"
-
-#: .\static\admin\submit_line.html:21 .\static\admin\submit_line.html:32
-#: .\templates\admin\submit_line.html:76 .\templates\admin\submit_line.html:87
-msgid "Next"
-msgstr "بعدی"
-
-#: .\static\admin\submit_line.html:23 .\static\admin\submit_line.html:30
-#: .\templates\admin\submit_line.html:78 .\templates\admin\submit_line.html:85
-msgid "Previous"
-msgstr "قبلی"
-
-#: .\static\admin\submit_line.html:25 .\static\admin\submit_line.html:28
-#: .\templates\admin\submit_line.html:80 .\templates\admin\submit_line.html:83
-msgid "First"
-msgstr "اولین"
-
-#: .\templates\admin\change_form.html:52 .\templates\admin\change_list.html:42
+#: .\static\admin\change_form.html:52 .\static\admin\change_list.html:42
+#: .\templates\admin\change_form.html:53 .\templates\admin\change_list.html:42
 msgid "Data not loaded yet, please wait..."
 msgstr "اطلاعات در حال به روز رسانی هستند. لطفا شکیبا باشید..."
 
-#: .\templates\admin\change_form.html:54 .\templates\admin\change_list.html:44
+#: .\static\admin\change_form.html:54 .\static\admin\change_list.html:44
+#: .\static\admin\index.html:31 .\static\admin\index.html:52
+#: .\templates\admin\change_form.html:55 .\templates\admin\change_list.html:44
 #: .\templates\admin\index.html:31 .\templates\admin\index.html:52
 msgid ""
 "Data syncronization failed. Try later and contact administrator if failing "
@@ -1142,37 +1122,91 @@ msgstr ""
 "خطا در همسان سازی! لطفا مجدد تلاش کرده و در صورت تکرار با راهبر سامانه تماس "
 "بگیرید."
 
+#: .\static\admin\change_list.html:8 .\static\admin\change_list.html:9
+#: .\static\admin\change_list.html:11 .\static\admin\change_list.html:12
 #: .\templates\admin\change_list.html:8 .\templates\admin\change_list.html:9
 #: .\templates\admin\change_list.html:11 .\templates\admin\change_list.html:12
 msgid "Excel Report"
 msgstr "خروجی اکسل"
 
+#: .\static\admin\change_list.html:17 .\static\admin\change_list.html:18
+#: .\static\admin\change_list.html:20 .\static\admin\change_list.html:21
 #: .\templates\admin\change_list.html:17 .\templates\admin\change_list.html:18
 #: .\templates\admin\change_list.html:20 .\templates\admin\change_list.html:21
 msgid "Todo tasks"
 msgstr "چاپ اقدامات مانده"
 
+#: .\static\admin\custom\activity_assessment_details.html:22
 #: .\templates\admin\custom\activity_assessment_details.html:22
 msgid "Assessor"
 msgstr "ارزیابی کننده"
 
+#: .\static\admin\custom\activity_assessment_details.html:32
+#: .\static\admin\custom\enactments-list-report.html:72
 #: .\templates\admin\custom\activity_assessment_details.html:32
 #: .\templates\admin\custom\enactments-list-report.html:72
 msgid "#"
 msgstr "شماره"
 
+#: .\static\admin\custom\activity_assessment_details.html:80
 #: .\templates\admin\custom\activity_assessment_details.html:80
 msgid "Save"
 msgstr "ذخیره"
 
+#: .\static\admin\custom\edit_inline\tabular.html:25
+#: .\templates\admin\custom\edit_inline\tabular.html:25
+msgid "Delete?"
+msgstr "حذف"
+
+#: .\static\admin\custom\edit_inline\tabular.html:48
+#: .\static\admin\index.html:91
+#: .\templates\admin\custom\edit_inline\tabular.html:48
+#: .\templates\admin\index.html:100
+msgid "Change"
+msgstr "تغییر"
+
+#: .\static\admin\custom\edit_inline\tabular.html:48
+#: .\static\admin\index.html:89
+#: .\templates\admin\custom\edit_inline\tabular.html:48
+#: .\templates\admin\index.html:98
+msgid "View"
+msgstr "مشاهده"
+
+#: .\static\admin\custom\edit_inline\tabular.html:52
+#: .\templates\admin\custom\edit_inline\tabular.html:52
+msgid "View on site"
+msgstr "مشاهده در سایت"
+
+#: .\static\admin\custom\edit_inline\tabular.html:88
 #: .\templates\admin\custom\edit_inline\tabular.html:88
 msgid "Evaluate"
 msgstr "ارزیابی"
 
+#: .\static\admin\custom\edit_inline\tabular.html:88
 #: .\templates\admin\custom\edit_inline\tabular.html:88
 msgid "View details"
 msgstr "مشاهده جزییات"
 
+#: .\static\admin\custom\edit_inline\tabular.html:100
+#: .\templates\admin\custom\edit_inline\tabular.html:100
+msgid "Add group followup"
+msgstr "اضافه کردن پیگیری گروهی"
+
+#: .\static\admin\custom\eirib-enactment.html:36
+#: .\static\admin\custom\enactments-list-report-excel.html:36
+#: .\static\admin\custom\enactments-list-report.html:36
+#: .\static\admin\custom\pay-slip.html:53
+#: .\templates\admin\custom\eirib-enactment.html:36
+#: .\templates\admin\custom\enactments-list-report-excel.html:36
+#: .\templates\admin\custom\enactments-list-report.html:36
+#: .\templates\admin\custom\pay-slip.html:53
+msgid "Reported by"
+msgstr "گزارش گیرنده"
+
+#: .\static\admin\custom\eirib-enactment.html:39
+#: .\static\admin\custom\enactments-list-report-excel.html:39
+#: .\static\admin\custom\enactments-list-report.html:39
+#: .\static\admin\custom\pay-slip.html:56
 #: .\templates\admin\custom\eirib-enactment.html:39
 #: .\templates\admin\custom\enactments-list-report-excel.html:39
 #: .\templates\admin\custom\enactments-list-report.html:39
@@ -1180,103 +1214,148 @@ msgstr "مشاهده جزییات"
 msgid "Report Date"
 msgstr "تاریخ گزارش"
 
+#: .\static\admin\custom\enactments-list-report.html:94
 #: .\templates\admin\custom\enactments-list-report.html:94
 msgid "Actors"
 msgstr "پیگیری کنندگان"
 
+#: .\static\admin\custom\pay-slip.html:101
 #: .\templates\admin\custom\pay-slip.html:101
 msgid "Wage"
 msgstr "درآمد"
 
+#: .\static\admin\custom\pay-slip.html:115
 #: .\templates\admin\custom\pay-slip.html:115
 msgid "Deductions"
 msgstr "کسورات"
 
+#: .\static\admin\custom\pay-slip.html:144
 #: .\templates\admin\custom\pay-slip.html:144
 msgid "Loan"
 msgstr "وام"
 
+#: .\static\admin\custom\pay-slip.html:145
 #: .\templates\admin\custom\pay-slip.html:145
 msgid "Installment"
 msgstr "قسط"
 
+#: .\static\admin\custom\pay-slip.html:146
 #: .\templates\admin\custom\pay-slip.html:146
 msgid "Remaining"
 msgstr "مانده"
 
+#: .\static\admin\custom\pay-slip.html:154
 #: .\templates\admin\custom\pay-slip.html:154
 msgid "Operation Info"
 msgstr "اطلاعات کارکرد"
 
+#: .\static\admin\custom\pay-slip.html:182
 #: .\templates\admin\custom\pay-slip.html:182
 msgid "Days"
 msgstr "روز"
 
+#: .\static\admin\custom\pay-slip.html:197
 #: .\templates\admin\custom\pay-slip.html:197
 msgid "Total units are in Rls"
 msgstr "تمامی مبالغ به ریال هستند."
 
-#: .\templates\admin\index.html:25
+#: .\static\admin\index.html:25 .\templates\admin\index.html:25
 #, python-format
 msgid "Models in the %(name)s application"
 msgstr "موجودیتهای اپلیکیشن %(name)s"
 
+#: .\static\admin\index.html:34 .\static\admin\index.html:56
 #: .\templates\admin\index.html:34 .\templates\admin\index.html:56
 msgid "Update data"
 msgstr "همسان سازی داده ها"
 
+#: .\static\admin\index.html:38 .\static\admin\index.html:62
 #: .\templates\admin\index.html:38 .\templates\admin\index.html:62
 msgid "Updating"
 msgstr "در حال به روز رسانی"
 
+#: .\static\admin\index.html:42 .\static\admin\index.html:67
 #: .\templates\admin\index.html:42 .\templates\admin\index.html:67
 msgid "Start"
 msgstr "آغاز"
 
-#: .\templates\admin\index.html:82
+#: .\static\admin\index.html:82 .\templates\admin\index.html:91
 msgid "Add"
 msgstr "اضافه"
 
-#: .\templates\admin\index.html:108
+#: .\static\admin\index.html:108 .\templates\admin\index.html:117
 msgid "You don’t have permission to view or edit anything."
 msgstr "شما اجازه رویت یا تغییر هیچ موجودیتی را ندارید."
 
-#: .\templates\admin\submit_line.html:9
+#: .\static\admin\submit_line.html:9 .\templates\admin\submit_line.html:9
 msgid "Cancel save"
 msgstr "بازگشت بدون ذخیره"
 
-#: .\templates\admin\submit_line.html:33
+#: .\static\admin\submit_line.html:17 .\templates\admin\submit_line.html:17
+msgid "Close enactment"
+msgstr "انتقال به سیستم عملکرد"
+
+#: .\static\admin\submit_line.html:33 .\templates\admin\submit_line.html:33
 msgid "Send"
 msgstr "ارسال"
 
-#: .\templates\admin\submit_line.html:45
+#: .\static\admin\submit_line.html:45 .\templates\admin\submit_line.html:45
 msgid "Accept"
 msgstr "ارجاع به کمیته"
 
-#: .\templates\admin\submit_line.html:47
+#: .\static\admin\submit_line.html:47 .\templates\admin\submit_line.html:47
 msgid "To Edit"
 msgstr "ارجاع جهت اصلاح"
 
-#: .\templates\admin\submit_line.html:57
+#: .\static\admin\submit_line.html:57 .\templates\admin\submit_line.html:57
 msgid "Approve"
 msgstr "تایید"
 
-#: .\templates\admin\submit_line.html:59
+#: .\static\admin\submit_line.html:59 .\templates\admin\submit_line.html:59
 msgid "Conditional Approve"
 msgstr "تایید مشروط"
 
-#: .\templates\admin\submit_line.html:61
+#: .\static\admin\submit_line.html:61 .\templates\admin\submit_line.html:61
 msgid "Reject"
 msgstr "رد"
 
+#: .\static\admin\submit_line.html:74 .\static\admin\submit_line.html:89
+#: .\templates\admin\submit_line.html:74 .\templates\admin\submit_line.html:89
+msgid "Last"
+msgstr "آخرین"
+
+#: .\static\admin\submit_line.html:76 .\static\admin\submit_line.html:87
+#: .\templates\admin\submit_line.html:76 .\templates\admin\submit_line.html:87
+msgid "Next"
+msgstr "بعدی"
+
+#: .\static\admin\submit_line.html:78 .\static\admin\submit_line.html:85
+#: .\templates\admin\submit_line.html:78 .\templates\admin\submit_line.html:85
+msgid "Previous"
+msgstr "قبلی"
+
+#: .\static\admin\submit_line.html:80 .\static\admin\submit_line.html:83
+#: .\templates\admin\submit_line.html:80 .\templates\admin\submit_line.html:83
+msgid "First"
+msgstr "اولین"
+
+#: .\static\admin\submit_line.html:97 .\static\admin\submit_line.html:102
 #: .\templates\admin\submit_line.html:97 .\templates\admin\submit_line.html:102
 msgid "Item"
 msgstr "مورد"
 
-#: .\templates\admin\submit_line.html:97
+#: .\static\admin\submit_line.html:97 .\templates\admin\submit_line.html:97
 msgid "of"
 msgstr "از"
 
-#: .\templates\admin\submit_line.html:99
+#: .\static\admin\submit_line.html:99 .\templates\admin\submit_line.html:99
 msgid "Filtered"
 msgstr "فیلتر شده"
+
+#: .\templates\admin\index.html:73
+msgid "Personnel Management System"
+msgstr "سامانه اطلاعات پرسنلی"
+
+#: .\templates\admin\index.html:78
+msgid "Enter"
+msgstr "ورود"

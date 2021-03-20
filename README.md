@@ -87,6 +87,7 @@ Configure Gunicorn:
     ADMIN_TEL='[admin tel]'
     ADMIN_EMAIL='[admin email]'
     LIST_PER_PAGE=[list per page in admin pages]
+    ACCESS_PERSONNEL_DATABASES_URL=[personnel access database url]
     
 27- sudo systemctl start gunicorn-followup
 28- sudo systemctl enable gunicorn-followup
