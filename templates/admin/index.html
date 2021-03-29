@@ -70,11 +70,11 @@
                             {% endif %}
                             <tr class="model-{{ model.object_name|lower }}">
                                     <th scope="row">
-                                        <a href="{% url 'hr-open-personnel-access' %}">{% trans 'Personnel Management System' %}</a>
+                                        <a href="{% url 'hr-open-personnel-access' %}" target="_blank">{% trans 'Personnel Management System' %}</a>
                                     </th>
                                     <td></td>
                                     <td scope="row"><a
-                                            href="{% url 'hr-open-personnel-access' %}"
+                                            href="{% url 'hr-open-personnel-access' %}" target="_blank"
                                             class="startlink">{% trans 'Enter' %}</a></td>
                                 </tr>
                         {% endif %}

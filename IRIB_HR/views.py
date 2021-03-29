@@ -1,6 +1,7 @@
-import os, datetime
+import datetime
 from .utils import update_data
 from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import redirect
 
 
@@ -13,11 +14,14 @@ def open_personnel_access_view(request):
     try:
         url = settings.DATABASES['access-personnel']['NAME']
         now = datetime.datetime.now()
-        hash = create_hash("%s|%s" % (request.user.username, create_hash("%s%s%s" % (now.minute, request.user.username, now.hour))))
-        os.system("%s %s" % (url, hash))
+        hash = create_hash(
+            "%s|%s" % (request.user.username, create_hash("%s%s%s" % (now.minute, request.user.username, now.hour))))
     except:
         pass
-    return redirect(request.META['HTTP_REFERER'])
+
+    resp = HttpResponse("%s %s" % (url, hash), content_type="application/octet-stream")
+    resp['Content-Disposition'] = 'attachment; filename=run.bat'
+    return resp
 
 
 def create_hash(key):
