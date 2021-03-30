@@ -3,6 +3,34 @@ from .models import PaySlip
 from django.conf import settings
 import os, xlrd, tempfile, shutil
 from IRIB_Shared_Lib.models import Month
+from django.contrib.auth.models import Group
+from EIRIB_FollowUp.models import User as _User
+from IRIB_Auth.models import User, Supervisor, AccessLevel
+
+
+def import_users():
+    wb = xlrd.open_workbook(os.path.join(settings.BASE_DIR, 'sms.xlsx'))
+    sheet = wb.sheet_by_index(3)
+    for i in range(1, sheet.nrows):
+        user = sheet.row_values(i)
+        supervisor = Supervisor.objects.update_or_create(name=user[6])[0]
+        u = User.objects.filter(username=user[0])
+        if u.count() == 0:
+            u = User.objects.create(access_level=AccessLevel.USER, username=user[0])
+        else:
+            u = u[0]
+        u._title=user[1]
+        u.first_name=user[2]
+        u.last_name=user[3]
+        u.is_staff=True
+        u.supervisor=supervisor
+        u.set_password(user[5])
+        u.groups.add(Group.objects.get(name='KM - Users'))
+        u.groups.add(Group.objects.get(name='HR - Users'))
+        u.save()
+        _u = _User.objects.filter(user__username=user[0])
+        if _u.count() == 0:
+            _User.objects.create(user=u, query_name=user[0])
 
 
 def dump_uploaded_file(source):
