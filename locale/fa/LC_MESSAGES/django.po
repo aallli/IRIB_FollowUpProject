@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-20 17:31+0330\n"
+"POT-Creation-Date: 2021-04-13 13:08+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -404,11 +404,11 @@ msgstr "خطا! کاربر '%s' غیر قابل حذف است."
 msgid "EIRIB Administration System"
 msgstr "سامانه مدیریت فضای مجازی سازمان صدا و سیما"
 
-#: .\IRIB_FollowUpProject\settings.py:146
+#: .\IRIB_FollowUpProject\settings.py:150
 msgid "En"
 msgstr "انگلیسی"
 
-#: .\IRIB_FollowUpProject\settings.py:147
+#: .\IRIB_FollowUpProject\settings.py:151
 msgid "Fa"
 msgstr "فارسی"
 
@@ -651,84 +651,88 @@ msgid "etc"
 msgstr "سایر"
 
 #: .\IRIB_HR\models.py:28
+msgid "difference"
+msgstr "مابه التفاوت"
+
+#: .\IRIB_HR\models.py:29
 msgid "Grocery Allowance"
 msgstr "کمک هزینه خواروبار"
 
-#: .\IRIB_HR\models.py:29
+#: .\IRIB_HR\models.py:30
 msgid "Housing Allowance"
 msgstr "کمک هزینه مسکن"
 
-#: .\IRIB_HR\models.py:30
+#: .\IRIB_HR\models.py:31
 msgid "Spouse Allowance"
 msgstr "حق همسر"
 
-#: .\IRIB_HR\models.py:31
+#: .\IRIB_HR\models.py:32
 msgid "Mobile  Allowance"
 msgstr "کمک هزینه موبایل"
 
-#: .\IRIB_HR\models.py:32
+#: .\IRIB_HR\models.py:33
 msgid "Food Cost"
 msgstr "هزینه غذا"
 
-#: .\IRIB_HR\models.py:33 .\static\admin\custom\pay-slip.html:118
+#: .\IRIB_HR\models.py:34 .\static\admin\custom\pay-slip.html:118
 #: .\templates\admin\custom\pay-slip.html:118
 msgid "Insurance"
 msgstr "بیمه"
 
-#: .\IRIB_HR\models.py:34 .\static\admin\custom\pay-slip.html:126
+#: .\IRIB_HR\models.py:35 .\static\admin\custom\pay-slip.html:126
 #: .\templates\admin\custom\pay-slip.html:126
 msgid "Tax"
 msgstr "مالیات"
 
-#: .\IRIB_HR\models.py:35
+#: .\IRIB_HR\models.py:36
 msgid "Loan Installments"
 msgstr "اقساط بیمه"
 
-#: .\IRIB_HR\models.py:36
+#: .\IRIB_HR\models.py:37
 msgid "Supplementary Insurance"
 msgstr "بیمه تکمیلی"
 
-#: .\IRIB_HR\models.py:37 .\static\admin\custom\pay-slip.html:181
+#: .\IRIB_HR\models.py:38 .\static\admin\custom\pay-slip.html:181
 #: .\templates\admin\custom\pay-slip.html:181
 msgid "Leave Balance"
 msgstr "مانده مرخصی"
 
-#: .\IRIB_HR\models.py:38 .\static\admin\custom\pay-slip.html:187
+#: .\IRIB_HR\models.py:39 .\static\admin\custom\pay-slip.html:187
 #: .\templates\admin\custom\pay-slip.html:187
 msgid "Atieh Fund Balance"
 msgstr "مانده صندوق آتیه"
 
-#: .\IRIB_HR\models.py:39 .\static\admin\custom\pay-slip.html:191
+#: .\IRIB_HR\models.py:40 .\static\admin\custom\pay-slip.html:191
 #: .\templates\admin\custom\pay-slip.html:191
 msgid "Refah Fund Balance"
 msgstr "مانده صندوق رفاه"
 
-#: .\IRIB_HR\models.py:42
+#: .\IRIB_HR\models.py:43
 msgid "Pay Slip"
 msgstr "فیش حقوقی"
 
-#: .\IRIB_HR\models.py:43
+#: .\IRIB_HR\models.py:44
 msgid "Pay Slips"
 msgstr "فیش حقوقی"
 
-#: .\IRIB_HR\models.py:55 .\static\admin\custom\eirib-enactment.html:63
+#: .\IRIB_HR\models.py:56 .\static\admin\custom\eirib-enactment.html:63
 #: .\static\admin\custom\pay-slip.html:94
 #: .\templates\admin\custom\eirib-enactment.html:63
 #: .\templates\admin\custom\pay-slip.html:94
 msgid "Date"
 msgstr "تاریخ"
 
-#: .\IRIB_HR\models.py:63 .\static\admin\custom\pay-slip.html:162
+#: .\IRIB_HR\models.py:64 .\static\admin\custom\pay-slip.html:162
 #: .\templates\admin\custom\pay-slip.html:162
 msgid "Gross Salary"
 msgstr "جمع درآمد ناخالص"
 
-#: .\IRIB_HR\models.py:68 .\static\admin\custom\pay-slip.html:167
+#: .\IRIB_HR\models.py:69 .\static\admin\custom\pay-slip.html:167
 #: .\templates\admin\custom\pay-slip.html:167
 msgid "Total deductions"
 msgstr "جمع کسورات"
 
-#: .\IRIB_HR\models.py:73 .\static\admin\custom\pay-slip.html:173
+#: .\IRIB_HR\models.py:74 .\static\admin\custom\pay-slip.html:173
 #: .\templates\admin\custom\pay-slip.html:173
 msgid "Net Salary"
 msgstr "مبلغ قابل پرداخت"

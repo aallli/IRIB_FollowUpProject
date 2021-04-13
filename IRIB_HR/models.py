@@ -25,6 +25,7 @@ class PaySlip(models.Model):
     post_allowance = models.IntegerField(_('Post Allowance'), blank=False, default=0)
     children_allowance = models.IntegerField(_('Children Allowance'), blank=False, default=0)
     etc = models.IntegerField(_('etc'), blank=False, default=0)
+    difference = models.IntegerField(_('difference'), blank=False, default=0)
     grocery_salary = models.IntegerField(_('Grocery Allowance'), blank=False, default=0)
     housing_salary = models.IntegerField(_('Housing Allowance'), blank=False, default=0)
     spouse_salary = models.IntegerField(_('Spouse Allowance'), blank=False, default=0)
@@ -58,7 +59,7 @@ class PaySlip(models.Model):
     def gross_salary(self):
         return self.basic_salary + self.supplementary_allowance + self.overtime + self.special_allowance + \
                self.post_allowance + self.children_allowance + self.grocery_salary + self.housing_salary + \
-               self.spouse_salary + self.mobile_salary + self.etc + self.food_cost
+               self.spouse_salary + self.mobile_salary + self.etc + self.difference + self.food_cost
 
     gross_salary.short_description = _('Gross Salary')
 

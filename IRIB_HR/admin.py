@@ -68,6 +68,7 @@ class PaySlipAdmin(BaseModelAdmin):
             [PaySlip._meta.get_field('spouse_salary').verbose_name, payslip.spouse_salary],
             [PaySlip._meta.get_field('mobile_salary').verbose_name, payslip.mobile_salary],
             [PaySlip._meta.get_field('etc').verbose_name, payslip.etc],
+            [PaySlip._meta.get_field('difference').verbose_name, payslip.difference],
             [PaySlip._meta.get_field('food_cost').verbose_name, payslip.food_cost], ]:
             if item[1] > 0:
                 incomes.append([item[0], f'{item[1]:n}'])

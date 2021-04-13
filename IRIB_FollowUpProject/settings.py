@@ -26,7 +26,7 @@ SSO_SALT = os.environ.get('SSO_SALT', default='5152')
 DEBUG = True
 
 # admin info
-VERSION = '1.21.0'
+VERSION = '1.22.0'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -111,7 +111,8 @@ DATABASES = {
         'PASSWORD': os.environ.get('ACCESS_DATABASES_PASSWORD', default='123456'),
     },
     'access-personnel': {
-        'NAME': os.environ.get('ACCESS_PERSONNEL_DATABASES_NAME', default=r"\\172.16.226.174\Fileserver\Omomi-Hamkaran-Moavenat\personel\bin\AutoUpdater.exe"),
+        'NAME': os.environ.get('ACCESS_PERSONNEL_DATABASES_NAME', default="AutoUpdater.exe"),
+        'PATH': os.environ.get('ACCESS_PERSONNEL_DATABASES_PATH', default=r"\\172.16.226.174\Fileserver\Omomi-Hamkaran-Moavenat\personel\bin"),
     },
 }
 

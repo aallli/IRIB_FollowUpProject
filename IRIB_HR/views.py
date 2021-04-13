@@ -12,7 +12,7 @@ def update_data_view(request):
 
 def open_personnel_access_view(request):
     try:
-        url = settings.DATABASES['access-personnel']['NAME']
+        url = r"%s\%s" % (settings.DATABASES['access-personnel']['PATH'], settings.DATABASES['access-personnel']['NAME'])
         now = datetime.datetime.now()
         hash = create_hash(
             "%s|%s" % (request.user.username, create_hash("%s%s%s" % (now.minute, request.user.username, now.hour))))
