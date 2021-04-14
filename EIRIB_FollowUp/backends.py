@@ -7,9 +7,30 @@ from EIRIB_FollowUp.models import User as _User
 from django.contrib.auth.backends import ModelBackend
 from IRIB_Auth.models import User, Title, AccessLevel, Supervisor
 
+UserModel = get_user_model()
+
 
 class EIRIBBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
+        if username is None:
+            username = kwargs.get(UserModel.USERNAME_FIELD)
+        if username is None or password is None:
+            return
+        try:
+            user = UserModel._default_manager.get_by_natural_key(username)
+        except UserModel.DoesNotExist:
+            # Run the default password hasher once to reduce the timing
+            # difference between an existing and a nonexistent user (#20760).
+            UserModel().set_password(password)
+        else:
+            if user.check_password(password) and self.user_can_authenticate(user):
+                if not user.is_secretary:
+                    user_query = Timer(1, self.get_user_query, [_User.objects.get_or_create(user=user)[0]])
+                    user_query.start()
+                return user
+                return user
+
+    def authenticate1(self, request, username=None, password=None, **kwargs):
         try:
             user = self.get_user_by_username(username)
         except User.DoesNotExist:
