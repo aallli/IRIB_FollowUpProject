@@ -80,6 +80,11 @@ class AttachmentAdmin(BaseModelAdmin):
             kwargs["queryset"] = models.CardtableBase.objects.filter(user=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def get_queryset(self, request):
+        if request.user.is_superuser or request.user.is_km_operator:
+            return super(AttachmentAdmin, self).get_queryset()
+        return models.Attachment.objects.filter(cardtable__in=models.CardtableBase.objects.filter(user=request.user))
+
 
 @admin.register(models.Activity)
 class ActivityAdmin(BaseModelAdmin):
