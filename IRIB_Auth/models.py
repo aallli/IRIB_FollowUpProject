@@ -75,7 +75,7 @@ class User(AbstractUser):
 
     @property
     def is_km_operator(self):
-        return self.groups.filter(name=settings.KM_OPERATOR_GROUP_NAME) > 0
+        return self.groups.filter(name=settings.KM_OPERATOR_GROUP_NAME).count() > 0
 
     def delete(self, using=None, keep_parents=False):
         if self.is_superuser:
