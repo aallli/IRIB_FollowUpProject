@@ -87,7 +87,8 @@ class AttachmentAdmin(BaseModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "enactment" and not (request.user.is_superuser or request.user.is_secretary):
-            kwargs["queryset"] = Enactment.objects.filter(row__in=request.user.query)
+            _user = _User.objects.get(user=request.user)
+            kwargs["queryset"] = Enactment.objects.filter(row__in=_user.query) if _user and not _user.query is None else Enactment.objects.none()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
