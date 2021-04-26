@@ -204,7 +204,11 @@ def update_data():
     data_loaded = 0
     tries = 0
 
-    conn = mdb_connect(settings.DATABASES['access-followup']['NAME'])
+    try:
+        conn = mdb_connect(settings.DATABASES['access-followup']['NAME'])
+    except:
+        tries = -1
+        return
 
     sessions = Timer(1, get_sessions)
     sessions.start()
