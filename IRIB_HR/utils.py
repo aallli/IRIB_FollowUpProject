@@ -7,6 +7,10 @@ from django.contrib.auth.models import Group
 from EIRIB_FollowUp.models import User as _User
 from IRIB_Auth.models import User, Supervisor, AccessLevel
 
+tries = 0
+max_try = 50
+max_data = 1
+data_loaded = pow(2, max_data) - 1
 
 def import_users():
     wb = xlrd.open_workbook(os.path.join(settings.BASE_DIR, 'sms.xlsx'))
@@ -41,6 +45,9 @@ def dump_uploaded_file(source):
 
 
 def update_data(request):
+    global data_loaded, tries
+    data_loaded = 0
+    tries = 0
     if request.method == 'POST' and 'file' in request.FILES:
         excel_file = request.FILES['file']
         try:
@@ -113,6 +120,7 @@ def update_data(request):
                 except:
                     pass
         except:
+            tries = -1
             return
 
         def clean_temp(file):
@@ -122,4 +130,10 @@ def update_data(request):
         wb.release_resources()
         r = Timer(600.0, clean_temp, (excel_file,))
         r.start()
+        data_loaded = 1
 
+
+def data_loading():
+    global data_loaded, max_data, tries
+    loading = data_loaded != pow(2, max_data) - 1
+    return loading, tries == -1

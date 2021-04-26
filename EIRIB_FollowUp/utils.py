@@ -32,47 +32,9 @@ msgid = _(
 
 tries = 0
 max_try = 50
-max_data = 6
+max_data = 7
 data_loaded = pow(2, max_data) - 1
-
-
-def get_enactments():
-    global data_loaded, max_data, tries, max_try
-
-    if data_loaded != pow(2, max_data - 1) - 1:
-        if tries == max_try:
-            data_loaded = pow(2, max_data) - 1
-            tries = -1
-            return
-        tries += 1
-        enactments = Timer(5, get_enactments)
-        enactments.start()
-        return
-
-    Enactment.objects.all().delete()
-    command = 'SELECT * from tblmosavabat'
-    result = execute_query(command)
-    try:
-        Enactment.objects.bulk_create([Enactment(**{
-            'row': r.ID,
-            'description': r.sharh,
-            'subject': Subject.objects.get(name=settings.WITHOUT_SUBJECT_TITLE if r.muzoo in [None, ''] else r.muzoo),
-            'first_actor': Actor.objects.filter(lname=r.peygiri1).first(),
-            'second_actor': Actor.objects.filter(lname=r.peygiri2).first(),
-            '_date': r.date or timezone.now(),
-            'follow_grade': r.lozoomepeygiri,
-            'result': r.natije,
-            'session': Session.objects.get(
-                name=settings.WITHOUT_SESSION_TITLE if r.jalaseh in [None, ''] else r.jalaseh),
-            'assigner': Assigner.objects.get(
-                name=settings.WITHOUT_ASSIGNER_TITLE if r.gooyandeh in [None, ''] else r.gooyandeh),
-            '_review_date': r.review_date or timezone.now()}) for r in result])
-    except Exception as e:
-        print(e)
-        tries = -1
-        return
-    finally:
-        data_loaded ^= 32
+conn = None
 
 
 def get_sessions():
@@ -109,7 +71,6 @@ def get_assigners():
 
 def get_subjects():
     global data_loaded
-
     try:
         Subject.objects.all().delete()
         query = '''
@@ -162,10 +123,88 @@ def get_supervisors():
         actors.start()
 
 
+def get_user_queries():
+    global data_loaded
+    try:
+        users = execute_query('SELECT * FROM tblUser;')
+        for u in users:
+            try:
+                user = User.objects.get(user__username=u.username)
+                if user:
+                    user.query_name = u.openningformP
+                    command = 'SELECT * from %s' % user.query_name
+                    result = execute_query(command)
+                    user.query = [r.ID for r in result]
+
+                if user.secretary_query_name:
+                    command = 'SELECT * from %s' % user.secretary_query_name
+                    try:
+                        result = execute_query(command)
+                        user.secretary_query = list(result[0])
+                    except Exception:
+                        user.secretary_query = None
+                else:
+                    user.secretary_query = None
+
+                user.save()
+            except:
+                pass
+    finally:
+        data_loaded ^= 32
+
+
+def get_enactments():
+    global data_loaded, max_data, tries, max_try
+
+    if data_loaded != pow(2, max_data - 1) - 1:
+        if tries == max_try:
+            data_loaded = pow(2, max_data) - 1
+            tries = -1
+            return
+        tries += 1
+        enactments = Timer(5, get_enactments)
+        enactments.start()
+        return
+
+    command = 'SELECT * from tblmosavabat'
+    try:
+        result = execute_query(command)
+        for r in result:
+            try:
+                enact = Enactment.objects.get_or_create(row= r.ID)
+                enactment = enact[0]
+                if enact[1]:
+                    enactment.result = r.natije
+                    enactment._review_date =r.review_date or timezone.now()
+
+                enactment.description = r.sharh
+                enactment.subject = Subject.objects.get(name=settings.WITHOUT_SUBJECT_TITLE if r.muzoo in [None, ''] else r.muzoo)
+                enactment.first_actor = Actor.objects.filter(lname=r.peygiri1).first()
+                enactment.second_actor = Actor.objects.filter(lname=r.peygiri2).first()
+                enactment._date = r.date or timezone.now()
+                enactment.follow_grade = r.lozoomepeygiri
+                enactment.session = Session.objects.get(
+                        name=settings.WITHOUT_SESSION_TITLE if r.jalaseh in [None, ''] else r.jalaseh)
+                enactment.assigner = Assigner.objects.get(
+                        name=settings.WITHOUT_ASSIGNER_TITLE if r.gooyandeh in [None, ''] else r.gooyandeh)
+                enactment.save()
+            except Exception as e:
+                print(e)
+
+    except Exception as e:
+        print(e)
+        tries = -1
+        return
+    finally:
+        data_loaded ^= 64
+
+
 def update_data():
-    global data_loaded, tries
+    global data_loaded, tries, conn
     data_loaded = 0
     tries = 0
+
+    conn = mdb_connect(settings.DATABASES['access-followup']['NAME'])
 
     sessions = Timer(1, get_sessions)
     sessions.start()
@@ -182,10 +221,17 @@ def update_data():
     enactments = Timer(5, get_enactments)
     enactments.start()
 
+    user_queries = Timer(1, get_user_queries)
+    user_queries.start()
+
 
 def data_loading():
-    global data_loaded, max_data, tries
-    return data_loaded != pow(2, max_data) - 1, tries == -1
+    global data_loaded, max_data, tries, conn
+    loading = data_loaded != pow(2, max_data) - 1
+    if (not loading or tries == -1) and conn:
+        conn.close()
+        conn = None
+    return loading, tries == -1
 
 
 def user_exists(user_name):
@@ -244,9 +290,6 @@ def mdb_connect(db_file, user='admin', password='', old_driver=False):
                      (driver_ver, db_file, user, password))
 
     return pyodbc.connect(odbc_conn_str)
-
-
-conn = mdb_connect(settings.DATABASES['access-followup']['NAME'])
 
 
 def execute_query(query, params=None, update=None, insert=None, delete=None):

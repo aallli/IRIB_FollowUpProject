@@ -1,6 +1,6 @@
 {% extends "admin/index.html" %}
 
-{% load i18n static irib_shared_tag eirib_followup_tag %}
+{% load i18n static irib_shared_tag eirib_followup_tag irib_hr_tag %}
 
 {% block extrastyle %}
     {{ block.super }}
@@ -47,7 +47,7 @@
 
                         {% if app.app_label == 'IRIB_HR' %}
                             {% if user.is_superuser or user.is_secretary %}
-                                {% data_loading 'index' as hr_data_loading %}
+                                {% hr_data_loading 'index' as hr_data_loading %}
                                 {% if hr_data_loading.1 %}
                                     <div class="errornote loading-message index">{% trans 'Data syncronization failed. Try later and contact administrator if failing repeats.' %}</div>
                                 {% endif %}
