@@ -14,15 +14,18 @@ data_loaded = pow(2, max_data) - 1
 
 def import_users():
     wb = xlrd.open_workbook(os.path.join(settings.BASE_DIR, 'sms.xlsx'))
-    sheet = wb.sheet_by_index(3)
+    sheet = wb.sheet_by_index(0)
     for i in range(1, sheet.nrows):
         user = sheet.row_values(i)
         supervisor = Supervisor.objects.update_or_create(name=user[6])[0]
         u = User.objects.filter(username=user[0])
         if u.count() == 0:
             u = User.objects.create(access_level=AccessLevel.USER, username=user[0])
+            print("User Added: %s" % u.username)
         else:
             u = u[0]
+            print("User Updated: %s" % u.username)
+
         u._title=user[1]
         u.first_name=user[2]
         u.last_name=user[3]

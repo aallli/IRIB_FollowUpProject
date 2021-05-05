@@ -9,7 +9,7 @@ from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
-from EIRIB_FollowUp.utils import save_user, delete_user, execute_query
+#from EIRIB_FollowUp.utils import save_user, delete_user, execute_query
 from IRIB_Shared_Lib.utils import to_jalali, get_jalali_filter, get_model_fullname, format_date
 from EIRIB_FollowUp.models import Enactment, Session, Assigner, Subject, Actor, Supervisor, Attachment
 
@@ -106,7 +106,8 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def save_model(self, request, obj, form, change):
         super(UserAdmin, self).save_model(request, obj, form, change)
         try:
-            save_user(obj.user)
+            pass
+            #save_user(obj.user)
         except Exception as e:
             messages.set_level(request, messages.WARNING)
             messages.error(request, _('Error in creating/updating user in MS Acceess Database'))
@@ -114,7 +115,8 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     @atomic
     def delete_model(self, request, obj):
         try:
-            delete_user(obj.user)
+            pass
+            #delete_user(obj.user)
         except Exception as e:
             messages.set_level(request, messages.WARNING)
             messages.error(request, _('Error in deleting user from MS Acceess Database'))
@@ -125,7 +127,8 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         for obj in queryset.all():
             try:
                 try:
-                    delete_user(obj.user)
+                    pass
+                    #delete_user(obj.user)
                 except Exception as e:
                     self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
                 obj.delete()
@@ -189,59 +192,61 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
         obj._review_date = timezone.now()
         if obj.pk:
-            query = '''
-                    UPDATE tblmosavabat
-                    SET tblmosavabat.natije = ?
-                   '''
-            params = [obj.result]
-
-            if user.is_superuser or user.is_secretary or user.is_scoped_secretary:
-                query += ", tblmosavabat.sharh=?, tblmosavabat.peygiri1=?, tblmosavabat.peygiri2=?" \
-                         ", tblmosavabat.tarikh=?, tblmosavabat.jalaseh=?, tblmosavabat.muzoo=?" \
-                         ", tblmosavabat.gooyandeh=?, tblmosavabat.vahed=?, tblmosavabat.vahed2=?" \
-                         ", tblmosavabat.mosavabatcode=?, tblmosavabat.TarikhBaznegari=?, tblmosavabat.[date]=?" \
-                         ", tblmosavabat.review_date=?"
-                params.extend((obj.description,
-                               obj.first_actor.lname if obj.first_actor else '-',
-                               obj.second_actor.lname if obj.second_actor else '-',
-                               int(to_jalali(obj._date, no_time=True).replace('/', '')) - 13000000,
-                               obj.session.name,
-                               obj.subject.name,
-                               obj.assigner.name,
-                               obj.first_actor.supervisor.name if obj.first_actor and obj.first_actor.supervisor else '-',
-                               obj.second_actor.supervisor.name if obj.second_actor and obj.second_actor.supervisor else '-',
-                               obj.code,
-                               obj.review_date(),
-                               obj._date,
-                               obj._review_date))
-            query += '''
-                    WHERE ID = ?
-                   '''
-            params.append(obj.row)
-            execute_query(query, params, update=True)
+            # query = '''
+            #         UPDATE tblmosavabat
+            #         SET tblmosavabat.natije = ?
+            #        '''
+            # params = [obj.result]
+            #
+            # if user.is_superuser or user.is_secretary or user.is_scoped_secretary:
+            #     query += ", tblmosavabat.sharh=?, tblmosavabat.peygiri1=?, tblmosavabat.peygiri2=?" \
+            #              ", tblmosavabat.tarikh=?, tblmosavabat.jalaseh=?, tblmosavabat.muzoo=?" \
+            #              ", tblmosavabat.gooyandeh=?, tblmosavabat.vahed=?, tblmosavabat.vahed2=?" \
+            #              ", tblmosavabat.mosavabatcode=?, tblmosavabat.TarikhBaznegari=?, tblmosavabat.[date]=?" \
+            #              ", tblmosavabat.review_date=?"
+            #     params.extend((obj.description,
+            #                    obj.first_actor.lname if obj.first_actor else '-',
+            #                    obj.second_actor.lname if obj.second_actor else '-',
+            #                    int(to_jalali(obj._date, no_time=True).replace('/', '')) - 13000000,
+            #                    obj.session.name,
+            #                    obj.subject.name,
+            #                    obj.assigner.name,
+            #                    obj.first_actor.supervisor.name if obj.first_actor and obj.first_actor.supervisor else '-',
+            #                    obj.second_actor.supervisor.name if obj.second_actor and obj.second_actor.supervisor else '-',
+            #                    obj.code,
+            #                    obj.review_date(),
+            #                    obj._date,
+            #                    obj._review_date))
+            # query += '''
+            #         WHERE ID = ?
+            #        '''
+            # params.append(obj.row)
+            #execute_query(query, params, update=True)
+            pass
         else:
-            query = '''
-                    INSERT INTO tblmosavabat (sharh, peygiri1, peygiri2, tarikh, lozoomepeygiri, natije, jalaseh,
-                    muzoo, gooyandeh, vahed, vahed2, mosavabatcode, TarikhBaznegari, [date], review_date)
-                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    '''
+            # query = '''
+            #         INSERT INTO tblmosavabat (sharh, peygiri1, peygiri2, tarikh, lozoomepeygiri, natije, jalaseh,
+            #         muzoo, gooyandeh, vahed, vahed2, mosavabatcode, TarikhBaznegari, [date], review_date)
+            #         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            #         '''
             obj.follow_grade = 1
-            params = (obj.description,
-                      obj.first_actor.lname if obj.first_actor else '-',
-                      obj.second_actor.lname if obj.second_actor else '-',
-                      int(to_jalali(obj._date, True).replace('/', '')) - 13000000,
-                      obj.follow_grade,
-                      obj.result,
-                      obj.session.name,
-                      obj.subject.name,
-                      obj.assigner.name,
-                      obj.first_actor.supervisor.name if obj.first_actor and obj.first_actor.supervisor else '-',
-                      obj.second_actor.supervisor.name if obj.second_actor and obj.second_actor.supervisor else '-',
-                      obj.code,
-                      obj.review_date(),
-                      obj._date,
-                      obj._review_date)
-            obj.row = execute_query(query, params, insert=True)
+            # params = (obj.description,
+            #           obj.first_actor.lname if obj.first_actor else '-',
+            #           obj.second_actor.lname if obj.second_actor else '-',
+            #           int(to_jalali(obj._date, True).replace('/', '')) - 13000000,
+            #           obj.follow_grade,
+            #           obj.result,
+            #           obj.session.name,
+            #           obj.subject.name,
+            #           obj.assigner.name,
+            #           obj.first_actor.supervisor.name if obj.first_actor and obj.first_actor.supervisor else '-',
+            #           obj.second_actor.supervisor.name if obj.second_actor and obj.second_actor.supervisor else '-',
+            #           obj.code,
+            #           obj.review_date(),
+            #           obj._date,
+            #           obj._review_date)
+            # obj.row = execute_query(query, params, insert=True)
+            obj.row = Enactment.objects.latest('row').row + 1
             new_obj = True
 
         super(EnactmentAdmin, self).save_model(request, obj, form, change)
@@ -257,12 +262,12 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     @atomic
     def delete_model(self, request, obj):
-        query = '''
-                DELETE FROM tblmosavabat
-                WHERE tblmosavabat.ID = ?
-                '''
-        params = (obj.row)
-        execute_query(query, params, delete=True)
+        # query = '''
+        #         DELETE FROM tblmosavabat
+        #         WHERE tblmosavabat.ID = ?
+        #         '''
+        # params = (obj.row)
+        # execute_query(query, params, delete=True)
         super(EnactmentAdmin, self).delete_model(request, obj)
 
     def response_delete(self, request, obj_display, obj_id):
@@ -272,21 +277,21 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     @atomic
     def save_formset(self, request, form, formset, change):
         super(EnactmentAdmin, self).save_formset(request, form, formset, change)
-        if formset.prefix == 'attachment_set' and change:
-            obj = form.instance
-            query = '''
-                UPDATE tblmosavabat
-                SET tblmosavabat.[attachments] = ?
-               '''
-
-            attachments = ' '.join(
-                '%s%s' % (request.META['HTTP_ORIGIN'], attachment.file.url) for attachment in obj.attachment_set.all())
-
-            params = (attachments, obj.row)
-            query += '''
-                    WHERE ID = ?
-                   '''
-            execute_query(query, params, update=True)
+        # if formset.prefix == 'attachment_set' and change:
+        #     obj = form.instance
+        #     query = '''
+        #         UPDATE tblmosavabat
+        #         SET tblmosavabat.[attachments] = ?
+        #        '''
+        #
+        #     attachments = ' '.join(
+        #         '%s%s' % (request.META['HTTP_ORIGIN'], attachment.file.url) for attachment in obj.attachment_set.all())
+        #
+        #     params = (attachments, obj.row)
+        #     query += '''
+        #             WHERE ID = ?
+        #            '''
+        #     execute_query(query, params, update=True)
 
     def get_urls(self):
         urls = super(EnactmentAdmin, self).get_urls()
@@ -391,11 +396,11 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         enactment.follow_grade = 0
         enactment.save()
 
-        query = '''
-                UPDATE tblmosavabat
-                SET tblmosavabat.lozoomepeygiri = ?
-                WHERE ID = ?
-               '''
-        params = [enactment.follow_grade, enactment.row]
-        execute_query(query, params, update=True)
+        # query = '''
+        #         UPDATE tblmosavabat
+        #         SET tblmosavabat.lozoomepeygiri = ?
+        #         WHERE ID = ?
+        #        '''
+        # params = [enactment.follow_grade, enactment.row]
+        # execute_query(query, params, update=True)
         return result
