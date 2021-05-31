@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-13 13:08+0430\n"
+"POT-Creation-Date: 2021-05-31 12:34+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,16 +30,16 @@ msgstr "مسوول پیگیری"
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\EIRIB_FollowUp\admin.py:111 .\IRIB_Auth\admin.py:62
+#: .\EIRIB_FollowUp\admin.py:113 .\IRIB_Auth\admin.py:62
 msgid "Error in creating/updating user in MS Acceess Database"
 msgstr "خطای ایجاد / به روز رسانی کاربر در دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:119 .\EIRIB_FollowUp\admin.py:129
+#: .\EIRIB_FollowUp\admin.py:122 .\EIRIB_FollowUp\admin.py:133
 #: .\IRIB_Auth\admin.py:110 .\IRIB_Auth\admin.py:124
 msgid "Error in deleting user from MS Acceess Database"
 msgstr "خطای حذف کاربر از دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:149 .\EIRIB_FollowUp\models.py:161
+#: .\EIRIB_FollowUp\admin.py:153 .\EIRIB_FollowUp\models.py:161
 #: .\EIRIB_FollowUp\models.py:193 .\IRIB_FollowUp\admin.py:230
 #: .\IRIB_FollowUp\models.py:155 .\IRIB_FollowUp\models.py:191
 #: .\static\admin\custom\enactments-list-report-excel.html:69
@@ -47,12 +47,12 @@ msgstr "خطای حذف کاربر از دیتابیس اکسس"
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
-#: .\EIRIB_FollowUp\admin.py:150 .\EIRIB_FollowUp\models.py:156
+#: .\EIRIB_FollowUp\admin.py:154 .\EIRIB_FollowUp\models.py:156
 #: .\EIRIB_FollowUp\models.py:187 .\IRIB_FollowUp\admin.py:231
 msgid "Assignment Date"
 msgstr "تاریخ مصوبه"
 
-#: .\EIRIB_FollowUp\admin.py:186
+#: .\EIRIB_FollowUp\admin.py:190
 msgid "Unauthorized session, Access denied"
 msgstr "دسترسی غیر مجاز!"
 
@@ -139,8 +139,6 @@ msgid "Secretary Query Name"
 msgstr "نام کوئری دبیر"
 
 #: .\EIRIB_FollowUp\models.py:102
-#, fuzzy
-#| msgid "Secretary Query Name"
 msgid "Secretary Query"
 msgstr "نام کوئری دبیر"
 
@@ -232,8 +230,6 @@ msgid "Second Supervisor"
 msgstr "واحد پیگیری دوم"
 
 #: .\EIRIB_FollowUp\models.py:212
-#, fuzzy
-#| msgid "Follow Ups"
 msgid "Followups"
 msgstr "پیگیریها"
 
@@ -329,19 +325,19 @@ msgstr ""
 "نمی تواند کلمه عبور شما را مشاهده کند.  کلمه عبور خود را می توانید از طریق "
 "<a href=\"{}\">این لینک</a> تغییر دهید."
 
-#: .\EIRIB_FollowUp\utils.py:261
+#: .\EIRIB_FollowUp\utils.py:308
 msgid "Update failed."
 msgstr "خطا در به روز رسانی"
 
-#: .\EIRIB_FollowUp\utils.py:261
+#: .\EIRIB_FollowUp\utils.py:308
 msgid "Successful update."
 msgstr "به روز رسانی با موفقیت انجام شد."
 
-#: .\EIRIB_FollowUp\utils.py:268
+#: .\EIRIB_FollowUp\utils.py:315
 msgid "Delete failed."
 msgstr "خطای حذف"
 
-#: .\EIRIB_FollowUp\utils.py:268
+#: .\EIRIB_FollowUp\utils.py:315
 msgid "Successful delete."
 msgstr "حذف با موفقیت انجام شد."
 
@@ -651,7 +647,7 @@ msgid "etc"
 msgstr "سایر"
 
 #: .\IRIB_HR\models.py:28
-msgid "difference"
+msgid "Difference"
 msgstr "مابه التفاوت"
 
 #: .\IRIB_HR\models.py:29
@@ -830,20 +826,20 @@ msgstr "سه ماه گذشته"
 msgid "Last 6 months"
 msgstr "شش ماه گذشته"
 
-#: .\Knowledge_Management\admin.py:123 .\Knowledge_Management\admin.py:210
+#: .\Knowledge_Management\admin.py:128 .\Knowledge_Management\admin.py:215
 msgid "Main info"
 msgstr "اطلاعات اصلی"
 
-#: .\Knowledge_Management\admin.py:131 .\Knowledge_Management\admin.py:219
+#: .\Knowledge_Management\admin.py:136 .\Knowledge_Management\admin.py:224
 #: .\Knowledge_Management\models.py:137 .\Knowledge_Management\models.py:188
 msgid "Creation Date"
 msgstr "تاریخ ثبت"
 
-#: .\Knowledge_Management\admin.py:156
+#: .\Knowledge_Management\admin.py:161
 msgid "Maximum exceeded, Invalid operations."
 msgstr "به دلیل احراز سقف تکرار، عملیات غیر مجاز است."
 
-#: .\Knowledge_Management\admin.py:290
+#: .\Knowledge_Management\admin.py:295
 msgid ""
 "Type some note for knowledge user and save before clicking Accept button..."
 msgstr "قبل از ارجاع، توضیحاتی برای کاربر دانشی ثبت کرده و آن را ذخیره کنید..."
