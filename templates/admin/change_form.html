@@ -1,16 +1,25 @@
 {% extends "admin/change_form.html" %}
 {% load static i18n eirib_followup_tag %}
 
-{% if opts.model_name == 'enactment' %}
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/custom_admin.js' %}"></script>
+
+    {% if opts.app_label == 'IRIB_HR' and opts.model_name == 'payslip' %}
+        <script type="text/javascript" src="{% static 'js/payslip.js' %}"></script>
+    {% endif %}
+
+    {% if opts.app_label == 'IRIB_HR' and opts.model_name == 'bonus' %}
+        <script type="text/javascript" src="{% static 'js/bonus.js' %}"></script>
+    {% endif %}
+
+    {% if opts.app_label == 'IRIB_FollowUp' and opts.model_name == 'enactment' %}
         <script type="text/javascript" src="{% static 'js/custom_enactment_admin.js' %}"></script>
-    {% block extrahead %}
-        {{ block.super }}
         <script>
             var url = '{% url 'ajax_actor_supervisor_unit' %}';
         </script>
-        <script type="text/javascript" src="{% static 'js/custom_admin.js' %}"/>
-    {% endblock %}
-{% endif %}
+    {% endif %}
+{% endblock %}
 
 {% block object-tools %}
     {% if opts.model_name == 'session' and original.pk %}

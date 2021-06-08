@@ -1,10 +1,11 @@
 import locale
-from .models import PaySlip
 from django.urls import path
 from django.contrib import admin
 from IRIB_Shared_Lib.models import Month
+from .models import PaySlip, BonusType, Bonus
 from django.utils import timezone, translation
 from IRIB_Shared_Lib.admin import BaseModelAdmin
+from jalali_date.admin import ModelAdminJalaliMixin
 from django.template.response import TemplateResponse
 from IRIB_Shared_Lib.utils import to_jalali, format_date
 
@@ -50,10 +51,10 @@ class PaySlipAdmin(BaseModelAdmin):
     def report(self, request, pk=None):
         payslip = PaySlip.objects.get(pk=pk)
         payslip.month = Month(payslip.month).label
-        incomes_sum = locale.format("%d", payslip.gross_salary(), grouping=True),
-        deductions_sum = locale.format("%d", payslip.deductions_sum(), grouping=True),
-        net_salary = locale.format("%d", payslip.salary_net(), grouping=True),
-        payslip.tax = locale.format("%d", payslip.tax, grouping=True)
+        incomes_sum = payslip.gross_salary(),
+        deductions_sum = payslip.deductions_sum(),
+        net_salary = payslip.salary_net(),
+        payslip.tax = payslip.tax
         payslip.insurance = locale.format("%d", payslip.insurance, grouping=True)
         incomes = []
         for item in [
@@ -71,7 +72,7 @@ class PaySlipAdmin(BaseModelAdmin):
             [PaySlip._meta.get_field('difference').verbose_name, payslip.difference],
             [PaySlip._meta.get_field('food_cost').verbose_name, payslip.food_cost], ]:
             if item[1] > 0:
-                incomes.append([item[0], f'{item[1]:n}'])
+                incomes.append([item[0], item[1]])
 
         context = dict(
             payslip=payslip,
@@ -86,3 +87,38 @@ class PaySlipAdmin(BaseModelAdmin):
     def get_urls(self):
         urls = super(PaySlipAdmin, self).get_urls()
         return [path('<int:pk>/report/', self.report, name="payslip-report"), ] + urls
+
+
+@admin.register(BonusType)
+class BonusTypeAdmin(BaseModelAdmin):
+    model = BonusType
+
+
+@admin.register(Bonus)
+class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
+    model = Bonus
+    list_display = ['type', 'date', 'amount']
+    list_display_links = ['type', 'date', 'amount']
+    list_filter = ['type']
+
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def get_queryset(self, request):
+        return Bonus.objects.all() if request.user.is_superuser else Bonus.objects.filter(
+            user_id=request.user.pk)
+
+    def get_list_display(self, request):
+        return self.list_display + ['user',] if request.user.is_superuser else self.list_display
+
+    def get_list_display_links(self, request, list_display):
+        return self.list_display_links + ['user', ] if request.user.is_superuser else self.list_display_links
+
+    def get_list_filter(self, request):
+        return self.list_filter + ['user', ] if request.user.is_superuser else self.list_filter

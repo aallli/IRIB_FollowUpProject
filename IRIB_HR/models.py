@@ -1,6 +1,9 @@
 from django.db import models
+from IRIB_Auth.models import User
+from django.utils import translation
 from IRIB_Shared_Lib.models import Month
 from django.utils.translation import ugettext_lazy as _
+from IRIB_Shared_Lib.utils import to_jalali, format_date
 
 
 class PaySlip(models.Model):
@@ -72,3 +75,42 @@ class PaySlip(models.Model):
         return self.gross_salary() - self.deductions_sum()
 
     salary_net.short_description = _('Net Salary')
+
+
+class BonusType(models.Model):
+    title = models.CharField(verbose_name=_('Title'), max_length=200, blank=False, unique=True)
+
+    class Meta:
+        verbose_name = _('Bonus Type')
+        verbose_name_plural = _('Bonus Types')
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+    def __unicode__(self):
+        return self.__str__()
+
+
+class Bonus(models.Model):
+    type = models.ForeignKey(BonusType, verbose_name=_('Type'), on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.SET_NULL, blank=True, null=True)
+    _date = models.DateTimeField(verbose_name=_('Pay Date'), blank=False)
+    amount = models.IntegerField(_('Amount'), blank=False, default=0)
+
+    class Meta:
+        verbose_name = _('Bonus')
+        verbose_name_plural = _('Bonuses')
+        ordering = ['type', 'user', '_date']
+
+    def __str__(self):
+        return '%s - %s (%s)' % (self.type, self.user, self.date())
+
+    def __unicode__(self):
+        return self.__str__()
+
+    def date(self):
+        return to_jalali(self._date) if translation.get_language() == 'fa' else format_date(self._date)
+
+    date.short_description = _('Pay Date')
+    date.admin_order_field = 'date'

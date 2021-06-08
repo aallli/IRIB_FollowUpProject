@@ -1,5 +1,14 @@
 {% extends "admin/change_list.html" %}
-{% load i18n eirib_followup_tag %}
+{% load i18n eirib_followup_tag static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {% if opts.app_label == 'IRIB_HR' and opts.model_name == 'bonus' %}
+        <script type="text/javascript" src="{% static 'js/custom_admin.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bonus.js' %}"></script>
+    {% endif %}
+{% endblock %}
+
 {% block object-tools %}
     {% if opts.model_name == 'enactment' %}
         <ul class="object-tools object-tools-print">

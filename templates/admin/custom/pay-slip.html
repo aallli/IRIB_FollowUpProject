@@ -1,5 +1,11 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_interface_tags irib_shared_tag i18n_switcher %}
+{% load i18n static admin_interface_tags irib_shared_tag i18n_switcher %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/custom_admin.js' %}"></script>
+{% endblock %}
 
 {% block branding %}
     {% get_admin_interface_theme as theme %}
@@ -101,10 +107,10 @@
                 <div class="row header">{% trans 'Wage' %}</div>
                 {% for income in incomes %}
                     <div class="row bordered">
-                        <div class="column">
+                        <div class="column format-number">
                             {{ income.0 }}
                         </div>
-                        <div class="column">
+                        <div class="column format-number">
                             {{ income.1 }}
                         </div>
                     </div>
@@ -117,7 +123,7 @@
                     <div class="column">
                         {% trans 'Insurance' %}
                     </div>
-                    <div class="column">
+                    <div class="column format-number">
                         {{ payslip.insurance }}
                     </div>
                 </div>
@@ -125,7 +131,7 @@
                     <div class="column">
                         {% trans 'Tax' %}
                     </div>
-                    <div class="column">
+                    <div class="column format-number">
                         {{ payslip.tax }}
                     </div>
                 </div>
@@ -146,9 +152,9 @@
                     <div class="column" style="width: 33%">{% trans 'Remaining' %}</div>
                 </div>
                 {% for income in incomes %}
-                        <div class="row bordered">
-                            <div class="column">&nbsp;</div>
-                        </div>
+                    <div class="row bordered">
+                        <div class="column">&nbsp;</div>
+                    </div>
                 {% endfor %}
             </div>
             <div class="column bordered header" style="width: 15%">{% trans 'Operation Info' %}</div>
@@ -160,18 +166,18 @@
                     <div class="row">
                         <div class="column bordered" style="width: 29.3%; display: flex;">
                             <div class="column">{% trans 'Gross Salary' %}</div>
-                            <div class="column">{{ incomes_sum.0 }}</div>
+                            <div class="column format-number">{{ incomes_sum.0 }}</div>
                         </div>
 
                         <div class="column bordered" style="width: 70.7%; display: flex;">
                             <div class="column">{% trans 'Total deductions' %}</div>
-                            <div class="column">{{ deductions_sum.0 }}</div>
+                            <div class="column format-number">{{ deductions_sum.0 }}</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="column bordered" style="width: 100%;display: flex;">
                             <div class="column">{% trans 'Net Salary' %}</div>
-                            <div class="column">{{ net_salary.0 }}</div>
+                            <div class="column format-number">{{ net_salary.0 }}</div>
                         </div>
                     </div>
                 </div>
@@ -179,20 +185,31 @@
 
             <div class="column bordered header" style="width: 15%">
                 <div class="column">{% trans 'Leave Balance' %}</div>
-                <div class="column">{{ payslip.leave_balance }} {% trans 'Days' %}</div>
+                <div class="column format-number">{{ payslip.leave_balance }} {% trans 'Days' %}</div>
             </div>
         </div>
         <div class="row">
             <div class="column bordered">
                 <div class="column">{% trans 'Atieh Fund Balance' %}:</div>
-                <div class="column">{{ payslip.atieh_balance }}</div>
+                <div class="column format-number">{{ payslip.atieh_balance }}</div>
             </div>
             <div class="column bordered">
                 <div class="column">{% trans 'Refah Fund Balance' %}:</div>
-                <div class="column">{{ payslip.refah_balance }}</div>
+                <div class="column format-number">{{ payslip.refah_balance }}</div>
             </div>
         </div>
     </div>
     <div class="foot-note">
         {% trans 'Total units are in Rls' %}
-    </div>{% endblock %}
+    </div>
+    <script>
+        $(document).ready(function () {
+            function format_number_fields(item) {
+                div = $(item);
+                div.text(format_number(div));
+            }
+
+            $(".format-number").toArray().forEach(format_number_fields)
+        });
+    </script>
+{% endblock %}

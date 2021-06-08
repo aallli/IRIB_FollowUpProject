@@ -432,3 +432,7 @@ h1.enactment-print {
 .cancel-save{
     margin: 4px 8px 0 0;
 }
+
+#bonus_form .form-row.field-type {
+    width: auto;
+}
