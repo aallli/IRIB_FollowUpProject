@@ -95,7 +95,7 @@ class BonusType(models.Model):
 class Bonus(models.Model):
     type = models.ForeignKey(BonusType, verbose_name=_('Type'), on_delete=models.SET_NULL, blank=True, null=True)
     user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.SET_NULL, blank=True, null=True)
-    _date = models.DateTimeField(verbose_name=_('Pay Date'), blank=False)
+    _date = models.DateField(verbose_name=_('Pay Date'), blank=False)
     amount = models.IntegerField(_('Amount'), blank=False, default=0)
 
     class Meta:
