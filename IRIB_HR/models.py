@@ -92,11 +92,29 @@ class BonusType(models.Model):
         return self.__str__()
 
 
+class BonusSubType(models.Model):
+    title = models.CharField(verbose_name=_('Title'), max_length=200, blank=False)
+    type = models.ForeignKey(BonusType, verbose_name=_('Bonus Type'), on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Bonus Sub Type')
+        verbose_name_plural = _('Bonus Sub Types')
+        ordering = ['title']
+        unique_together = ['title', 'type']
+
+    def __str__(self):
+        return '%s - %s' % (self.type, self.title)
+
+    def __unicode__(self):
+        return self.__str__()
+
+
 class Bonus(models.Model):
-    type = models.ForeignKey(BonusType, verbose_name=_('Type'), on_delete=models.SET_NULL, blank=True, null=True)
+    type = models.ForeignKey(BonusSubType, verbose_name=_('Type'), on_delete=models.SET_NULL, blank=True, null=True)
     user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.SET_NULL, blank=True, null=True)
     _date = models.DateField(verbose_name=_('Pay Date'), blank=False)
     amount = models.IntegerField(_('Amount'), blank=False, default=0)
+    description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Bonus')

@@ -9,8 +9,10 @@ var number_fields = [
 
 $( document ).ready(function() {
     function format_number_fields(item) {
-        div = $(item);
-        div.text(format_number(div));
+        $(item).toArray().forEach(function(elem) {
+            elem = $(elem);
+            elem.text(format_number(elem));
+        })
     }
     number_fields.forEach(format_number_fields)
 });

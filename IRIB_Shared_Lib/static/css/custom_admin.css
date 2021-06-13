@@ -433,6 +433,11 @@ h1.enactment-print {
     margin: 4px 8px 0 0;
 }
 
-#bonus_form .form-row.field-type {
+#bonus_form .form-row.field-type,
+#bonussubtype_form .form-row.field-type {
     width: auto;
+}
+
+#bonus_form input#id_amount {
+    width: 150px;
 }

@@ -2,12 +2,12 @@ import locale
 from django.urls import path
 from django.contrib import admin
 from IRIB_Shared_Lib.models import Month
-from .models import PaySlip, BonusType, Bonus
 from django.utils import timezone, translation
 from IRIB_Shared_Lib.admin import BaseModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.template.response import TemplateResponse
 from IRIB_Shared_Lib.utils import to_jalali, format_date
+from .models import PaySlip, BonusType, Bonus, BonusSubType
 
 # Used for thousands separator for numbers... usage: f'{value:n}'
 locale.setlocale(locale.LC_ALL, '')
@@ -94,12 +94,22 @@ class BonusTypeAdmin(BaseModelAdmin):
     model = BonusType
 
 
+@admin.register(BonusSubType)
+class BonusSubTypeAdmin(BaseModelAdmin):
+    model = BonusSubType
+    fields = ['type', 'title']
+    list_display = ['title', 'type', ]
+    list_display_links = ['title', 'type', ]
+    list_filter = ['type']
+
+
 @admin.register(Bonus)
 class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Bonus
     list_display = ['type', 'date', 'amount']
     list_display_links = ['type', 'date', 'amount']
     list_filter = ['type']
+    search_fields = ['type__title', 'description', 'user__username', 'user__first_name', 'user__last_name']
 
     def has_add_permission(self, request):
         return request.user.is_superuser
@@ -115,7 +125,7 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             user_id=request.user.pk)
 
     def get_list_display(self, request):
-        return self.list_display + ['user',] if request.user.is_superuser else self.list_display
+        return self.list_display + ['user', ] if request.user.is_superuser else self.list_display
 
     def get_list_display_links(self, request, list_display):
         return self.list_display_links + ['user', ] if request.user.is_superuser else self.list_display_links
