@@ -2,6 +2,7 @@ from django.db import models
 from IRIB_Auth.models import User
 from django.utils import translation
 from IRIB_Shared_Lib.models import Month
+from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 from IRIB_Shared_Lib.utils import to_jalali, format_date
 
@@ -79,6 +80,7 @@ class PaySlip(models.Model):
 
 class BonusType(models.Model):
     title = models.CharField(verbose_name=_('Title'), max_length=200, blank=False, unique=True)
+    group = models.ForeignKey(Group, verbose_name=_('Allowed Group'), on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Bonus Type')
@@ -99,7 +101,7 @@ class BonusSubType(models.Model):
     class Meta:
         verbose_name = _('Bonus Sub Type')
         verbose_name_plural = _('Bonus Sub Types')
-        ordering = ['title']
+        ordering = ['type', 'title']
         unique_together = ['title', 'type']
 
     def __str__(self):

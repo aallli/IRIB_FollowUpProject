@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-13 09:57+0430\n"
+"POT-Creation-Date: 2021-06-14 12:56+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,7 +121,7 @@ msgstr "واحدهای پیگیری"
 #: .\EIRIB_FollowUp\models.py:96 .\IRIB_Auth\models.py:10
 #: .\IRIB_FollowUp\models.py:21 .\IRIB_FollowUp\models.py:102
 #: .\IRIB_FollowUp\models.py:119 .\IRIB_FollowUp\models.py:348
-#: .\IRIB_HR\models.py:114 .\Knowledge_Management\models.py:70
+#: .\IRIB_HR\models.py:116 .\Knowledge_Management\models.py:70
 msgid "User"
 msgstr "کاربر"
 
@@ -175,7 +175,7 @@ msgstr "کد مصوبه"
 #: .\EIRIB_FollowUp\models.py:150 .\EIRIB_FollowUp\models.py:177
 #: .\EIRIB_FollowUp\models.py:234 .\IRIB_FollowUp\models.py:150
 #: .\IRIB_FollowUp\models.py:173 .\IRIB_FollowUp\models.py:269
-#: .\IRIB_HR\models.py:117 .\Knowledge_Management\models.py:138
+#: .\IRIB_HR\models.py:119 .\Knowledge_Management\models.py:138
 #: .\Knowledge_Management\models.py:209 .\Knowledge_Management\models.py:243
 #: .\static\admin\custom\eirib-enactment.html:80
 #: .\static\admin\custom\enactments-list-report.html:90
@@ -383,7 +383,7 @@ msgstr "جناب آقای"
 msgid "Mrs"
 msgstr "سرکار خانم"
 
-#: .\IRIB_Auth\models.py:38 .\IRIB_HR\models.py:81 .\IRIB_HR\models.py:96
+#: .\IRIB_Auth\models.py:38 .\IRIB_HR\models.py:82 .\IRIB_HR\models.py:98
 msgid "Title"
 msgstr "عنوان"
 
@@ -504,8 +504,7 @@ msgid "Members"
 msgstr "اعضا"
 
 #: .\IRIB_FollowUp\models.py:156 .\IRIB_FollowUp\models.py:179
-#: .\IRIB_HR\models.py:97 .\IRIB_HR\models.py:113
-#: .\static\admin\custom\enactments-list-report.html:82
+#: .\IRIB_HR\models.py:115 .\static\admin\custom\enactments-list-report.html:82
 #: .\templates\admin\custom\enactments-list-report.html:82
 msgid "Type"
 msgstr "نوع"
@@ -553,216 +552,224 @@ msgstr "پیگیری گروهی"
 msgid "Group FollowUps"
 msgstr "پیگیریهای گروهی"
 
+#: .\IRIB_HR\admin.py:162
+msgid "Bonus type not allowd."
+msgstr "این گروه پاداش برای شما مجاز نیست."
+
 #: .\IRIB_HR\apps.py:7
 msgid "IRIB Human Resources"
 msgstr "مدیریت منابع انسانی"
 
-#: .\IRIB_HR\models.py:10
+#: .\IRIB_HR\models.py:11
 msgid "Month"
 msgstr "ماه"
 
-#: .\IRIB_HR\models.py:11
+#: .\IRIB_HR\models.py:12
 msgid "Year"
 msgstr "سال"
 
-#: .\IRIB_HR\models.py:12 .\static\admin\custom\pay-slip.html:68
+#: .\IRIB_HR\models.py:13 .\static\admin\custom\pay-slip.html:68
 #: .\templates\admin\custom\pay-slip.html:74
 msgid "first name"
 msgstr "نام"
 
-#: .\IRIB_HR\models.py:13 .\static\admin\custom\pay-slip.html:68
+#: .\IRIB_HR\models.py:14 .\static\admin\custom\pay-slip.html:68
 #: .\templates\admin\custom\pay-slip.html:74
 msgid "last name"
 msgstr "نام خانوادگی"
 
-#: .\IRIB_HR\models.py:14
+#: .\IRIB_HR\models.py:15
 msgid "National ID"
 msgstr "کد ملی"
 
-#: .\IRIB_HR\models.py:15 .\static\admin\custom\pay-slip.html:79
+#: .\IRIB_HR\models.py:16 .\static\admin\custom\pay-slip.html:79
 #: .\templates\admin\custom\pay-slip.html:85
 msgid "Personnel ID"
 msgstr "شماره کارمندی"
 
-#: .\IRIB_HR\models.py:16
+#: .\IRIB_HR\models.py:17
 msgid "Account Number"
 msgstr "شماره حساب"
 
-#: .\IRIB_HR\models.py:17
+#: .\IRIB_HR\models.py:18
 msgid "Insurance Number"
 msgstr "شماره بیمه تامین اجتماعی"
 
-#: .\IRIB_HR\models.py:18 .\static\admin\custom\pay-slip.html:72
+#: .\IRIB_HR\models.py:19 .\static\admin\custom\pay-slip.html:72
 #: .\templates\admin\custom\pay-slip.html:78
 msgid "Department"
 msgstr "واحد سازمانی"
 
-#: .\IRIB_HR\models.py:19 .\static\admin\custom\pay-slip.html:83
+#: .\IRIB_HR\models.py:20 .\static\admin\custom\pay-slip.html:83
 #: .\templates\admin\custom\pay-slip.html:89
 msgid "Working Place"
 msgstr "محل خدمت"
 
-#: .\IRIB_HR\models.py:20
+#: .\IRIB_HR\models.py:21
 msgid "Job Title"
 msgstr "عنوان شغلی"
 
-#: .\IRIB_HR\models.py:21 .\static\admin\custom\pay-slip.html:90
+#: .\IRIB_HR\models.py:22 .\static\admin\custom\pay-slip.html:90
 #: .\templates\admin\custom\pay-slip.html:96
 msgid "Contract Type"
 msgstr "نوع قرارداد"
 
-#: .\IRIB_HR\models.py:22
+#: .\IRIB_HR\models.py:23
 msgid "Basic Salary"
 msgstr "حقوق پایه"
 
-#: .\IRIB_HR\models.py:23
+#: .\IRIB_HR\models.py:24
 msgid "Supplementary Allowance"
 msgstr "تفاوت تطبیقی"
 
-#: .\IRIB_HR\models.py:24
+#: .\IRIB_HR\models.py:25
 msgid "Operation"
 msgstr "کارکرد عادی"
 
-#: .\IRIB_HR\models.py:25
+#: .\IRIB_HR\models.py:26
 msgid "Overtime Working"
 msgstr "کارکرد اضافه"
 
-#: .\IRIB_HR\models.py:26
+#: .\IRIB_HR\models.py:27
 msgid "Overtime"
 msgstr "اضافه کاری"
 
-#: .\IRIB_HR\models.py:27
+#: .\IRIB_HR\models.py:28
 msgid "Special Allowance"
 msgstr "حق ویژه"
 
-#: .\IRIB_HR\models.py:28
+#: .\IRIB_HR\models.py:29
 msgid "Post Allowance"
 msgstr "حق مسوولیت"
 
-#: .\IRIB_HR\models.py:29
+#: .\IRIB_HR\models.py:30
 msgid "Children Allowance"
 msgstr "حق اولاد"
 
-#: .\IRIB_HR\models.py:30
+#: .\IRIB_HR\models.py:31
 msgid "etc"
 msgstr "سایر"
 
-#: .\IRIB_HR\models.py:31
+#: .\IRIB_HR\models.py:32
 msgid "Difference"
 msgstr "مابه التفاوت"
 
-#: .\IRIB_HR\models.py:32
+#: .\IRIB_HR\models.py:33
 msgid "Grocery Allowance"
 msgstr "کمک هزینه خواروبار"
 
-#: .\IRIB_HR\models.py:33
+#: .\IRIB_HR\models.py:34
 msgid "Housing Allowance"
 msgstr "کمک هزینه مسکن"
 
-#: .\IRIB_HR\models.py:34
+#: .\IRIB_HR\models.py:35
 msgid "Spouse Allowance"
 msgstr "حق همسر"
 
-#: .\IRIB_HR\models.py:35
+#: .\IRIB_HR\models.py:36
 msgid "Mobile  Allowance"
 msgstr "کمک هزینه موبایل"
 
-#: .\IRIB_HR\models.py:36
+#: .\IRIB_HR\models.py:37
 msgid "Food Cost"
 msgstr "هزینه غذا"
 
-#: .\IRIB_HR\models.py:37 .\static\admin\custom\pay-slip.html:118
+#: .\IRIB_HR\models.py:38 .\static\admin\custom\pay-slip.html:118
 #: .\templates\admin\custom\pay-slip.html:124
 msgid "Insurance"
 msgstr "بیمه"
 
-#: .\IRIB_HR\models.py:38 .\static\admin\custom\pay-slip.html:126
+#: .\IRIB_HR\models.py:39 .\static\admin\custom\pay-slip.html:126
 #: .\templates\admin\custom\pay-slip.html:132
 msgid "Tax"
 msgstr "مالیات"
 
-#: .\IRIB_HR\models.py:39
+#: .\IRIB_HR\models.py:40
 msgid "Loan Installments"
 msgstr "اقساط بیمه"
 
-#: .\IRIB_HR\models.py:40
+#: .\IRIB_HR\models.py:41
 msgid "Supplementary Insurance"
 msgstr "بیمه تکمیلی"
 
-#: .\IRIB_HR\models.py:41 .\static\admin\custom\pay-slip.html:181
+#: .\IRIB_HR\models.py:42 .\static\admin\custom\pay-slip.html:181
 #: .\templates\admin\custom\pay-slip.html:187
 msgid "Leave Balance"
 msgstr "مانده مرخصی"
 
-#: .\IRIB_HR\models.py:42 .\static\admin\custom\pay-slip.html:187
+#: .\IRIB_HR\models.py:43 .\static\admin\custom\pay-slip.html:187
 #: .\templates\admin\custom\pay-slip.html:193
 msgid "Atieh Fund Balance"
 msgstr "مانده صندوق آتیه"
 
-#: .\IRIB_HR\models.py:43 .\static\admin\custom\pay-slip.html:191
+#: .\IRIB_HR\models.py:44 .\static\admin\custom\pay-slip.html:191
 #: .\templates\admin\custom\pay-slip.html:197
 msgid "Refah Fund Balance"
 msgstr "مانده صندوق رفاه"
 
-#: .\IRIB_HR\models.py:46
+#: .\IRIB_HR\models.py:47
 msgid "Pay Slip"
 msgstr "فیش حقوقی"
 
-#: .\IRIB_HR\models.py:47
+#: .\IRIB_HR\models.py:48
 msgid "Pay Slips"
 msgstr "فیش حقوقی"
 
-#: .\IRIB_HR\models.py:59 .\static\admin\custom\eirib-enactment.html:63
+#: .\IRIB_HR\models.py:60 .\static\admin\custom\eirib-enactment.html:63
 #: .\static\admin\custom\pay-slip.html:94
 #: .\templates\admin\custom\eirib-enactment.html:63
 #: .\templates\admin\custom\pay-slip.html:100
 msgid "Date"
 msgstr "تاریخ"
 
-#: .\IRIB_HR\models.py:67 .\static\admin\custom\pay-slip.html:162
+#: .\IRIB_HR\models.py:68 .\static\admin\custom\pay-slip.html:162
 #: .\templates\admin\custom\pay-slip.html:168
 msgid "Gross Salary"
 msgstr "جمع درآمد ناخالص"
 
-#: .\IRIB_HR\models.py:72 .\static\admin\custom\pay-slip.html:167
+#: .\IRIB_HR\models.py:73 .\static\admin\custom\pay-slip.html:167
 #: .\templates\admin\custom\pay-slip.html:173
 msgid "Total deductions"
 msgstr "جمع کسورات"
 
-#: .\IRIB_HR\models.py:77 .\static\admin\custom\pay-slip.html:173
+#: .\IRIB_HR\models.py:78 .\static\admin\custom\pay-slip.html:173
 #: .\templates\admin\custom\pay-slip.html:179
 msgid "Net Salary"
 msgstr "مبلغ قابل پرداخت"
 
-#: .\IRIB_HR\models.py:84
+#: .\IRIB_HR\models.py:83
+msgid "Allowed Group"
+msgstr "گروه مجاز"
+
+#: .\IRIB_HR\models.py:86 .\IRIB_HR\models.py:99
 msgid "Bonus Type"
 msgstr "گروه پاداش"
 
-#: .\IRIB_HR\models.py:85
+#: .\IRIB_HR\models.py:87
 msgid "Bonus Types"
 msgstr "گروههای پاداش"
 
-#: .\IRIB_HR\models.py:100
+#: .\IRIB_HR\models.py:102
 msgid "Bonus Sub Type"
 msgstr "نوع پاداش"
 
-#: .\IRIB_HR\models.py:101
+#: .\IRIB_HR\models.py:103
 msgid "Bonus Sub Types"
 msgstr "انواع پاداش"
 
-#: .\IRIB_HR\models.py:115 .\IRIB_HR\models.py:133
+#: .\IRIB_HR\models.py:117 .\IRIB_HR\models.py:135
 msgid "Pay Date"
 msgstr "تاریخ پرداخت"
 
-#: .\IRIB_HR\models.py:116
+#: .\IRIB_HR\models.py:118
 msgid "Amount"
 msgstr "مبلغ (ریال)"
 
-#: .\IRIB_HR\models.py:120
+#: .\IRIB_HR\models.py:122
 msgid "Bonus"
 msgstr "پاداش"
 
-#: .\IRIB_HR\models.py:121
+#: .\IRIB_HR\models.py:123
 msgid "Bonuses"
 msgstr "پاداشها"
 
