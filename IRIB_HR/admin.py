@@ -106,16 +106,17 @@ class BonusTypeAdmin(BaseModelAdmin):
         if user.is_superuser:
             return queryset
 
+        queryset_output = queryset.none()
         if user.is_hr_administation():
-            return queryset.filter(group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
+            queryset_output |= queryset.filter(group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
 
         if user.is_hr_financial():
-            return queryset.filter(group__name=settings.HR_FINANCIAL_GROUP_NAME)
+            queryset_output |= queryset.filter(group__name=settings.HR_FINANCIAL_GROUP_NAME)
 
         if user.is_hr_planning():
-            return queryset.filter(group__name=settings.HR_PLANNING_GROUP_NAME)
+            queryset_output |= queryset.filter(group__name=settings.HR_PLANNING_GROUP_NAME)
 
-        return queryset.none()
+        return queryset_output
 
 
 @admin.register(BonusSubType)
@@ -133,32 +134,33 @@ class BonusSubTypeAdmin(BaseModelAdmin):
         if user.is_superuser:
             return queryset
 
+        queryset_output = queryset.none()
         if user.is_hr_administation():
-            return queryset.filter(type__group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
+            queryset_output |= queryset.filter(type__group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
 
         if user.is_hr_financial():
-            return queryset.filter(type__group__name=settings.HR_FINANCIAL_GROUP_NAME)
+            queryset_output |= queryset.filter(type__group__name=settings.HR_FINANCIAL_GROUP_NAME)
 
         if user.is_hr_planning():
-            return queryset.filter(type__group__name=settings.HR_PLANNING_GROUP_NAME)
+            queryset_output |= queryset.filter(type__group__name=settings.HR_PLANNING_GROUP_NAME)
 
-        return queryset.none()
+        return queryset_output
 
     def save_model(self, request, obj, form, change):
         user = request.user
         try:
             if not user.is_superuser:
-                group = ''
+                groups = []
                 if user.is_hr_administation():
-                    group = settings.HR_ADMINISTRATION_GROUP_NAME
+                    groups.append(settings.HR_ADMINISTRATION_GROUP_NAME)
 
                 if user.is_hr_financial():
-                    group = settings.HR_FINANCIAL_GROUP_NAME
+                    groups.append(settings.HR_FINANCIAL_GROUP_NAME)
 
                 if user.is_hr_planning():
-                    group = settings.HR_PLANNING_GROUP_NAME
+                    groups.append(settings.HR_PLANNING_GROUP_NAME)
 
-                if obj.type.group.name != group:
+                if not obj.type.group.name in groups:
                     raise Exception(_('Bonus type not allowd.'))
 
             super(BonusSubTypeAdmin, self).save_model(request, obj, form, change)
@@ -195,32 +197,33 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         if user.is_superuser:
             return queryset
 
+        queryset_output = queryset.none()
         if user.is_hr_administation():
-            return queryset.filter(type__type__group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
+            queryset_output |= queryset.filter(type__type__group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
 
         if user.is_hr_financial():
-            return queryset.filter(type__type__group__name=settings.HR_FINANCIAL_GROUP_NAME)
+            queryset_output |=queryset.filter(type__type__group__name=settings.HR_FINANCIAL_GROUP_NAME)
 
         if user.is_hr_planning():
-            return queryset.filter(type__type__group__name=settings.HR_PLANNING_GROUP_NAME)
+            queryset_output |=queryset.filter(type__type__group__name=settings.HR_PLANNING_GROUP_NAME)
 
-        return queryset.none()
+        return queryset_output
 
     def save_model(self, request, obj, form, change):
         user = request.user
         try:
             if not user.is_superuser:
-                group = ''
+                groups = []
                 if user.is_hr_administation():
-                    group = settings.HR_ADMINISTRATION_GROUP_NAME
+                    groups.append(settings.HR_ADMINISTRATION_GROUP_NAME)
 
                 if user.is_hr_financial():
-                    group = settings.HR_FINANCIAL_GROUP_NAME
+                    groups.append(settings.HR_FINANCIAL_GROUP_NAME)
 
                 if user.is_hr_planning():
-                    group = settings.HR_PLANNING_GROUP_NAME
+                    groups.append(settings.HR_PLANNING_GROUP_NAME)
 
-                if obj.type.type.group.name != group:
+                if not obj.type.type.group.name in groups:
                     raise Exception(_('Bonus type not allowd.'))
 
             super(BonusAdmin, self).save_model(request, obj, form, change)

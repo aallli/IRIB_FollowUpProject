@@ -13,7 +13,7 @@
             {% for app in app_list %}
                 <div class="app-{{ app.app_label }} module">
                     {% if app.app_label == 'IRIB_HR' %}
-                        {% if user.is_superuser or user.is_secretary %}
+                        {% if user.is_superuser or user.is_hr_financial %}
                             <form enctype="multipart/form-data" action="/hr_start_sync/" method="post"
                                   id="payslip_form">
                             {% csrf_token %}
@@ -46,14 +46,14 @@
                         {% endif %}
 
                         {% if app.app_label == 'IRIB_HR' %}
-                            {% if user.is_superuser or user.is_secretary %}
+                            {% if user.is_superuser or user.is_hr_financial %}
                                 {% hr_data_loading 'index' as hr_data_loading %}
                                 {% if hr_data_loading.1 %}
                                     <div class="errornote loading-message index">{% trans 'Data syncronization failed. Try later and contact administrator if failing repeats.' %}</div>
                                 {% endif %}
                                 <tr class="model-{{ model.object_name|lower }}">
                                     <th scope="row">
-                                        <a href="javascript: void(0);">{% trans 'Update data' %}</a>
+                                        <a href="javascript: void(0);">{% trans 'Upload payslip' %}</a>
                                         <input id="file" name="file" type="file"/>
                                     </th>
                                     {% if hr_data_loading.0 %}

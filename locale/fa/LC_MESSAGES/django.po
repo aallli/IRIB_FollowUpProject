@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-14 12:56+0430\n"
+"POT-Creation-Date: 2021-06-15 10:42+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -552,7 +552,7 @@ msgstr "پیگیری گروهی"
 msgid "Group FollowUps"
 msgstr "پیگیریهای گروهی"
 
-#: .\IRIB_HR\admin.py:162
+#: .\IRIB_HR\admin.py:162 .\IRIB_HR\admin.py:224
 msgid "Bonus type not allowd."
 msgstr "این گروه پاداش برای شما مجاز نیست."
 
@@ -1305,7 +1305,7 @@ msgid "Models in the %(name)s application"
 msgstr "موجودیتهای اپلیکیشن %(name)s"
 
 #: .\static\admin\index.html:34 .\static\admin\index.html:56
-#: .\templates\admin\index.html:34 .\templates\admin\index.html:56
+#: .\templates\admin\index.html:34
 msgid "Update data"
 msgstr "همسان سازی داده ها"
 
@@ -1399,3 +1399,7 @@ msgstr "از"
 #: .\static\admin\submit_line.html:99 .\templates\admin\submit_line.html:99
 msgid "Filtered"
 msgstr "فیلتر شده"
+
+#: .\templates\admin\index.html:56
+msgid "Upload payslip"
+msgstr "بارگذاری گروهی حقوق"
