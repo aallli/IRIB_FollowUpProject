@@ -96,8 +96,20 @@ class PaySlipAdmin(BaseModelAdmin):
 @admin.register(BonusType)
 class BonusTypeAdmin(BaseModelAdmin):
     model = BonusType
-    list_display = ['title', 'group', ]
-    list_display_links = ['title', 'group', ]
+    fields = ['title', ]
+    list_display = ['title', ]
+    ordering = ['title', ]
+
+    def get_fields(self, request, obj=None):
+        user = request.user
+        return self.fields + ['group', ] if user.is_superuser else self.fields
+
+    def get_list_display(self, request):
+        user = request.user
+        return self.list_display + ['group', ] if user.is_superuser else self.list_display
+
+    def get_list_display_links(self, request, list_display):
+        return self.get_list_display(request)
 
     def get_queryset(self, request):
         queryset = super(BonusTypeAdmin, self).get_queryset(request)
@@ -106,17 +118,8 @@ class BonusTypeAdmin(BaseModelAdmin):
         if user.is_superuser:
             return queryset
 
-        queryset_output = queryset.none()
-        if user.is_hr_administation():
-            queryset_output |= queryset.filter(group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
-
-        if user.is_hr_financial():
-            queryset_output |= queryset.filter(group__name=settings.HR_FINANCIAL_GROUP_NAME)
-
-        if user.is_hr_planning():
-            queryset_output |= queryset.filter(group__name=settings.HR_PLANNING_GROUP_NAME)
-
-        return queryset_output
+        groups = user.get_groups(settings.HR_)
+        return queryset.filter(group__name__in=groups)
 
 
 @admin.register(BonusSubType)
@@ -124,8 +127,11 @@ class BonusSubTypeAdmin(BaseModelAdmin):
     model = BonusSubType
     fields = ['type', 'title']
     list_display = ['type', 'title', ]
-    list_display_links = ['type', 'title', ]
-    list_filter = ['type']
+    list_filter = ['type', ]
+    ordering = ['type', 'title']
+
+    def get_list_display_links(self, request, list_display):
+        return self.get_list_display(request)
 
     def get_queryset(self, request):
         queryset = super(BonusSubTypeAdmin, self).get_queryset(request)
@@ -134,47 +140,36 @@ class BonusSubTypeAdmin(BaseModelAdmin):
         if user.is_superuser:
             return queryset
 
-        queryset_output = queryset.none()
-        if user.is_hr_administation():
-            queryset_output |= queryset.filter(type__group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
-
-        if user.is_hr_financial():
-            queryset_output |= queryset.filter(type__group__name=settings.HR_FINANCIAL_GROUP_NAME)
-
-        if user.is_hr_planning():
-            queryset_output |= queryset.filter(type__group__name=settings.HR_PLANNING_GROUP_NAME)
-
-        return queryset_output
+        groups = user.get_groups(settings.HR_)
+        return queryset.filter(type__group__name__in=groups)
 
     def save_model(self, request, obj, form, change):
         user = request.user
         try:
             if not user.is_superuser:
-                groups = []
-                if user.is_hr_administation():
-                    groups.append(settings.HR_ADMINISTRATION_GROUP_NAME)
-
-                if user.is_hr_financial():
-                    groups.append(settings.HR_FINANCIAL_GROUP_NAME)
-
-                if user.is_hr_planning():
-                    groups.append(settings.HR_PLANNING_GROUP_NAME)
-
+                groups = user.get_groups(settings.HR_)
                 if not obj.type.group.name in groups:
-                    raise Exception(_('Bonus type not allowd.'))
+                    raise Exception(_('Bonus type not allowed.'))
 
             super(BonusSubTypeAdmin, self).save_model(request, obj, form, change)
         except Exception as e:
             messages.set_level(request, messages.ERROR)
             messages.error(request, e)
 
+    def get_field_queryset(self, db, db_field, request):
+        user = request.user
+        if not user.is_superuser and db_field.name == 'type':
+            groups = user.get_groups(settings.HR_)
+            queryset = super(BonusSubTypeAdmin, self).get_field_queryset(db, db_field, request)
+            return queryset.filter(group__name__in=groups)
+        return super(BonusSubTypeAdmin, self).get_field_queryset(db, db_field, request)
+
 
 @admin.register(Bonus)
 class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = Bonus
     list_display = ['type', 'date', 'amount']
-    list_display_links = ['type', 'date', 'amount']
-    list_filter = ['type']
+    list_filter = ['type', ]
     search_fields = ['type__title', 'description', 'user__username', 'user__first_name', 'user__last_name']
 
     def get_queryset(self, request):
@@ -185,7 +180,7 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         return self.list_display + ['user', ] if request.user.is_superuser else self.list_display
 
     def get_list_display_links(self, request, list_display):
-        return self.list_display_links + ['user', ] if request.user.is_superuser else self.list_display_links
+        return self.get_list_display(request)
 
     def get_list_filter(self, request):
         return self.list_filter + ['user', ] if request.user.is_superuser else self.list_filter
@@ -197,36 +192,26 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         if user.is_superuser:
             return queryset
 
-        queryset_output = queryset.none()
-        if user.is_hr_administation():
-            queryset_output |= queryset.filter(type__type__group__name=settings.HR_ADMINISTRATION_GROUP_NAME)
-
-        if user.is_hr_financial():
-            queryset_output |=queryset.filter(type__type__group__name=settings.HR_FINANCIAL_GROUP_NAME)
-
-        if user.is_hr_planning():
-            queryset_output |=queryset.filter(type__type__group__name=settings.HR_PLANNING_GROUP_NAME)
-
-        return queryset_output
+        groups = user.get_groups(settings.HR_)
+        return queryset.filter(type__type__group__name__in=groups)
 
     def save_model(self, request, obj, form, change):
         user = request.user
         try:
             if not user.is_superuser:
-                groups = []
-                if user.is_hr_administation():
-                    groups.append(settings.HR_ADMINISTRATION_GROUP_NAME)
-
-                if user.is_hr_financial():
-                    groups.append(settings.HR_FINANCIAL_GROUP_NAME)
-
-                if user.is_hr_planning():
-                    groups.append(settings.HR_PLANNING_GROUP_NAME)
-
+                groups = user.get_groups(settings.HR_)
                 if not obj.type.type.group.name in groups:
-                    raise Exception(_('Bonus type not allowd.'))
+                    raise Exception(_('Bonus type not allowed.'))
 
             super(BonusAdmin, self).save_model(request, obj, form, change)
         except Exception as e:
             messages.set_level(request, messages.ERROR)
             messages.error(request, e)
+
+    def get_field_queryset(self, db, db_field, request):
+        user = request.user
+        if not user.is_superuser and db_field.name == 'type':
+            groups = user.get_groups(settings.HR_)
+            queryset = super(BonusAdmin, self).get_field_queryset(db, db_field, request)
+            return queryset.filter(type__group__name__in=groups)
+        return super(BonusAdmin, self).get_field_queryset(db, db_field, request)

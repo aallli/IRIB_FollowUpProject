@@ -82,20 +82,18 @@ class User(AbstractUser):
             raise Exception(_('Delete failed, Immutable user: (%s)' % self.username))
         return super(User, self).delete(using, keep_parents)
 
-    def is_hr_administation(self):
-        for group in self.groups.all():
-            if group.name == settings.HR_ADMINISTRATION_GROUP_NAME:
+    def is_group_member(self, group):
+        for _group in self.groups.all():
+            if _group.name == group:
                 return True
         return False
 
-    def is_hr_financial(self):
-        for group in self.groups.all():
-            if group.name == settings.HR_FINANCIAL_GROUP_NAME:
-                return True
-        return False
+    def get_groups(self, groups=None):
+        if groups == None:
+            return self.groups.all().values_list('name')
 
-    def is_hr_planning(self):
-        for group in self.groups.all():
-            if group.name == settings.HR_PLANNING_GROUP_NAME:
-                return True
-        return False
+        _groups = []
+        for group in groups:
+            if self.is_group_member(groups[group]):
+                _groups.append(groups[group])
+        return _groups

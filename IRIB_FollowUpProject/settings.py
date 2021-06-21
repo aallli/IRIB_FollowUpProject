@@ -26,7 +26,7 @@ SSO_SALT = os.environ.get('SSO_SALT', default='5152')
 DEBUG = True
 
 # admin info
-VERSION = '1.24.4'
+VERSION = '1.25.0'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -225,14 +225,20 @@ EIRIB_FU_USER_GROUP_NAME = 'EIRIB FU - Users'
 # IRIB Followup Configurations
 IRIB_FU_OPERATOR_GROUP_NAME = 'IRIB FU - Operators'
 IRIB_FU_USER_GROUP_NAME = 'IRIB FU - Users'
+IRIB_FU_ = {
+    'HQ_GROUP_NAME' : 'IRIB FU - HQ',
+    'CS_PLANNING_GROUP_NAME' : 'IRIB FU - CS - Planning',
+}
 
 # Knowledge Management Configurations
 KM_OPERATOR_GROUP_NAME = 'KM - Operators'
 KM_USER_GROUP_NAME = 'KM - Users'
 
-# EIRIB HR Configurations
+# IRIB HR Configurations
 HR_OPERATOR_GROUP_NAME = 'HR - Operators'
 HR_USER_GROUP_NAME = 'HR - Users'
-HR_ADMINISTRATION_GROUP_NAME = 'HR - Administration'
-HR_FINANCIAL_GROUP_NAME = 'HR - Financial'
-HR_PLANNING_GROUP_NAME = 'HR - Planning'
+HR_ = {
+    'ADMINISTRATION_GROUP_NAME' : 'HR - Administration',
+    'FINANCIAL_GROUP_NAME' : 'HR - Financial',
+    'PLANNING_GROUP_NAME' : 'HR - Planning',
+}

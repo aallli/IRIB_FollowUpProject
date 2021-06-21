@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf import settings
 from django.db.models import Count
 from IRIB_Auth.models import Supervisor
 from django.db.transaction import atomic
@@ -90,10 +91,33 @@ class SessionAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     search_fields = ['session__name', ]
     fields = [('session', '_date'), 'absents']
     list_display = ['session', 'date']
-    list_display_links = ['session', 'date']
     readonly_fields = ['date', 'absents']
     list_filter = ['session', get_jalali_filter('_date', _('Attended Date'))]
+    ordering = ['session__name', '-_date']
     inlines = [AttendantInline]
+
+    def get_list_display_links(self, request, list_display):
+        return self.get_list_display(request)
+
+    def get_queryset(self, request):
+        queryset = super(SessionAdmin, self).get_queryset(request)
+        user = request.user
+
+        if user.is_superuser:
+            return queryset
+
+        groups = user.get_groups(settings.IRIB_FU_)
+        return queryset.filter(session__group__name__in=groups)
+
+    def get_field_queryset(self, db, db_field, request):
+        user = request.user
+        if not user.is_superuser and db_field.name == 'session':
+            groups = user.get_groups(settings.IRIB_FU_)
+            queryset = super(SessionAdmin, self).get_field_queryset(db, db_field, request)
+            if queryset:
+                queryset = queryset.filter(group__name__in=groups)
+            return queryset
+        return super(SessionAdmin, self).get_field_queryset(db, db_field, request)
 
     def save_model(self, request, obj, form, change):
         new_session = not obj.pk
@@ -120,16 +144,43 @@ class SessionAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 @admin.register(SessionBase)
 class SessionBaseAdmin(BaseModelAdmin):
     model = Session
+    fields = ['name', 'group', ]
+    list_display = ['name', 'group', ]
     search_fields = ['name', ]
     inlines = [MemberInline, SessionInline]
+    ordering = ['name']
+
+    def get_list_display_links(self, request, list_display):
+        return self.get_list_display(request)
+
+    def get_field_queryset(self, db, db_field, request):
+        user = request.user
+        if not user.is_superuser and db_field.name == 'group':
+            groups = user.get_groups(settings.IRIB_FU_)
+            return super(SessionBaseAdmin, self).get_field_queryset(db, db_field, request).filter(name__in=groups)
+        return super(SessionBaseAdmin, self).get_field_queryset(db, db_field, request)
+
+    def get_queryset(self, request):
+        queryset = super(SessionBaseAdmin, self).get_queryset(request)
+        user = request.user
+
+        if user.is_superuser:
+            return queryset
+
+        groups = user.get_groups(settings.IRIB_FU_)
+        return queryset.filter(group__name__in=groups)
 
     @atomic()
     def save_model(self, request, obj, form, change):
         if obj.pk:
+            # Change the correspondent group name
             if 'name' in form.initial:
-                group = Group.objects.get_or_create(name=form.initial['name'])[0]
-                group.name = obj.name
-                group.save()
+                try:
+                    group = Group.objects.get(name=form.initial['name'])[0]
+                    group.name = obj.name
+                    group.save()
+                except:
+                    pass
         else:
             Group.objects.get_or_create(name=obj.name)
         return super(SessionBaseAdmin, self).save_model(request, obj, form, change)
@@ -224,8 +275,6 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     list_display = ['row', 'type', 'session', 'session_date', 'review_date', 'status', 'subject',
                     'description_short']
-    list_display_links = ['row', 'type', 'session', 'session_date', 'review_date', 'status', 'subject',
-                          'description_short']
     list_filter = ['_type',
                    get_jalali_filter('_review_date', _('Review Date')),
                    get_jalali_filter('session___date', _('Assignment Date')),
@@ -241,6 +290,18 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 
     status.admin_order_field = 'status'
     status.short_description = _('Status')
+
+    def get_list_display_links(self, request, list_display):
+        return self.get_list_display(request)
+
+    def get_field_queryset(self, db, db_field, request):
+        user = request.user
+        if not user.is_superuser and db_field.name == 'session':
+            groups = user.get_groups(settings.IRIB_FU_)
+            queryset = super(EnactmentAdmin, self).get_field_queryset(db, db_field, request)
+            return queryset.filter(session__group__name__in=groups) | queryset.filter(
+                session_id__in=Member.objects.filter(user=user).values('session_id'))
+        return super(EnactmentAdmin, self).get_field_queryset(db, db_field, request)
 
     def get_inline_instances(self, request, obj=None):
         if request.user.is_superuser or request.user.is_secretary or request.user.is_scoped_secretary:
@@ -266,8 +327,11 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         if request.user.is_superuser or request.user.is_secretary:
             return queryset
 
-        return queryset.filter(pk__in=FollowUp.objects.filter(actor=request.user).values('enactment')) | \
-               queryset.filter(session__session__in=Member.objects.filter(user=request.user).values('session'))
+        user = request.user
+        groups = user.get_groups(settings.IRIB_FU_)
+        return queryset.filter(session__session__group__name__in=groups) | \
+               queryset.filter(pk__in=FollowUp.objects.filter(actor=user).values('enactment')) | \
+               queryset.filter(session__session__in=Member.objects.filter(user=user).values('session'))
 
     def get_readonly_fields(self, request, obj=None):
         extra_readonly = ['_review_date']
@@ -278,6 +342,32 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             return self.readonly_fields + extra_readonly
 
         return self.readonly_fields
+
+    def save_model(self, request, obj, form, change):
+        user = request.user
+        try:
+            if not user.is_superuser:
+                groups = user.get_groups(settings.IRIB_FU_)
+                if not obj.session.session.group.name in groups:
+                    raise Exception(_('Session not allowed.'))
+
+            super(EnactmentAdmin, self).save_model(request, obj, form, change)
+        except Exception as e:
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, e)
+
+    def delete_model(self, request, obj):
+        user = request.user
+        try:
+            if not user.is_superuser:
+                groups = user.get_groups(settings.IRIB_FU_)
+                if not obj.session.session.group.name in groups:
+                    raise Exception(_('Session not allowed.'))
+
+            super(EnactmentAdmin, self).delete_model(request, obj)
+        except Exception as e:
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, e)
 
     def report(self, request):
         super(BaseModelAdmin, self).changelist_view(request)

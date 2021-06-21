@@ -7,6 +7,7 @@ from IRIB_Auth.models import User
 from django.dispatch import receiver
 from django.utils import translation
 from django.utils.html import format_html
+from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 from IRIB_Shared_Lib.utils import to_jalali, format_date
 
@@ -36,6 +37,7 @@ class EnactmentType(models.TextChoices):
 
 class SessionBase(models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=2000, blank=False, unique=True)
+    group = models.ForeignKey(Group, verbose_name=_('Allowed Group'), on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Meeeting')
@@ -56,7 +58,7 @@ class Session(models.Model):
     class Meta:
         verbose_name = _('Minute')
         verbose_name_plural = _('Minutes')
-        ordering = ['session__name', '_date']
+        ordering = ['session__name', '-_date']
 
     def __str__(self):
         return '%s (%s)' % (self.session.name, self.date())
