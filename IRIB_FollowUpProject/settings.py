@@ -26,7 +26,7 @@ SSO_SALT = os.environ.get('SSO_SALT', default='5152')
 DEBUG = True
 
 # admin info
-VERSION = '1.25.2'
+VERSION = '1.26.0'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -228,6 +228,7 @@ IRIB_FU_USER_GROUP_NAME = 'IRIB FU - Users'
 IRIB_FU_ = {
     'HQ_GROUP_NAME' : 'سامانه پیگیری - حوزه ریاست',
     'CS_PLANNING_GROUP_NAME' : 'سامانه پیگیری - برنامه ریزی فضای مجازی',
+    'CS_LICENSE_GROUP_NAME' : 'سامانه پیگیری - صدور مجوز فضای مجازی',
 }
 
 # Knowledge Management Configurations
