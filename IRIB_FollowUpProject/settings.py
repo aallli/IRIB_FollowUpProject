@@ -26,7 +26,7 @@ SSO_SALT = os.environ.get('SSO_SALT', default='5152')
 DEBUG = True
 
 # admin info
-VERSION = '1.25.0'
+VERSION = '1.25.2'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -215,7 +215,7 @@ NAVIGATED_MODELS = ['EIRIB_FollowUp_session', 'EIRIB_FollowUp_assigner', 'EIRIB_
                     'Knowledge_Management_subcategory', 'Knowledge_Management_assessmentcardtable',
                     'Knowledge_Management_personalcardtable',
 
-                    'IRIB_HR_payslip',
+                    'IRIB_HR_payslip', 'IRIB_HR_bonustype', 'IRIB_HR_bonus', 'IRIB_HR_bonussubtype',
                     ]
 
 # EIRIB Followup Configurations
@@ -226,8 +226,8 @@ EIRIB_FU_USER_GROUP_NAME = 'EIRIB FU - Users'
 IRIB_FU_OPERATOR_GROUP_NAME = 'IRIB FU - Operators'
 IRIB_FU_USER_GROUP_NAME = 'IRIB FU - Users'
 IRIB_FU_ = {
-    'HQ_GROUP_NAME' : 'IRIB FU - HQ',
-    'CS_PLANNING_GROUP_NAME' : 'IRIB FU - CS - Planning',
+    'HQ_GROUP_NAME' : 'سامانه پیگیری - حوزه ریاست',
+    'CS_PLANNING_GROUP_NAME' : 'سامانه پیگیری - برنامه ریزی فضای مجازی',
 }
 
 # Knowledge Management Configurations
