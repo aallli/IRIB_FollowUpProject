@@ -12,9 +12,31 @@ class AccessLevel(models.TextChoices):
     SCOPED_SECRETARY = 'scoped_secretary', _('Scoped Secretary')
 
 
+class Sex(models.TextChoices):
+    MALE = 'male', _('Male')
+    FEMALE = 'female', _('Female')
+
+
 class Title(models.TextChoices):
     MR = 'Mr', _('Mr')
     MRS = 'Mrs', _('Mrs')
+
+
+class MaritalStatus(models.TextChoices):
+    MR = 'married', _('Married')
+    SG = 'single', _('Single')
+    DV = 'divorced', _('Divorced')
+    WD = 'widowed', _('Widowed')
+
+
+class EducationLevel(models.TextChoices):
+    PS = 'preschool', _('Preschool')
+    PR = 'primary', _('Primary')
+    LW = 'lower', _('Lower secondary')
+    UP = 'upper', _('Upper secondary')
+    BC = 'bachelor', _('Bachelor''s or equivalent')
+    MS = 'master', _('Master''s or equivalent')
+    DC = 'doctoral', _('Doctoral or equivalent')
 
 
 class Supervisor(models.Model):

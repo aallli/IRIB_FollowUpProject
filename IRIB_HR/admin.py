@@ -4,14 +4,13 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
 from IRIB_Shared_Lib.models import Month
-from django.forms import ValidationError
 from django.utils import timezone, translation
 from IRIB_Shared_Lib.admin import BaseModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
-from IRIB_Shared_Lib.utils import to_jalali, format_date
-from .models import PaySlip, BonusType, Bonus, BonusSubType
+from IRIB_Shared_Lib.utils import to_jalali, format_date, get_jalali_filter
+from .models import PaySlip, BonusType, Bonus, BonusSubType, PersonalInquiry
 
 # Used for thousands separator for numbers... usage: f'{value:n}'
 locale.setlocale(locale.LC_ALL, '')
@@ -172,10 +171,6 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     list_filter = ['type', ]
     search_fields = ['type__title', 'description', 'user__username', 'user__first_name', 'user__last_name']
 
-    def get_queryset(self, request):
-        return Bonus.objects.all() if request.user.is_superuser else Bonus.objects.filter(
-            user_id=request.user.pk)
-
     def get_list_display(self, request):
         return self.list_display + ['user', ] if request.user.is_superuser else self.list_display
 
@@ -192,8 +187,11 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         if user.is_superuser:
             return queryset
 
-        groups = user.get_groups(settings.HR_)
-        return queryset.filter(type__type__group__name__in=groups)
+        if user.is_group_member(settings.HR_OPERATOR_GROUP_NAME):
+            groups = user.get_groups(settings.HR_)
+            return queryset.filter(type__type__group__name__in=groups)
+        else:
+            return queryset.filter(user_id=user.pk)
 
     def save_model(self, request, obj, form, change):
         user = request.user
@@ -215,3 +213,25 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             queryset = super(BonusAdmin, self).get_field_queryset(db, db_field, request)
             return queryset.filter(type__group__name__in=groups)
         return super(BonusAdmin, self).get_field_queryset(db, db_field, request)
+
+
+@admin.register(PersonalInquiry)
+class PersonalInquiryAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
+    model = PersonalInquiry
+    queryset = PersonalInquiry.objects.all()
+    fields = (('image', 'image_tag'),
+              ('last_name', 'first_name', 'alias', 'national_code',),
+              ('father_name', 'id_number', 'issue_place', 'marital_status',),
+              ('_birthdate', 'birth_place', 'religion', 'personal_no',),
+              ('educational_stage', 'email', 'postal_code', 'tel',),
+              ('mobile', 'operator_name', 'cooperation_reason',),
+              ('address', 'description', 'background',),
+              )
+    list_display = ['last_name', 'first_name', 'national_code', 'date', 'operator_name']
+    list_filter = ['sex', get_jalali_filter('_date', _('Inquiry Date')), 'marital_status', 'educational_stage']
+    readonly_fields = ['date', 'image_tag']
+    search_fields = ['last_name', 'first_name', 'national_code', 'operator_name', 'id_number', 'personal_no',
+                     'alias', 'cooperation_reason', 'mobile', 'email', 'description', 'address']
+
+    def get_list_display_links(self, request, list_display):
+        return self.get_list_display(request)

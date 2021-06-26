@@ -1,10 +1,15 @@
+import os
 from django.db import models
-from IRIB_Auth.models import User
+from django.conf import settings
 from django.utils import translation
+from django.dispatch import receiver
+from django.utils.html import mark_safe
 from IRIB_Shared_Lib.models import Month
+from django_resized import ResizedImageField
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
-from IRIB_Shared_Lib.utils import to_jalali, format_date
+from IRIB_Shared_Lib.utils import to_jalali, format_date, set_now
+from IRIB_Auth.models import User, MaritalStatus, EducationLevel, Sex
 
 
 class PaySlip(models.Model):
@@ -134,3 +139,136 @@ class Bonus(models.Model):
 
     date.short_description = _('Pay Date')
     date.admin_order_field = 'date'
+
+
+class PersonalInquiry(models.Model):
+    first_name = models.CharField(_('first name'), max_length=30, blank=False, null=False)
+    last_name = models.CharField(_('last name'), max_length=150, blank=False, null=False)
+    father_name = models.CharField(_('father name'), max_length=30, blank=False, null=False)
+    id_number = models.CharField(_('ID number'), max_length=30, blank=False, null=False)
+    issue_place = models.CharField(_('issue place'), max_length=30, blank=False, null=False)
+    _date = models.DateField(verbose_name=_('inquiry date'), blank=False, default=set_now)
+    _birthdate = models.DateField(verbose_name=_('birthdate'), blank=False)
+    birth_place = models.CharField(_('birth place'), max_length=30, blank=False, null=False)
+    religion = models.CharField(_('religion'), max_length=30, blank=False, null=False)
+    personal_no = models.CharField(_('personal number'), max_length=10, blank=True)
+    national_code = models.CharField(_('National ID'), max_length=10, blank=False, null=False)
+    alias = models.CharField(_('alias'), max_length=30, blank=True)
+    marital_status = models.CharField(verbose_name=_('marital status'), choices=MaritalStatus.choices,
+                                      default=MaritalStatus.SG, max_length=30, null=False)
+    cooperation_reason = models.CharField(verbose_name=_('cooperation reason'), max_length=255, blank=True, null=True)
+    educational_stage = models.CharField(verbose_name=_('educational stage'), choices=EducationLevel.choices,
+                                         default=EducationLevel.UP, max_length=50, null=False)
+    email = models.EmailField(_('Email address'), blank=True)
+    mobile = models.CharField(_('Mobile no.'), max_length=13, blank=True, null=True,
+                              help_text=settings.MOBILE_VALIDATORS[0].message, validators=settings.MOBILE_VALIDATORS)
+    tel = models.CharField(_('Tel'), max_length=13, blank=True, null=True)
+    sex = models.CharField(verbose_name=_('Sex'), choices=Sex.choices, default=Sex.MALE, max_length=10, null=False)
+    postal_code = models.CharField(_('postal code'), max_length=10, blank=True, null=True)
+    address = models.TextField(verbose_name=_('Address'), max_length=4000, blank=False)
+    operator_name = models.CharField(_('operator name'), max_length=255, blank=True, null=True)
+    description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True)
+    background = models.TextField(verbose_name=_('job background'), max_length=4000, blank=True)
+    image = ResizedImageField(size=[settings.MAX_SMALL_IMAGE_WIDTH, settings.MAX_SMALL_IMAGE_HEIGHT],
+                              verbose_name=_('Image'), upload_to='uploads/user-images/', blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Personal Inquiry')
+        verbose_name_plural = _('Personal Inquiries')
+        ordering = ['_date', 'last_name', 'first_name', ]
+
+    def __str__(self):
+        return '%s - %s (%s)' % (self.last_name, self.first_name, self.date())
+
+    def __unicode__(self):
+        return self.__str__()
+
+    def date(self):
+        return to_jalali(self._date) if translation.get_language() == 'fa' else format_date(self._date)
+
+    date.short_description = _('Inquiry Date')
+    date.admin_order_field = 'date'
+
+    def birthdate(self):
+        return to_jalali(self._birthdate) if translation.get_language() == 'fa' else format_date(self._birthdate)
+
+    date.short_description = _('birthdate')
+    date.admin_order_field = 'birthdate'
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe(
+                '<a href="%s%s" target="_blank"><img src="%s%s" title="%s" alt="%s" style="max-width:%spx;max-height:%spx;"/></a>' % (
+                    settings.MEDIA_URL, self.image, settings.MEDIA_URL, self.image, self, self,
+                    settings.MAX_SMALL_IMAGE_WIDTH, settings.MAX_SMALL_IMAGE_HEIGHT))
+        else:
+            return mark_safe('<img src="%simg/person-icon.jpg" width="150" height="150" title="%s" alt="%s"/>' % (
+                settings.STATIC_URL, self.get_full_name(), self.get_full_name()))
+
+    image_tag.short_description = _('Image')
+
+
+class Attachment(models.Model):
+    def directory_path(instance, filename):
+        return '{0}/personal_inquiry/{1}/{2}'.format(settings.MEDIA_ROOT, instance.personal_inquiry.pk, filename)
+
+    description = models.CharField(verbose_name=_('Description'), max_length=2000, blank=True, null=True)
+    file = models.FileField(verbose_name=_('File'), upload_to=directory_path, blank=False)
+    personal_inquiry = models.ForeignKey(PersonalInquiry, verbose_name=_('Personal Inquiry'), on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('Attachment')
+        verbose_name_plural = _('Attachments')
+        ordering = ['description']
+
+    def __str__(self):
+        return self.filename()
+
+    def __unicode__(self):
+        return self.filename()
+
+    def filename(self):
+        parts = self.file.name.split('/')
+        return parts[len(parts) - 1]
+
+
+@receiver(models.signals.post_delete, sender=Attachment)
+def auto_delete_attachment_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `Attachment` object is deleted.
+    """
+    if instance.file.name:
+        try:
+            if os.path.isfile(instance.file.path):
+                os.remove(instance.file.path)
+        except Exception as e:
+            print('Delete error: %s' % e.args[0])
+
+
+@receiver(models.signals.pre_save, sender=Attachment)
+def auto_delete_attachment_on_change(sender, instance, **kwargs):
+    """
+    Deletes old file from filesystem
+    when corresponding `Attachment` object is updated
+    with new file.
+    """
+    if not instance.pk:
+        return False
+
+    try:
+        old_file = Attachment.objects.get(pk=instance.pk).file
+    except Attachment.DoesNotExist:
+        return False
+
+    if not old_file.name:
+        return False
+
+    new_file = instance.file
+    try:
+        if not old_file == new_file:
+            if os.path.isfile(old_file.path):
+                os.remove(old_file.path)
+    except Exception as e:
+        print('Delete error: %s' % e.args[0])
+        return False

@@ -3,7 +3,7 @@
     font-style: normal;
     font-weight: 900;
     src: url("../fonts/IRANSansWeb_Black.eot");
-    src: url("../fonts/IRANSansWeb_Black.eot?#iefix") format("embedded-opentype"),url("../fonts/IRANSansWeb_Black.woff2") format("woff2"),url("../fonts/IRANSansWeb_Black.woff") format("woff"),url("../fonts/IRANSansWeb_Black.ttf") format("truetype")
+    src: url("../fonts/IRANSansWeb_Black.eot?#iefix") format("embedded-opentype"), url("../fonts/IRANSansWeb_Black.woff2") format("woff2"), url("../fonts/IRANSansWeb_Black.woff") format("woff"), url("../fonts/IRANSansWeb_Black.ttf") format("truetype")
 }
 
 @font-face {
@@ -11,7 +11,7 @@
     font-style: normal;
     font-weight: 700;
     src: url("../fonts/IRANSansWeb_Bold.eot");
-    src: url("../fonts/IRANSansWeb_Bold.eot?#iefix") format("embedded-opentype"),url("../fonts/IRANSansWeb_Bold.woff2") format("woff2"),url("../fonts/IRANSansWeb_Bold.woff") format("woff"),url("../fonts/IRANSansWeb_Bold.ttf") format("truetype")
+    src: url("../fonts/IRANSansWeb_Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/IRANSansWeb_Bold.woff2") format("woff2"), url("../fonts/IRANSansWeb_Bold.woff") format("woff"), url("../fonts/IRANSansWeb_Bold.ttf") format("truetype")
 }
 
 @font-face {
@@ -19,7 +19,7 @@
     font-style: normal;
     font-weight: 500;
     src: url("../fonts/IRANSansWeb_Medium.eot");
-    src: url("../fonts/IRANSansWeb_Medium.eot?#iefix") format("embedded-opentype"),url("../fonts/IRANSansWeb_Medium.woff2") format("woff2"),url("../fonts/IRANSansWeb_Medium.woff") format("woff"),url("../fonts/IRANSansWeb_Medium.ttf") format("truetype")
+    src: url("../fonts/IRANSansWeb_Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/IRANSansWeb_Medium.woff2") format("woff2"), url("../fonts/IRANSansWeb_Medium.woff") format("woff"), url("../fonts/IRANSansWeb_Medium.ttf") format("truetype")
 }
 
 @font-face {
@@ -27,7 +27,7 @@
     font-style: normal;
     font-weight: 300;
     src: url("../fonts/IRANSansWeb_Light.eot");
-    src: url("../fonts/IRANSansWeb_Light.eot?#iefix") format("embedded-opentype"),url("../fonts/IRANSansWeb_Light.woff2") format("woff2"),url("../fonts/IRANSansWeb_Light.woff") format("woff"),url("../fonts/IRANSansWeb_Light.ttf") format("truetype")
+    src: url("../fonts/IRANSansWeb_Light.eot?#iefix") format("embedded-opentype"), url("../fonts/IRANSansWeb_Light.woff2") format("woff2"), url("../fonts/IRANSansWeb_Light.woff") format("woff"), url("../fonts/IRANSansWeb_Light.ttf") format("truetype")
 }
 
 @font-face {
@@ -35,7 +35,7 @@
     font-style: normal;
     font-weight: 200;
     src: url("../fonts/IRANSansWeb_UltraLight.eot");
-    src: url("../fonts/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"),url("../fonts/IRANSansWeb_UltraLight.woff2") format("woff2"),url("../fonts/IRANSansWeb_UltraLight.woff") format("woff"),url("../fonts/IRANSansWeb_UltraLight.ttf") format("truetype")
+    src: url("../fonts/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"), url("../fonts/IRANSansWeb_UltraLight.woff2") format("woff2"), url("../fonts/IRANSansWeb_UltraLight.woff") format("woff"), url("../fonts/IRANSansWeb_UltraLight.ttf") format("truetype")
 }
 
 @font-face {
@@ -43,9 +43,8 @@
     font-style: normal;
     font-weight: 400;
     src: url("../fonts/IRANSansWeb.eot");
-    src: url("../fonts/IRANSansWeb.eot?#iefix") format("embedded-opentype"),url("../fonts/IRANSansWeb.woff2") format("woff2"),url("../fonts/IRANSansWeb.woff") format("woff"),url("../fonts/IRANSansWeb.ttf") format("truetype")
+    src: url("../fonts/IRANSansWeb.eot?#iefix") format("embedded-opentype"), url("../fonts/IRANSansWeb.woff2") format("woff2"), url("../fonts/IRANSansWeb.woff") format("woff"), url("../fonts/IRANSansWeb.ttf") format("truetype")
 }
-
 
 :lang(fa) {
     font-family: IRANSans !important;
@@ -457,6 +456,29 @@ div.payslip .header .column {
     min-width: 300px !important;
 }
 
+#personalinquiry_form .fieldBox.field-box {
+    width: 20% !important;
+    min-width: 20% !important;
+}
+
+#personalinquiry_form .fieldBox.field-box label {
+    font-weight: 700;
+}
+
+#personalinquiry_form .fieldBox.field-box label + * {
+    width: 95%;
+}
+
+.form-row.field-address.field-description {
+    width: 100%;
+}
+
+#personalinquiry_form .fieldBox.field-box.field-background,
+#personalinquiry_form .fieldBox.field-box.field-address,
+#personalinquiry_form .fieldBox.field-box.field-description {
+    width: 30% !important;
+}
+
 h1.enactment-print {
     text-align: center;
 }
@@ -465,7 +487,7 @@ h1.enactment-print {
     border: solid 1px black;
 }
 
-.cancel-save{
+.cancel-save {
     margin: 4px 8px 0 0;
 }
 

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,7 +27,7 @@ SSO_SALT = os.environ.get('SSO_SALT', default='5152')
 DEBUG = True
 
 # admin info
-VERSION = '1.26.0'
+VERSION = '1.27.0'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'admin_interface',
     'jalali_date',
     'colorfield',
+    'django_resized',
 
     # django apps
     'django.contrib.admin',
@@ -112,7 +114,8 @@ DATABASES = {
     },
     'access-personnel': {
         'NAME': os.environ.get('ACCESS_PERSONNEL_DATABASES_NAME', default="AutoUpdater.exe"),
-        'PATH': os.environ.get('ACCESS_PERSONNEL_DATABASES_PATH', default=r"\\172.16.226.174\Fileserver\Omomi-Hamkaran-Moavenat\personel\bin"),
+        'PATH': os.environ.get('ACCESS_PERSONNEL_DATABASES_PATH',
+                               default=r"\\172.16.226.174\Fileserver\Omomi-Hamkaran-Moavenat\personel\bin"),
     },
 }
 
@@ -176,6 +179,22 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# Image sizes
+MAX_SMALL_IMAGE_WIDTH = 150  # in pixel
+MAX_SMALL_IMAGE_HEIGHT = 150  # in pixel
+MAX_MEDIUM_IMAGE_WIDTH = 500  # in pixel
+MAX_MEDIUM_IMAGE_HEIGHT = 500  # in pixel
+MAX_LARGE_IMAGE_WIDTH = 1000  # in pixel
+MAX_LARGE_IMAGE_HEIGHT = 1000  # in pixel
+
+# Django-Resized image resizing tool
+DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
+DJANGORESIZED_DEFAULT_QUALITY = 75
+DJANGORESIZED_DEFAULT_KEEP_META = True
+DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'JPEG'
+DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg", 'JPEG': ".jpeg", 'GIF': ".gif", 'PNG': ".png"}
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
+
 # django jalali datae defaults
 JALALI_DATE_DEFAULTS = {
     'Strftime': {
@@ -203,6 +222,12 @@ JALALI_DATE_DEFAULTS = {
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+MOBILE_VALIDATORS = (
+    RegexValidator(
+        regex=r'^(\+989\d{9})|^(09\d{9})$',
+        message=_("Valid mobile format is either +989xxxxxxxxx or 09xxxxxxxxx")),
+)
+
 NAVIGATED_MODELS = ['EIRIB_FollowUp_session', 'EIRIB_FollowUp_assigner', 'EIRIB_FollowUp_subject',
                     'EIRIB_FollowUp_actor', 'EIRIB_FollowUp_supervisor', 'EIRIB_FollowUp_user',
                     'EIRIB_FollowUp_enactment',
@@ -216,6 +241,7 @@ NAVIGATED_MODELS = ['EIRIB_FollowUp_session', 'EIRIB_FollowUp_assigner', 'EIRIB_
                     'Knowledge_Management_personalcardtable',
 
                     'IRIB_HR_payslip', 'IRIB_HR_bonustype', 'IRIB_HR_bonus', 'IRIB_HR_bonussubtype',
+                    'IRIB_HR_personalinquiry',
                     ]
 
 # EIRIB Followup Configurations
@@ -226,9 +252,9 @@ EIRIB_FU_USER_GROUP_NAME = 'EIRIB FU - Users'
 IRIB_FU_OPERATOR_GROUP_NAME = 'IRIB FU - Operators'
 IRIB_FU_USER_GROUP_NAME = 'IRIB FU - Users'
 IRIB_FU_ = {
-    'HQ_GROUP_NAME' : 'سامانه پیگیری - حوزه ریاست',
-    'CS_PLANNING_GROUP_NAME' : 'سامانه پیگیری - برنامه ریزی فضای مجازی',
-    'CS_LICENSE_GROUP_NAME' : 'سامانه پیگیری - صدور مجوز فضای مجازی',
+    'HQ_GROUP_NAME': 'سامانه پیگیری - حوزه ریاست',
+    'CS_PLANNING_GROUP_NAME': 'سامانه پیگیری - برنامه ریزی فضای مجازی',
+    'CS_LICENSE_GROUP_NAME': 'سامانه پیگیری - صدور مجوز فضای مجازی',
 }
 
 # Knowledge Management Configurations
@@ -238,8 +264,9 @@ KM_USER_GROUP_NAME = 'KM - Users'
 # IRIB HR Configurations
 HR_OPERATOR_GROUP_NAME = 'HR - Operators'
 HR_USER_GROUP_NAME = 'HR - Users'
+HR_INQUIRY_GROUP_NAME = 'HR - Personal Inquiry'
 HR_ = {
-    'ADMINISTRATION_GROUP_NAME' : 'HR - Administration',
-    'FINANCIAL_GROUP_NAME' : 'HR - Financial',
-    'PLANNING_GROUP_NAME' : 'HR - Planning',
+    'ADMINISTRATION_GROUP_NAME': 'HR - Administration',
+    'FINANCIAL_GROUP_NAME': 'HR - Financial',
+    'PLANNING_GROUP_NAME': 'HR - Planning',
 }
