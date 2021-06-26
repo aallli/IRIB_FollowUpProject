@@ -20,7 +20,7 @@ class AttachmentInline(admin.TabularInline):
     model = Attachment
 
     def get_readonly_fields(self, request, obj=None):
-        if PersonalInquiry.objects.filter(pk=obj.pk).count() == 0:
+        if obj and PersonalInquiry.objects.filter(pk=obj.pk).count() == 0:
             self.extra = 0
             self.max_num = 0
             return ['description', 'file']
