@@ -10,10 +10,21 @@ from jalali_date.admin import ModelAdminJalaliMixin
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from IRIB_Shared_Lib.utils import to_jalali, format_date, get_jalali_filter
-from .models import PaySlip, BonusType, Bonus, BonusSubType, PersonalInquiry
+from .models import PaySlip, BonusType, Bonus, BonusSubType, PersonalInquiry, Attachment
 
 # Used for thousands separator for numbers... usage: f'{value:n}'
 locale.setlocale(locale.LC_ALL, '')
+
+
+class AttachmentInline(admin.TabularInline):
+    model = Attachment
+
+    def get_readonly_fields(self, request, obj=None):
+        if PersonalInquiry.objects.filter(pk=obj.pk).count() == 0:
+            self.extra = 0
+            self.max_num = 0
+            return ['description', 'file']
+        return self.readonly_fields
 
 
 @admin.register(PaySlip)
@@ -232,6 +243,7 @@ class PersonalInquiryAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     readonly_fields = ['date', 'image_tag']
     search_fields = ['last_name', 'first_name', 'national_code', 'operator_name', 'id_number', 'personal_no',
                      'alias', 'cooperation_reason', 'mobile', 'email', 'description', 'address']
+    inlines = [AttachmentInline]
 
     def get_list_display_links(self, request, list_display):
         return self.get_list_display(request)
