@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-26 14:25+0430\n"
+"POT-Creation-Date: 2021-06-27 15:15+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,23 +23,31 @@ msgstr ""
 msgid "Supervisor"
 msgstr "مسوول پیگیری"
 
-#: .\EIRIB_FollowUp\admin.py:30 .\EIRIB_FollowUp\models.py:64
+#: .\EIRIB_FollowUp\admin.py:22
+msgid "No actor"
+msgstr "فاقد پیگیری کننده"
+
+#: .\EIRIB_FollowUp\admin.py:34 .\EIRIB_FollowUp\models.py:64
 #: .\EIRIB_FollowUp\models.py:84 .\EIRIB_FollowUp\models.py:138
 #: .\IRIB_Auth\models.py:46 .\IRIB_Auth\models.py:62
 #: .\IRIB_FollowUp\admin.py:22 .\IRIB_FollowUp\models.py:264
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
 
-#: .\EIRIB_FollowUp\admin.py:113 .\IRIB_Auth\admin.py:62
+#: .\EIRIB_FollowUp\admin.py:38
+msgid "No supervisor"
+msgstr "فاقد واحد پیگیری"
+
+#: .\EIRIB_FollowUp\admin.py:123 .\IRIB_Auth\admin.py:62
 msgid "Error in creating/updating user in MS Acceess Database"
 msgstr "خطای ایجاد / به روز رسانی کاربر در دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:122 .\EIRIB_FollowUp\admin.py:133
+#: .\EIRIB_FollowUp\admin.py:132 .\EIRIB_FollowUp\admin.py:143
 #: .\IRIB_Auth\admin.py:110 .\IRIB_Auth\admin.py:124
 msgid "Error in deleting user from MS Acceess Database"
 msgstr "خطای حذف کاربر از دیتابیس اکسس"
 
-#: .\EIRIB_FollowUp\admin.py:153 .\EIRIB_FollowUp\models.py:161
+#: .\EIRIB_FollowUp\admin.py:163 .\EIRIB_FollowUp\models.py:161
 #: .\EIRIB_FollowUp\models.py:193 .\IRIB_FollowUp\admin.py:279
 #: .\IRIB_FollowUp\models.py:157 .\IRIB_FollowUp\models.py:193
 #: .\static\admin\custom\enactments-list-report-excel.html:69
@@ -47,12 +55,12 @@ msgstr "خطای حذف کاربر از دیتابیس اکسس"
 msgid "Review Date"
 msgstr "تاریخ بازنگری"
 
-#: .\EIRIB_FollowUp\admin.py:154 .\EIRIB_FollowUp\models.py:156
+#: .\EIRIB_FollowUp\admin.py:164 .\EIRIB_FollowUp\models.py:156
 #: .\EIRIB_FollowUp\models.py:187 .\IRIB_FollowUp\admin.py:280
 msgid "Assignment Date"
 msgstr "تاریخ مصوبه"
 
-#: .\EIRIB_FollowUp\admin.py:190
+#: .\EIRIB_FollowUp\admin.py:200
 msgid "Unauthorized session, Access denied"
 msgstr "دسترسی غیر مجاز!"
 
@@ -327,19 +335,19 @@ msgstr ""
 "نمی تواند کلمه عبور شما را مشاهده کند.  کلمه عبور خود را می توانید از طریق "
 "<a href=\"{}\">این لینک</a> تغییر دهید."
 
-#: .\EIRIB_FollowUp\utils.py:308
+#: .\EIRIB_FollowUp\utils.py:311
 msgid "Update failed."
 msgstr "خطا در به روز رسانی"
 
-#: .\EIRIB_FollowUp\utils.py:308
+#: .\EIRIB_FollowUp\utils.py:311
 msgid "Successful update."
 msgstr "به روز رسانی با موفقیت انجام شد."
 
-#: .\EIRIB_FollowUp\utils.py:315
+#: .\EIRIB_FollowUp\utils.py:318
 msgid "Delete failed."
 msgstr "خطای حذف"
 
-#: .\EIRIB_FollowUp\utils.py:315
+#: .\EIRIB_FollowUp\utils.py:318
 msgid "Successful delete."
 msgstr "حذف با موفقیت انجام شد."
 
@@ -454,15 +462,15 @@ msgstr "خطا! کاربر '%s' غیر قابل حذف است."
 msgid "EIRIB Administration System"
 msgstr "سامانه مدیریت فضای مجازی سازمان صدا و سیما"
 
-#: .\IRIB_FollowUpProject\settings.py:153
+#: .\IRIB_FollowUpProject\settings.py:154
 msgid "En"
 msgstr "انگلیسی"
 
-#: .\IRIB_FollowUpProject\settings.py:154
+#: .\IRIB_FollowUpProject\settings.py:155
 msgid "Fa"
 msgstr "فارسی"
 
-#: .\IRIB_FollowUpProject\settings.py:228
+#: .\IRIB_FollowUpProject\settings.py:229
 msgid "Valid mobile format is either +989xxxxxxxxx or 09xxxxxxxxx"
 msgstr "فرمت معتبر موبایل به شکل +989xxxxxxxxx یا 09xxxxxxxxx است."
 
@@ -618,11 +626,11 @@ msgstr "پیگیری گروهی"
 msgid "Group FollowUps"
 msgstr "پیگیریهای گروهی"
 
-#: .\IRIB_HR\admin.py:151 .\IRIB_HR\admin.py:202
+#: .\IRIB_HR\admin.py:162 .\IRIB_HR\admin.py:213
 msgid "Bonus type not allowed."
 msgstr "این گروه پاداش برای شما مجاز نیست."
 
-#: .\IRIB_HR\admin.py:231 .\IRIB_HR\models.py:189
+#: .\IRIB_HR\admin.py:242 .\IRIB_HR\models.py:189
 msgid "Inquiry Date"
 msgstr "تاریخ ثبت استعلام"
 

@@ -19,11 +19,15 @@ class ActorFilter(SimpleListFilter):
     parameter_name = 'actor'
 
     def lookups(self, request, model_admin):
-        return [(actor.pk, actor) for actor in Actor.objects.all()]
+        return [(-1, _('No actor'))] + [(actor.pk, actor) for actor in Actor.objects.all()]
 
     def queryset(self, request, queryset):
-        return queryset.filter(first_actor__pk=self.value()) | queryset.filter(
-            second_actor__pk=self.value()) if self.value() else queryset
+        if self.value():
+            return queryset.filter(first_actor__pk=self.value()) | queryset.filter(
+                second_actor__pk=self.value()) if int(self.value()) > 0 else queryset.filter(
+                first_actor__isnull=True).filter(second_actor__isnull=True)
+        else:
+            return queryset
 
 
 class SupervisorFilter(SimpleListFilter):
@@ -31,11 +35,15 @@ class SupervisorFilter(SimpleListFilter):
     parameter_name = 'supervisor'
 
     def lookups(self, request, model_admin):
-        return [(supervisor.pk, supervisor.name) for supervisor in Supervisor.objects.all()]
+        return [(-1, _('No supervisor'))] + [(supervisor.pk, supervisor.name) for supervisor in Supervisor.objects.all()]
 
     def queryset(self, request, queryset):
-        return queryset.filter(first_actor__supervisor__pk=self.value()) | queryset.filter(
-            second_actor__supervisor__pk=self.value()) if self.value() else queryset
+        if self.value():
+            return queryset.filter(first_actor__supervisor__pk=self.value()) | queryset.filter(
+                second_actor__supervisor__pk=self.value()) if int(self.value()) > 0 else queryset.filter(
+                first_actor__supervisor__isnull=True).filter(second_actor__supervisor__isnull=True)
+        else:
+            return queryset
 
 
 @admin.register(Session)
@@ -88,7 +96,8 @@ class AttachmentAdmin(BaseModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "enactment" and not (request.user.is_superuser or request.user.is_secretary):
             _user = _User.objects.get(user=request.user)
-            kwargs["queryset"] = Enactment.objects.filter(row__in=_user.query) if _user and not _user.query is None else Enactment.objects.none()
+            kwargs["queryset"] = Enactment.objects.filter(
+                row__in=_user.query) if _user and not _user.query is None else Enactment.objects.none()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -96,7 +105,8 @@ class AttachmentAdmin(BaseModelAdmin):
 class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = _User
     fields = ['user', ('query_name', 'secretary_query_name')]
-    search_fields = ['user__first_name', 'user__last_name', 'user__username', 'user__supervisor__name', 'query_name', 'secretary_query_name']
+    search_fields = ['user__first_name', 'user__last_name', 'user__username', 'user__supervisor__name', 'query_name',
+                     'secretary_query_name']
     list_display = ['first_name', 'last_name', 'username', 'access_level', 'supervisor', 'last_login_jalali']
     list_display_links = ['first_name', 'last_name', 'username', 'access_level', 'supervisor', 'last_login_jalali']
     list_filter = ('user__supervisor', 'user__access_level', 'user__is_active', 'user__is_superuser', 'user__groups')
@@ -107,7 +117,7 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
         super(UserAdmin, self).save_model(request, obj, form, change)
         try:
             pass
-            #save_user(obj.user)
+            # save_user(obj.user)
         except Exception as e:
             messages.set_level(request, messages.WARNING)
             messages.error(request, _('Error in creating/updating user in MS Acceess Database'))
@@ -116,7 +126,7 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def delete_model(self, request, obj):
         try:
             pass
-            #delete_user(obj.user)
+            # delete_user(obj.user)
         except Exception as e:
             messages.set_level(request, messages.WARNING)
             messages.error(request, _('Error in deleting user from MS Acceess Database'))
@@ -128,7 +138,7 @@ class UserAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             try:
                 try:
                     pass
-                    #delete_user(obj.user)
+                    # delete_user(obj.user)
                 except Exception as e:
                     self.message_user(request, _('Error in deleting user from MS Acceess Database'), messages.WARNING)
                 obj.delete()
@@ -184,7 +194,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def save_model(self, request, obj, form, change):
         new_obj = False
         user = request.user
-        _user=_User.objects.get(user=user)
+        _user = _User.objects.get(user=user)
         if obj.session and _user.secretary_query and not obj.session.name in _user.secretary_query:
             messages.set_level(request, messages.ERROR)
             messages.error(request, _('Unauthorized session, Access denied'))
@@ -221,7 +231,7 @@ class EnactmentAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
             #         WHERE ID = ?
             #        '''
             # params.append(obj.row)
-            #execute_query(query, params, update=True)
+            # execute_query(query, params, update=True)
             pass
         else:
             # query = '''
