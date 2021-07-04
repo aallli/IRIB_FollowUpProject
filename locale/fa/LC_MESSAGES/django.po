@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-27 15:15+0430\n"
+"POT-Creation-Date: 2021-07-04 10:34+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -335,19 +335,19 @@ msgstr ""
 "نمی تواند کلمه عبور شما را مشاهده کند.  کلمه عبور خود را می توانید از طریق "
 "<a href=\"{}\">این لینک</a> تغییر دهید."
 
-#: .\EIRIB_FollowUp\utils.py:311
+#: .\EIRIB_FollowUp\utils.py:309
 msgid "Update failed."
 msgstr "خطا در به روز رسانی"
 
-#: .\EIRIB_FollowUp\utils.py:311
+#: .\EIRIB_FollowUp\utils.py:309
 msgid "Successful update."
 msgstr "به روز رسانی با موفقیت انجام شد."
 
-#: .\EIRIB_FollowUp\utils.py:318
+#: .\EIRIB_FollowUp\utils.py:316
 msgid "Delete failed."
 msgstr "خطای حذف"
 
-#: .\EIRIB_FollowUp\utils.py:318
+#: .\EIRIB_FollowUp\utils.py:316
 msgid "Successful delete."
 msgstr "حذف با موفقیت انجام شد."
 
@@ -444,6 +444,10 @@ msgstr "فوق لیسانس یا معادل"
 #: .\IRIB_Auth\models.py:39
 msgid "Doctoral or equivalent"
 msgstr "دکترا یا معادل"
+
+#: .\IRIB_Auth\models.py:57
+msgid "Personnel Number"
+msgstr "شماره کارمندی"
 
 #: .\IRIB_Auth\models.py:60 .\IRIB_HR\models.py:87 .\IRIB_HR\models.py:103
 msgid "Title"

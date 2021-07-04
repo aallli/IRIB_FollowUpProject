@@ -26,15 +26,15 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             'fields': (('username', 'first_name', 'last_name', '_title'),
                        ('access_level', 'is_active'),)}),
         (_('Address Info'), {
-            'fields': (('supervisor', 'email'))}),
+            'fields': (('supervisor', 'personnel_number', 'email'))}),
         (_('Important dates'), {
             'fields': (('last_login_jalali', 'date_joined_jalali'),)}),
         (_('Permissions'), {
             'fields': (('is_staff', 'is_superuser'), 'groups', 'user_permissions'), }),
         (_('Sensitive Info'), {'fields': ('password',)}),
     )
-    list_display = ['username', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
-    list_display_links = ['username', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
+    list_display = ['username', 'personnel_number', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
+    list_display_links = ['username', 'personnel_number', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
     list_filter = ('supervisor', 'access_level', 'is_active', 'is_superuser', 'groups')
     readonly_fields = ['last_login_jalali', 'date_joined_jalali']
     change_form_template = 'admin/custom/change_form.html'
