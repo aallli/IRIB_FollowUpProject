@@ -1,11 +1,12 @@
 from threading import Timer
-from .models import PaySlip
 from django.conf import settings
 import os, xlrd, tempfile, shutil
 from IRIB_Shared_Lib.models import Month
 from django.contrib.auth.models import Group
 from EIRIB_FollowUp.models import User as _User
+from .models import PaySlip, Bonus, BonusSubType
 from IRIB_Auth.models import User, Supervisor, AccessLevel
+from EIRIB_FollowUp.utils import mdb_connect, execute_query
 
 tries = 0
 max_try = 50
@@ -26,11 +27,11 @@ def import_users():
             u = u[0]
             print("User Updated: %s" % u.username)
 
-        u._title=user[1]
-        u.first_name=user[2]
-        u.last_name=user[3]
-        u.is_staff=True
-        u.supervisor=supervisor
+        u._title = user[1]
+        u.first_name = user[2]
+        u.last_name = user[3]
+        u.is_staff = True
+        u.supervisor = supervisor
         u.set_password(user[5])
         u.groups.add(Group.objects.get(name='KM - Users'))
         u.groups.add(Group.objects.get(name='HR - Users'))
@@ -38,6 +39,65 @@ def import_users():
         _u = _User.objects.filter(user__username=user[0])
         if _u.count() == 0:
             _User.objects.create(user=u, query_name=user[0])
+
+
+def import_national_ids():
+    wb = xlrd.open_workbook(os.path.join(settings.BASE_DIR, 'db\hoghoogh.xlsx'))
+    sheet = wb.sheet_by_index(0)
+    row=1
+    for i in range(1, sheet.nrows):
+        user = sheet.row_values(i)
+        u = User.objects.filter(username=user[0])
+        if str(user[2])=='1':
+            if u.count() == 0:
+                print("%s- User %s not exists" % (row, user[0]))
+                row += 1
+                u = User.objects.create(access_level=AccessLevel.USER, username=user[0])
+                u.personnel_number = user[0]
+                u.national_code = user[1]
+                u._title = user[4]
+                u.first_name = user[11]
+                u.last_name = user[10]
+                u.is_staff = True
+                supervisor = Supervisor.objects.update_or_create(name=user[5])[0]
+                u.supervisor = supervisor
+                u.set_password(user[93])
+                u.groups.add(Group.objects.get(name='KM - Users'))
+                u.groups.add(Group.objects.get(name='HR - Users'))
+                u.save()
+                _u = _User.objects.filter(user__username=user[0])
+                if _u.count() == 0:
+                    _User.objects.create(user=u, query_name=user[0])
+            else:
+                print("%s- User %s is updating" % (row, user[0]))
+                u = u[0]
+                u.personnel_number = user[0]
+                u.national_code = user[1]
+            u.save()
+
+
+def import_accord(bonus_sub_type_id):
+    global data_loaded, tries, conn
+    data_loaded = 0
+    tries = 0
+
+    try:
+        conn = mdb_connect(settings.DATABASES['access-followup']['MDB'])
+        query = '''
+                SELECT tblAccord.the_year, tblAccord.the_month, tblAccord.final_bid, tblAccord.note, tblAccord.shomarekarmandi
+                FROM tblAccord
+               '''
+        result = execute_query(query, conn=conn)
+        type = BonusSubType.objects.get(pk=bonus_sub_type_id)
+        for r in result:
+            try:
+                date = '%s/%s' % (r.the_year, r.the_month)
+                user = User.objects.get(username=r.shomarekarmandi)
+                Bonus.objects.get_or_create(type=type, user=user, _date=date, amount=r.final_bid, description=r.note)
+            except:
+                pass
+    except:
+        pass
 
 
 def dump_uploaded_file(source):

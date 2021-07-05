@@ -1,5 +1,4 @@
 from django.conf import settings
-
 from .forms import GroupAdminForm
 from .models import Supervisor, User
 from django.db.transaction import atomic
@@ -26,21 +25,21 @@ class UserAdmin(ModelAdminJalaliMixin, _UserAdmin, BaseModelAdmin):
             'fields': (('username', 'first_name', 'last_name', '_title'),
                        ('access_level', 'is_active'),)}),
         (_('Address Info'), {
-            'fields': (('supervisor', 'personnel_number', 'email'))}),
+            'fields': (('supervisor', ('personnel_number', 'national_code'), 'email'))}),
         (_('Important dates'), {
             'fields': (('last_login_jalali', 'date_joined_jalali'),)}),
         (_('Permissions'), {
             'fields': (('is_staff', 'is_superuser'), 'groups', 'user_permissions'), }),
         (_('Sensitive Info'), {'fields': ('password',)}),
     )
-    list_display = ['username', 'personnel_number', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
-    list_display_links = ['username', 'personnel_number', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
+    list_display = ['username', 'national_code', 'personnel_number', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
+    list_display_links = ['username', 'national_code', 'personnel_number', 'first_name', 'last_name', 'access_level', 'supervisor', 'last_login_jalali']
     list_filter = ('supervisor', 'access_level', 'is_active', 'is_superuser', 'groups')
     readonly_fields = ['last_login_jalali', 'date_joined_jalali']
     change_form_template = 'admin/custom/change_form.html'
 
     def get_readonly_fields(self, request, obj=None):
-        if (request.user.is_secretary  or request.user.is_scoped_secretary) and not request.user.is_superuser:
+        if (request.user.is_secretary or request.user.is_scoped_secretary) and not request.user.is_superuser:
             return self.readonly_fields + ['is_staff', 'is_superuser', 'groups', 'user_permissions']
         return self.readonly_fields
 

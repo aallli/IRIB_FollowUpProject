@@ -55,6 +55,7 @@ class Supervisor(models.Model):
 
 class User(AbstractUser):
     personnel_number = models.CharField(verbose_name=_('Personnel Number'), max_length=15, blank=True)
+    national_code = models.CharField(verbose_name=_('National ID'), max_length=10, blank=True)
     access_level = models.CharField(verbose_name=_('Access Level'), choices=AccessLevel.choices,
                                     default=AccessLevel.USER, max_length=20, null=False)
     _title = models.CharField(verbose_name=_('Title'), choices=Title.choices,

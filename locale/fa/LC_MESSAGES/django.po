@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-04 10:34+0430\n"
+"POT-Creation-Date: 2021-07-05 11:29+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "فاقد پیگیری کننده"
 
 #: .\EIRIB_FollowUp\admin.py:34 .\EIRIB_FollowUp\models.py:64
 #: .\EIRIB_FollowUp\models.py:84 .\EIRIB_FollowUp\models.py:138
-#: .\IRIB_Auth\models.py:46 .\IRIB_Auth\models.py:62
+#: .\IRIB_Auth\models.py:46 .\IRIB_Auth\models.py:63
 #: .\IRIB_FollowUp\admin.py:22 .\IRIB_FollowUp\models.py:264
 msgid "Supervisor Unit"
 msgstr "واحد پیگیری"
@@ -162,11 +162,11 @@ msgstr "کاربران"
 msgid "username"
 msgstr "کاربر"
 
-#: .\EIRIB_FollowUp\models.py:133 .\IRIB_Auth\models.py:58
+#: .\EIRIB_FollowUp\models.py:133 .\IRIB_Auth\models.py:59
 msgid "Access Level"
 msgstr "سطح دسترسی"
 
-#: .\EIRIB_FollowUp\models.py:143 .\IRIB_Auth\models.py:68
+#: .\EIRIB_FollowUp\models.py:143 .\IRIB_Auth\models.py:69
 msgid "last login"
 msgstr "آخرین ورود"
 
@@ -449,15 +449,19 @@ msgstr "دکترا یا معادل"
 msgid "Personnel Number"
 msgstr "شماره کارمندی"
 
-#: .\IRIB_Auth\models.py:60 .\IRIB_HR\models.py:87 .\IRIB_HR\models.py:103
+#: .\IRIB_Auth\models.py:58 .\IRIB_HR\models.py:20 .\IRIB_HR\models.py:155
+msgid "National ID"
+msgstr "کد ملی"
+
+#: .\IRIB_Auth\models.py:61 .\IRIB_HR\models.py:87 .\IRIB_HR\models.py:103
 msgid "Title"
 msgstr "عنوان"
 
-#: .\IRIB_Auth\models.py:74
+#: .\IRIB_Auth\models.py:75
 msgid "date joined"
 msgstr "تاریخ عضویت"
 
-#: .\IRIB_Auth\models.py:104
+#: .\IRIB_Auth\models.py:105
 #, python-format
 msgid "Delete failed, Immutable user: (%s)"
 msgstr "خطا! کاربر '%s' غیر قابل حذف است."
@@ -661,10 +665,6 @@ msgstr "نام"
 #: .\templates\admin\custom\pay-slip.html:74
 msgid "last name"
 msgstr "نام خانوادگی"
-
-#: .\IRIB_HR\models.py:20 .\IRIB_HR\models.py:155
-msgid "National ID"
-msgstr "کد ملی"
 
 #: .\IRIB_HR\models.py:21 .\static\admin\custom\pay-slip.html:79
 #: .\templates\admin\custom\pay-slip.html:85
