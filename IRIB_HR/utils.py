@@ -13,6 +13,7 @@ max_try = 50
 max_data = 1
 data_loaded = pow(2, max_data) - 1
 
+
 def import_users():
     wb = xlrd.open_workbook(os.path.join(settings.BASE_DIR, 'sms.xlsx'))
     sheet = wb.sheet_by_index(0)
@@ -44,36 +45,41 @@ def import_users():
 def import_national_ids():
     wb = xlrd.open_workbook(os.path.join(settings.BASE_DIR, 'db\hoghoogh.xlsx'))
     sheet = wb.sheet_by_index(0)
-    row=1
+    update_row = 1
+    new_row = 1
     for i in range(1, sheet.nrows):
-        user = sheet.row_values(i)
-        u = User.objects.filter(username=user[0])
-        if str(user[2])=='1':
-            if u.count() == 0:
-                print("%s- User %s not exists" % (row, user[0]))
-                row += 1
-                u = User.objects.create(access_level=AccessLevel.USER, username=user[0])
-                u.personnel_number = user[0]
-                u.national_code = user[1]
-                u._title = user[4]
-                u.first_name = user[11]
-                u.last_name = user[10]
-                u.is_staff = True
-                supervisor = Supervisor.objects.update_or_create(name=user[5])[0]
-                u.supervisor = supervisor
-                u.set_password(user[93])
-                u.groups.add(Group.objects.get(name='KM - Users'))
-                u.groups.add(Group.objects.get(name='HR - Users'))
+        try:
+            user = sheet.row_values(i)
+            u = User.objects.filter(username=user[0])
+            if str(user[2]) == '1':
+                if u.count() == 0:
+                    print("%s- User %s not exists (%s)" % (new_row, user[0], user[1]))
+                    new_row += 1
+                    u = User.objects.create(access_level=AccessLevel.USER, username=user[0])
+                    u.personnel_number = user[0]
+                    u.national_code = user[1]
+                    u._title = user[4]
+                    u.first_name = user[11]
+                    u.last_name = user[10]
+                    u.is_staff = True
+                    supervisor = Supervisor.objects.update_or_create(name=user[5])[0]
+                    u.supervisor = supervisor
+                    u.set_password(user[93])
+                    u.groups.add(Group.objects.get(name='KM - Users'))
+                    u.groups.add(Group.objects.get(name='HR - Users'))
+                    u.save()
+                    _u = _User.objects.filter(user__username=user[0])
+                    if _u.count() == 0:
+                        _User.objects.create(user=u, query_name=user[0])
+                else:
+                    print("%s- User %s is updating (%s)" % (update_row, user[0], user[1]))
+                    update_row += 1
+                    u = u[0]
+                    u.personnel_number = user[0]
+                    u.national_code = user[1]
                 u.save()
-                _u = _User.objects.filter(user__username=user[0])
-                if _u.count() == 0:
-                    _User.objects.create(user=u, query_name=user[0])
-            else:
-                print("%s- User %s is updating" % (row, user[0]))
-                u = u[0]
-                u.personnel_number = user[0]
-                u.national_code = user[1]
-            u.save()
+        except Exception as e:
+            print("%s (%s): %s" % (user[0], user[1], e))
 
 
 def import_accord(bonus_sub_type_id):
