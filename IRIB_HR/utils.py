@@ -127,7 +127,7 @@ def update_data(request):
                 payment = sheet.row_values(i)
                 try:
                     kwargs = dict(
-                        personnel_id=int(payment[0]),
+                        national_id=int(payment[0]),
                         last_name=payment[1],
                         first_name=payment[2],
                         operation=payment[3],
@@ -168,22 +168,12 @@ def update_data(request):
                         pass
 
                     try:
-                        kwargs['personnel_id'] = str(int(kwargs['personnel_id']))
+                        user = User.objects.get(national_code=kwargs['national_id'])
+                        kwargs['personnel_id'] = user.personnel_number
                     except:
                         pass
 
-                    try:
-                        kwargs['account_no'] = str(int(kwargs['account_no']))
-                    except:
-                        pass
-
-                    try:
-                        kwargs['insurance_no'] = str(int(kwargs['insurance_no']))
-                    except:
-                        pass
-
-                    payslip = PaySlip.objects.filter(personnel_id=kwargs['personnel_id'], month=kwargs['month'],
-                                                     year=kwargs['year'])
+                    payslip = PaySlip.objects.filter(national_id=kwargs['national_id'], month=kwargs['month'], year=kwargs['year'])
                     payslip.delete()
                     PaySlip.objects.create(**kwargs)
                 except:
