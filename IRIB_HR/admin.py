@@ -245,17 +245,6 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 class PersonalInquiryAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = PersonalInquiry
     queryset = PersonalInquiry.objects.all()
-    fields = (('image', 'image_tag', 'date',),
-              ('last_name', 'first_name', 'alias', 'national_code',),
-              ('father_name', 'id_number', 'issue_place', 'marital_status',),
-              ('_birthdate', 'birth_place', 'religion', 'personal_no',),
-              ('educational_stage', 'email', 'postal_code', 'tel',),
-              ('mobile', 'operator_name', 'cooperation_reason',),
-              ('address', 'description', 'background',),
-              ('operator_vote', 'operator_note',),
-              ('security_vote', 'security_note',),
-              ('final_vote', 'final_note',),
-              )
     list_display = ['last_name', 'first_name', 'national_code', 'date', 'operator_name']
     list_filter = [VoteFilter, 'sex', get_jalali_filter('_date', _('Inquiry Date')), 'marital_status', 'educational_stage']
     search_fields = ['last_name', 'first_name', 'national_code', 'operator_name', 'id_number', 'personal_no',
@@ -265,19 +254,47 @@ class PersonalInquiryAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     def get_list_display_links(self, request, list_display):
         return self.get_list_display(request)
 
+    def get_fields(self, request, obj=None):
+        fields = (( 'registrant', 'date',),
+                  ('image', 'image_tag',),
+                  ('last_name', 'first_name', 'alias', 'national_code',),
+                  ('father_name', 'id_number', 'issue_place', 'marital_status',),
+                  ('_birthdate', 'birth_place', 'religion', 'personal_no',),
+                  ('educational_stage', 'email', 'postal_code', 'tel',),
+                  ('mobile', 'operator_name', 'cooperation_reason',),
+                  ('address', 'description', 'background',),
+                  )
+        if obj:
+            fields += (
+                  ('operator_vote', 'operator_note',),
+                  ('security_vote', 'security_note',),
+                  ('final_vote', 'final_note',),)
+
+        return fields
+
     def get_readonly_fields(self, request, obj=None):
         user = request.user
-        readonly_fields = ['date', 'image_tag']
-        if not user.is_group_member(settings.HR_INQUIRY_['OPERATOR_GROUP_NAME']):
-            readonly_fields.append('operator_vote')
-            readonly_fields.append('operator_note')
+        readonly_fields = ['registrant', 'date', 'image_tag', 'operator_vote', 'operator_note', 'security_vote', 'security_note', 'final_vote', 'final_note']
 
-        if not user.is_group_member(settings.HR_INQUIRY_['SECURITY_GROUP_NAME']):
-            readonly_fields.append('security_vote')
-            readonly_fields.append('security_note')
+        if not obj:
+            return readonly_fields
 
-        if not user.is_group_member(settings.HR_INQUIRY_['HQ_GROUP_NAME']):
-            readonly_fields.append('final_vote')
-            readonly_fields.append('final_note')
+        if obj.registrant.pk == user.pk:
+            readonly_fields.remove('operator_vote')
+            readonly_fields.remove('operator_note')
+
+        if user.is_group_member(settings.HR_INQUIRY_['SECURITY_GROUP_NAME']):
+            readonly_fields.remove('security_vote')
+            readonly_fields.remove('security_note')
+
+        if user.is_superuser or user.is_group_member(settings.HR_INQUIRY_['HQ_GROUP_NAME']):
+            readonly_fields.remove('final_vote')
+            readonly_fields.remove('final_note')
 
         return readonly_fields
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:
+            obj.registrant = request.user
+
+        super(PersonalInquiryAdmin, self).save_model(request, obj, form, change)

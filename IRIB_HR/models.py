@@ -149,6 +149,7 @@ class Bonus(models.Model):
 
 
 class PersonalInquiry(models.Model):
+    registrant = models.ForeignKey(User, verbose_name=_('Registrant'), on_delete=models.SET_NULL, blank=False, null=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=False, null=False)
     last_name = models.CharField(_('last name'), max_length=150, blank=False, null=False)
     father_name = models.CharField(_('father name'), max_length=30, blank=True, null=True)

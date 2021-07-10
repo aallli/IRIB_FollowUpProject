@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-10 14:38+0430\n"
+"POT-Creation-Date: 2021-07-10 15:03+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,7 +183,7 @@ msgstr "کد مصوبه"
 #: .\EIRIB_FollowUp\models.py:150 .\EIRIB_FollowUp\models.py:177
 #: .\EIRIB_FollowUp\models.py:234 .\IRIB_FollowUp\models.py:152
 #: .\IRIB_FollowUp\models.py:175 .\IRIB_FollowUp\models.py:271
-#: .\IRIB_HR\models.py:131 .\IRIB_HR\models.py:176 .\IRIB_HR\models.py:227
+#: .\IRIB_HR\models.py:131 .\IRIB_HR\models.py:177 .\IRIB_HR\models.py:228
 #: .\Knowledge_Management\models.py:138 .\Knowledge_Management\models.py:209
 #: .\Knowledge_Management\models.py:243
 #: .\static\admin\custom\eirib-enactment.html:80
@@ -249,17 +249,17 @@ msgid "Status"
 msgstr "وضعیت"
 
 #: .\EIRIB_FollowUp\models.py:235 .\IRIB_FollowUp\models.py:272
-#: .\IRIB_HR\models.py:228 .\Knowledge_Management\models.py:210
+#: .\IRIB_HR\models.py:229 .\Knowledge_Management\models.py:210
 msgid "File"
 msgstr "ضمیمه"
 
 #: .\EIRIB_FollowUp\models.py:239 .\IRIB_FollowUp\models.py:276
-#: .\IRIB_HR\models.py:232 .\Knowledge_Management\models.py:214
+#: .\IRIB_HR\models.py:233 .\Knowledge_Management\models.py:214
 msgid "Attachment"
 msgstr "ضمیمه"
 
 #: .\EIRIB_FollowUp\models.py:240 .\IRIB_FollowUp\models.py:277
-#: .\IRIB_HR\models.py:233 .\Knowledge_Management\models.py:215
+#: .\IRIB_HR\models.py:234 .\Knowledge_Management\models.py:215
 msgid "Attachments"
 msgstr "ضمایم"
 
@@ -296,7 +296,7 @@ msgid "Themes"
 msgstr "شمایل گرافیکی"
 
 #: .\EIRIB_FollowUp\utils.py:19 .\IRIB_FollowUp\utils.py:12
-#: .\IRIB_HR\models.py:169
+#: .\IRIB_HR\models.py:170
 msgid "Email address"
 msgstr "پست الکترونیک"
 
@@ -449,7 +449,7 @@ msgstr "دکترا یا معادل"
 msgid "Personnel Number"
 msgstr "شماره کارمندی"
 
-#: .\IRIB_Auth\models.py:58 .\IRIB_HR\models.py:27 .\IRIB_HR\models.py:162
+#: .\IRIB_Auth\models.py:58 .\IRIB_HR\models.py:27 .\IRIB_HR\models.py:163
 msgid "National ID"
 msgstr "کد ملی"
 
@@ -642,7 +642,7 @@ msgstr "نظر"
 msgid "Bonus type not allowed."
 msgstr "این گروه پاداش برای شما مجاز نیست."
 
-#: .\IRIB_HR\admin.py:260 .\IRIB_HR\models.py:201
+#: .\IRIB_HR\admin.py:260 .\IRIB_HR\models.py:202
 msgid "Inquiry Date"
 msgstr "تاریخ ثبت استعلام"
 
@@ -675,13 +675,13 @@ msgstr "ماه"
 msgid "Year"
 msgstr "سال"
 
-#: .\IRIB_HR\models.py:25 .\IRIB_HR\models.py:152
+#: .\IRIB_HR\models.py:25 .\IRIB_HR\models.py:153
 #: .\static\admin\custom\pay-slip.html:68
 #: .\templates\admin\custom\pay-slip.html:74
 msgid "first name"
 msgstr "نام"
 
-#: .\IRIB_HR\models.py:26 .\IRIB_HR\models.py:153
+#: .\IRIB_HR\models.py:26 .\IRIB_HR\models.py:154
 #: .\static\admin\custom\pay-slip.html:68
 #: .\templates\admin\custom\pay-slip.html:74
 msgid "last name"
@@ -874,115 +874,119 @@ msgstr "پاداش"
 msgid "Bonuses"
 msgstr "پاداشها"
 
-#: .\IRIB_HR\models.py:154
+#: .\IRIB_HR\models.py:152
+msgid "Registrant"
+msgstr "کاربر ثبت کننده"
+
+#: .\IRIB_HR\models.py:155
 msgid "father name"
 msgstr "نام پدر"
 
-#: .\IRIB_HR\models.py:155
+#: .\IRIB_HR\models.py:156
 msgid "ID number"
 msgstr "شماره شناسنامه"
 
-#: .\IRIB_HR\models.py:156
+#: .\IRIB_HR\models.py:157
 msgid "issue place"
 msgstr "محل صدور"
 
-#: .\IRIB_HR\models.py:157
+#: .\IRIB_HR\models.py:158
 msgid "inquiry date"
 msgstr "تاریخ ثبت استعلام"
 
-#: .\IRIB_HR\models.py:158 .\IRIB_HR\models.py:207
+#: .\IRIB_HR\models.py:159 .\IRIB_HR\models.py:208
 msgid "birthdate"
 msgstr "تاریخ تولد"
 
-#: .\IRIB_HR\models.py:159
+#: .\IRIB_HR\models.py:160
 msgid "birth place"
 msgstr "محل تولد"
 
-#: .\IRIB_HR\models.py:160
+#: .\IRIB_HR\models.py:161
 msgid "religion"
 msgstr "دین"
 
-#: .\IRIB_HR\models.py:161
+#: .\IRIB_HR\models.py:162
 msgid "personal number"
 msgstr "شماره کارمندی"
 
-#: .\IRIB_HR\models.py:163
+#: .\IRIB_HR\models.py:164
 msgid "alias"
 msgstr "نام مستعار / نام خانوادگی قبلی"
 
-#: .\IRIB_HR\models.py:164
+#: .\IRIB_HR\models.py:165
 msgid "marital status"
 msgstr "وضعیت تاهل"
 
-#: .\IRIB_HR\models.py:166
+#: .\IRIB_HR\models.py:167
 msgid "cooperation reason"
 msgstr "علت همکاری"
 
-#: .\IRIB_HR\models.py:167
+#: .\IRIB_HR\models.py:168
 msgid "educational stage"
 msgstr "آخرین مدرک تحصیلی"
 
-#: .\IRIB_HR\models.py:170
+#: .\IRIB_HR\models.py:171
 msgid "Mobile no."
 msgstr "شماره تلفن همراه"
 
-#: .\IRIB_HR\models.py:171 .\static\404.html:20 .\templates\404.html:20
+#: .\IRIB_HR\models.py:172 .\static\404.html:20 .\templates\404.html:20
 msgid "Tel"
 msgstr "شماره تلفن"
 
-#: .\IRIB_HR\models.py:172
+#: .\IRIB_HR\models.py:173
 msgid "Sex"
 msgstr "جنسیت"
 
-#: .\IRIB_HR\models.py:173
+#: .\IRIB_HR\models.py:174
 msgid "postal code"
 msgstr "کد پستی"
 
-#: .\IRIB_HR\models.py:174
+#: .\IRIB_HR\models.py:175
 msgid "Address"
 msgstr "نشانی"
 
-#: .\IRIB_HR\models.py:175
+#: .\IRIB_HR\models.py:176
 msgid "operator name"
 msgstr "نام اپراتور / شبکه / برنامه"
 
-#: .\IRIB_HR\models.py:177
+#: .\IRIB_HR\models.py:178
 msgid "job background"
 msgstr "سوابق شغلی"
 
-#: .\IRIB_HR\models.py:179 .\IRIB_HR\models.py:220
+#: .\IRIB_HR\models.py:180 .\IRIB_HR\models.py:221
 msgid "Image"
 msgstr "تصویر"
 
-#: .\IRIB_HR\models.py:180
+#: .\IRIB_HR\models.py:181
 msgid "Operator Vote"
 msgstr "نظر اپراتور / شبکه / برنامه"
 
-#: .\IRIB_HR\models.py:181
+#: .\IRIB_HR\models.py:182
 msgid "Operator Note"
 msgstr "توضیحات اپراتور / شبکه / برنامه"
 
-#: .\IRIB_HR\models.py:182
+#: .\IRIB_HR\models.py:183
 msgid "Security Vote"
 msgstr "نظر حراست"
 
-#: .\IRIB_HR\models.py:183
+#: .\IRIB_HR\models.py:184
 msgid "Security Note"
 msgstr "توضیحات حراست"
 
-#: .\IRIB_HR\models.py:184
+#: .\IRIB_HR\models.py:185
 msgid "Final Vote"
 msgstr "نظر نهایی"
 
-#: .\IRIB_HR\models.py:185
+#: .\IRIB_HR\models.py:186
 msgid "Final Note"
 msgstr "توضیحات نهایی"
 
-#: .\IRIB_HR\models.py:188 .\IRIB_HR\models.py:229
+#: .\IRIB_HR\models.py:189 .\IRIB_HR\models.py:230
 msgid "Personal Inquiry"
 msgstr "استعلام عوامل"
 
-#: .\IRIB_HR\models.py:189
+#: .\IRIB_HR\models.py:190
 msgid "Personal Inquiries"
 msgstr "استعلام عوامل"
 
