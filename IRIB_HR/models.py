@@ -12,6 +12,13 @@ from IRIB_Shared_Lib.utils import to_jalali, format_date, set_now
 from IRIB_Auth.models import User, MaritalStatus, EducationLevel, Sex
 
 
+class Vote(models.TextChoices):
+    AP = 'approved', _('Approved')
+    RJ = 'rejected', _('Rejected')
+    CN = 'conditional', _('Conditional Approve')
+    PN = 'pending', _('Pending')
+
+
 class PaySlip(models.Model):
     month = models.CharField(verbose_name=_('Month'), choices=Month.choices, default=Month.FARVARDIN, max_length=30)
     year = models.IntegerField(verbose_name=_('Year'), blank=False, default=99)
@@ -144,33 +151,38 @@ class Bonus(models.Model):
 class PersonalInquiry(models.Model):
     first_name = models.CharField(_('first name'), max_length=30, blank=False, null=False)
     last_name = models.CharField(_('last name'), max_length=150, blank=False, null=False)
-    father_name = models.CharField(_('father name'), max_length=30, blank=False, null=False)
-    id_number = models.CharField(_('ID number'), max_length=30, blank=False, null=False)
-    issue_place = models.CharField(_('issue place'), max_length=30, blank=False, null=False)
+    father_name = models.CharField(_('father name'), max_length=30, blank=True, null=True)
+    id_number = models.CharField(_('ID number'), max_length=30, blank=True, null=True)
+    issue_place = models.CharField(_('issue place'), max_length=30, blank=True, null=True)
     _date = models.DateField(verbose_name=_('inquiry date'), blank=False, default=set_now)
-    _birthdate = models.DateField(verbose_name=_('birthdate'), blank=False)
-    birth_place = models.CharField(_('birth place'), max_length=30, blank=False, null=False)
-    religion = models.CharField(_('religion'), max_length=30, blank=False, null=False)
-    personal_no = models.CharField(_('personal number'), max_length=10, blank=True)
-    national_code = models.CharField(_('National ID'), max_length=10, blank=False, null=False)
-    alias = models.CharField(_('alias'), max_length=30, blank=True)
+    _birthdate = models.DateField(verbose_name=_('birthdate'), blank=True, null=True)
+    birth_place = models.CharField(_('birth place'), max_length=30, blank=True, null=True)
+    religion = models.CharField(_('religion'), max_length=30, blank=True, null=True)
+    personal_no = models.CharField(_('personal number'), max_length=10, blank=True, null=True)
+    national_code = models.CharField(_('National ID'), max_length=10, blank=True, null=True)
+    alias = models.CharField(_('alias'), max_length=30, blank=True, null=True)
     marital_status = models.CharField(verbose_name=_('marital status'), choices=MaritalStatus.choices,
                                       default=MaritalStatus.SG, max_length=30, null=False)
     cooperation_reason = models.CharField(verbose_name=_('cooperation reason'), max_length=255, blank=True, null=True)
     educational_stage = models.CharField(verbose_name=_('educational stage'), choices=EducationLevel.choices,
-                                         default=EducationLevel.UP, max_length=50, null=False)
-    email = models.EmailField(_('Email address'), blank=True)
-    mobile = models.CharField(_('Mobile no.'), max_length=13, blank=True, null=True,
-                              help_text=settings.MOBILE_VALIDATORS[0].message, validators=settings.MOBILE_VALIDATORS)
+                                         default=EducationLevel.UP, max_length=50, blank=True, null=True)
+    email = models.EmailField(_('Email address'), blank=True, null=True)
+    mobile = models.CharField(_('Mobile no.'), max_length=13, blank=True, null=True, help_text=settings.MOBILE_VALIDATORS[0].message, validators=settings.MOBILE_VALIDATORS)
     tel = models.CharField(_('Tel'), max_length=13, blank=True, null=True)
     sex = models.CharField(verbose_name=_('Sex'), choices=Sex.choices, default=Sex.MALE, max_length=10, null=False)
     postal_code = models.CharField(_('postal code'), max_length=10, blank=True, null=True)
-    address = models.TextField(verbose_name=_('Address'), max_length=4000, blank=False)
+    address = models.TextField(verbose_name=_('Address'), max_length=4000, blank=True, null=True)
     operator_name = models.CharField(_('operator name'), max_length=255, blank=True, null=True)
-    description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True)
-    background = models.TextField(verbose_name=_('job background'), max_length=4000, blank=True)
+    description = models.TextField(verbose_name=_('Description'), max_length=4000, blank=True, null=True)
+    background = models.TextField(verbose_name=_('job background'), max_length=4000, blank=True, null=True)
     image = ResizedImageField(size=[settings.MAX_SMALL_IMAGE_WIDTH, settings.MAX_SMALL_IMAGE_HEIGHT],
                               verbose_name=_('Image'), upload_to='uploads/user-images/', blank=True, null=True)
+    operator_vote = models.TextField(verbose_name=_('Operator Vote'), choices=Vote.choices, default=Vote.PN, max_length=20, null=False)
+    operator_note = models.TextField(verbose_name=_('Operator Note'), max_length=2000, blank=True, null=True)
+    security_vote = models.TextField(verbose_name=_('Security Vote'), choices=Vote.choices, default=Vote.PN, max_length=20, null=False)
+    security_note = models.TextField(verbose_name=_('Security Note'), max_length=2000, blank=True, null=True)
+    final_vote = models.TextField(verbose_name=_('Final Vote'), choices=Vote.choices, default=Vote.PN, max_length=20, null=False)
+    final_note = models.TextField(verbose_name=_('Final Note'), max_length=2000, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Personal Inquiry')
@@ -192,8 +204,8 @@ class PersonalInquiry(models.Model):
     def birthdate(self):
         return to_jalali(self._birthdate) if translation.get_language() == 'fa' else format_date(self._birthdate)
 
-    date.short_description = _('birthdate')
-    date.admin_order_field = 'birthdate'
+    birthdate.short_description = _('birthdate')
+    birthdate.admin_order_field = 'birthdate'
 
     def image_tag(self):
         if self.image:

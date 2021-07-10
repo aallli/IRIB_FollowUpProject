@@ -6,14 +6,29 @@ from django.contrib import messages
 from IRIB_Shared_Lib.models import Month
 from django.utils import timezone, translation
 from IRIB_Shared_Lib.admin import BaseModelAdmin
+from django.contrib.admin import SimpleListFilter
 from jalali_date.admin import ModelAdminJalaliMixin
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from IRIB_Shared_Lib.utils import to_jalali, format_date, get_jalali_filter
-from .models import PaySlip, BonusType, Bonus, BonusSubType, PersonalInquiry, Attachment
+from .models import PaySlip, BonusType, Bonus, BonusSubType, PersonalInquiry, Attachment, Vote
 
 # Used for thousands separator for numbers... usage: f'{value:n}'
 locale.setlocale(locale.LC_ALL, '')
+
+
+class VoteFilter(SimpleListFilter):
+    title = _('Vote')
+    parameter_name = 'vote'
+
+    def lookups(self, request, model_admin):
+        return [(vote.value, vote.label) for vote in Vote]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value:
+            queryset = queryset.filter(operator_vote=value) | queryset.filter(security_vote=value) | queryset.filter(final_vote=value)
+        return queryset.distinct()
 
 
 class AttachmentInline(admin.TabularInline):
@@ -230,20 +245,39 @@ class BonusAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
 class PersonalInquiryAdmin(ModelAdminJalaliMixin, BaseModelAdmin):
     model = PersonalInquiry
     queryset = PersonalInquiry.objects.all()
-    fields = (('image', 'image_tag'),
+    fields = (('image', 'image_tag', 'date',),
               ('last_name', 'first_name', 'alias', 'national_code',),
               ('father_name', 'id_number', 'issue_place', 'marital_status',),
               ('_birthdate', 'birth_place', 'religion', 'personal_no',),
               ('educational_stage', 'email', 'postal_code', 'tel',),
               ('mobile', 'operator_name', 'cooperation_reason',),
               ('address', 'description', 'background',),
+              ('operator_vote', 'operator_note',),
+              ('security_vote', 'security_note',),
+              ('final_vote', 'final_note',),
               )
     list_display = ['last_name', 'first_name', 'national_code', 'date', 'operator_name']
-    list_filter = ['sex', get_jalali_filter('_date', _('Inquiry Date')), 'marital_status', 'educational_stage']
-    readonly_fields = ['date', 'image_tag']
+    list_filter = [VoteFilter, 'sex', get_jalali_filter('_date', _('Inquiry Date')), 'marital_status', 'educational_stage']
     search_fields = ['last_name', 'first_name', 'national_code', 'operator_name', 'id_number', 'personal_no',
                      'alias', 'cooperation_reason', 'mobile', 'email', 'description', 'address']
     inlines = [AttachmentInline]
 
     def get_list_display_links(self, request, list_display):
         return self.get_list_display(request)
+
+    def get_readonly_fields(self, request, obj=None):
+        user = request.user
+        readonly_fields = ['date', 'image_tag']
+        if not user.is_group_member(settings.HR_INQUIRY_['OPERATOR_GROUP_NAME']):
+            readonly_fields.append('operator_vote')
+            readonly_fields.append('operator_note')
+
+        if not user.is_group_member(settings.HR_INQUIRY_['SECURITY_GROUP_NAME']):
+            readonly_fields.append('security_vote')
+            readonly_fields.append('security_note')
+
+        if not user.is_group_member(settings.HR_INQUIRY_['HQ_GROUP_NAME']):
+            readonly_fields.append('final_vote')
+            readonly_fields.append('final_note')
+
+        return readonly_fields
