@@ -27,7 +27,7 @@ SSO_SALT = os.environ.get('SSO_SALT', default='5152')
 DEBUG = True
 
 # admin info
-VERSION = '1.30.0'
+VERSION = '1.30.1'
 ADMIN_TEL = os.environ.get('ADMIN_TEL', default='+98 21 2915 5120')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', default='admin@eirib.ir')
 SITE_HEADER = _('EIRIB Administration System')
@@ -35,6 +35,7 @@ WITHOUT_SESSION_TITLE = None
 WITHOUT_ASSIGNER_TITLE = None
 WITHOUT_SUBJECT_TITLE = None
 WITHOUT_SUPERVISOR_TITLE = None
+DEFAULT_PASSWORD = 'User1234'
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="localhost").split(" ")
 

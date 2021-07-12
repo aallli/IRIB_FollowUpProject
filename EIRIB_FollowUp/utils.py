@@ -1,12 +1,12 @@
 import pyodbc
-from .models import User
 from threading import Timer
 from django.conf import settings
 from django.utils import timezone
 from IRIB_FollowUp.models import AccessLevel
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-from .models import Enactment, Session, Assigner, Subject, Actor, Supervisor
+from IRIB_Auth.models import Title, User as _User, Supervisor as _Supervisor
+from .models import Enactment, Session, Assigner, Subject, Actor, Supervisor, User
 
 msgid = _('welcome')
 settings.WITHOUT_SESSION_TITLE = _('[Without session]')
@@ -129,12 +129,28 @@ def get_user_queries():
         users = execute_query('SELECT * FROM tblUser;')
         for u in users:
             try:
-                user = User.objects.get(user__username=u.username)
-                if user:
-                    user.query_name = u.openningformP
-                    command = 'SELECT * from %s' % user.query_name
-                    result = execute_query(command)
-                    user.query = [r.ID for r in result]
+                user = _User.objects.filter(username=u.username)
+                if user.count() == 0:
+                    supervisor = _Supervisor.objects.get_or_create(name=settings.WITHOUT_SUPERVISOR_TITLE if u.Moavenat in [None, '', ' '] else u.Moavenat)[0]
+                    title = Title.MR if Title(Title.MR).label == u.envan else Title.MRS
+                    params = {"first_name": u.FName if u.FName else '',
+                              "last_name": u.LName if u.LName else '',
+                              "personnel_number": u.username,
+                              "supervisor": supervisor,
+                              "access_level": AccessLevel.USER if str(u.AccessLevelID) == "1" else AccessLevel.SECRETARY,
+                              "_title": title,
+                              "username": u.username}
+
+                    user = _User.objects.create(**params)
+                    user.set_password(settings.DEFAULT_PASSWORD)
+                    user.save()
+
+                user = User.objects.get_or_create(user=user)[0]
+                user.query_name = u.openningformP
+
+                command = 'SELECT * from %s' % user.query_name
+                result = execute_query(command)
+                user.query = [r.ID for r in result]
 
                 if user.secretary_query_name:
                     command = 'SELECT * from %s' % user.secretary_query_name
@@ -147,8 +163,8 @@ def get_user_queries():
                     user.secretary_query = None
 
                 user.save()
-            except:
-                pass
+            except Exception as e:
+               pass
     finally:
         data_loaded ^= 32
 
@@ -171,11 +187,11 @@ def get_enactments():
         result = execute_query(command)
         for r in result:
             try:
-                enact = Enactment.objects.get_or_create(row= r.ID)
+                enact = Enactment.objects.get_or_create(row=r.ID)
                 enactment = enact[0]
                 if enact[1]:
                     enactment.result = r.natije
-                    enactment._review_date =r.review_date or timezone.now()
+                    enactment._review_date = r.review_date or timezone.now()
 
                 enactment.description = r.sharh
                 enactment.subject = Subject.objects.get(name=settings.WITHOUT_SUBJECT_TITLE if r.muzoo in [None, ''] else r.muzoo)
@@ -184,9 +200,9 @@ def get_enactments():
                 enactment._date = r.date or timezone.now()
                 enactment.follow_grade = r.lozoomepeygiri
                 enactment.session = Session.objects.get(
-                        name=settings.WITHOUT_SESSION_TITLE if r.jalaseh in [None, ''] else r.jalaseh)
+                    name=settings.WITHOUT_SESSION_TITLE if r.jalaseh in [None, ''] else r.jalaseh)
                 enactment.assigner = Assigner.objects.get(
-                        name=settings.WITHOUT_ASSIGNER_TITLE if r.gooyandeh in [None, ''] else r.gooyandeh)
+                    name=settings.WITHOUT_ASSIGNER_TITLE if r.gooyandeh in [None, ''] else r.gooyandeh)
                 enactment.save()
             except Exception as e:
                 print(e)
